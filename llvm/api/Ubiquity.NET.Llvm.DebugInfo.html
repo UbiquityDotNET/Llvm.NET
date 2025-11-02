@@ -87,17 +87,18 @@
   <div class="markdown level0 remarks">
 <p>This namespace contains all the support for the LLVM representation of debugging information.</p>
 <h2 id="differences-from-previous-release">Differences from previous release</h2>
-<p>A critical difference is that a <a class="xref" href="Ubiquity.NET.Llvm.Module.html">Module</a> does NOT own a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a>
-That was a customized extension that was more accidental as a result of the former releases using object
-interning. However, once that was removed it was found that Module instances were attempting to hold fields
-or properties of things that were NOT part of the underlying native object. So, the pattern of use was
-changed to better match how the underlying LLVM API worked. In particular a DIBuilder is a <code>ref struct</code>
-that is ONLY allowed on the stack as it is intended for short term use. It can (and does) own a
-<a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompileUnit.html">DICompileUnit</a> and it can reference the module it was
-created from. Since it is a <code>ref struct</code> it is not allowed to store instances of a DIBuilder in the heap in
-any way. (<a class="xref" href="../articles/Samples/Kaleidoscope/Chapter9/Kaleidoscope-ch9.html">Kaleidoscope Chapter 9</a> provides a sample of use in a visitor pattern where the
-instance is provided as an <code>in</code> parameter to <code>ref readonly</code> functions. This ability was added to the visitor
-pattern specifically for this case.)</p>
+<p>A critical difference is that a <a class="xref" href="Ubiquity.NET.Llvm.Module.html">Module</a> does NOT own a
+<a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a>. That idea in previous releases was
+a customized extension that was more accidental as a result of the former releases using
+object interning. However, once that was removed it was found that Module instances were
+attempting to hold fields or properties of things that were NOT part of the underlying
+native object. So, the pattern of use was changed to better match how the underlying LLVM
+API worked. In particular a <code>DIBuilder</code> is intended for short term use. It can (and does)
+own a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DICompileUnit.html">DICompileUnit</a> and it can reference
+the module it was created from. (<a class="xref" href="../articles/Samples/Kaleidoscope/Chapter9/Kaleidoscope-ch9.html">Kaleidoscope Chapter 9</a> provides a
+sample of use in a visitor pattern where the instance is provided as a parameter to
+functions. This ability of providing a &quot;context&quot; was added to the visitor pattern
+specifically for this case.</p>
 </div>
 
     <h3 id="classes">
@@ -458,7 +459,7 @@ Enums
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

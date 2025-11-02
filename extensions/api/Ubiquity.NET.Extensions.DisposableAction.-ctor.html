@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Extensions_DisposableAction__ctor_" data-uid="Ubiquity.NET.Extensions.DisposableAction.#ctor*" class="text-break">
-Constructor DisposableAction  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Extensions/DisposableAction.cs/#L20"><i class="bi bi-code-slash"></i></a>
+Constructor DisposableAction  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/DisposableAction.cs/#L18"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -114,9 +114,9 @@ Constructor DisposableAction  <a class="header-action link-secondary" title="Vie
 
 <a id="Ubiquity_NET_Extensions_DisposableAction__ctor_" data-uid="Ubiquity.NET.Extensions.DisposableAction.#ctor*"></a>
 
-<h3 id="Ubiquity_NET_Extensions_DisposableAction__ctor_System_Action_" data-uid="Ubiquity.NET.Extensions.DisposableAction.#ctor(System.Action)">
-  DisposableAction(Action)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Extensions/DisposableAction.cs/#L20"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Extensions_DisposableAction__ctor_System_Action_System_String_" data-uid="Ubiquity.NET.Extensions.DisposableAction.#ctor(System.Action,System.String)">
+  DisposableAction(Action, string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/DisposableAction.cs/#L18"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.Extensions.DisposableAction.html">DisposableAction</a> class.</p>
@@ -124,13 +124,16 @@ Constructor DisposableAction  <a class="header-action link-secondary" title="Vie
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public DisposableAction(Action onDispose)</code></pre>
+  <pre><code class="lang-csharp hljs">public DisposableAction(Action onDispose, string? exp = null)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
 <dl class="parameters">
   <dt><code>onDispose</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
-  <dd><p>Action to run when <a class="xref" href="Ubiquity.NET.Extensions.DisposableAction.Dispose.html#Ubiquity_NET_Extensions_DisposableAction_Dispose">Dispose()</a>is called.</p>
+  <dd><p>Action to run when <a class="xref" href="Ubiquity.NET.Extensions.DisposableAction.Dispose.html#Ubiquity_NET_Extensions_DisposableAction_Dispose">Dispose()</a> is called.</p>
+</dd>
+  <dt><code>exp</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+  <dd><p>Expression for any exceptions; default normally provided by compiler as expression for <code class="paramref">onDispose</code></p>
 </dd>
 </dl>
 
@@ -148,7 +151,7 @@ Constructor DisposableAction  <a class="header-action link-secondary" title="Vie
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Extensions/DisposableAction.cs/#L20" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/DisposableAction.cs/#L18" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -164,7 +167,7 @@ Constructor DisposableAction  <a class="header-action link-secondary" title="Vie
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

@@ -110,19 +110,20 @@ expressions to validate input parameters.</li>
 <li>DictionaryBuilder to enable dictionary initializer style initialization of
 <code>ImmutableDictionary&lt;TKey, TValue&gt;</code> with significantly reduced overhead.
 <ul>
-<li>This leverages an <code>ImmutableDictionary&lt;TKey, TValue&gt;.Builder</code> under the hood to build the dictionary.
-When the <code>ToImmutable()</code> method is called the builder is converted to the immutable state without any
-overhead of a copy or re-construction of hash tables etc...</li>
+<li>This leverages an <code>ImmutableDictionary&lt;TKey, TValue&gt;.Builder</code> under the hood to build
+the dictionary. When the <code>ToImmutable()</code> method is called the builder is converted to
+the immutable state without any overhead of a copy or re-construction of hash tables
+etc...</li>
 </ul>
 </li>
 <li>KvpArrayBuilder to enable array initializer style initialization of
 <code>ImmutableArray&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;</code> with significantly reduced overhead.
 <ul>
-<li>This leverages an <code>ImmutableArray&lt;T&gt;.Builder</code> under the hood to build the array directly.
-When the <code>ToImmutable()</code> method is called the builder is converted to the immutable state without any
-overhead of a copy.</li>
-<li>Since this is an array and not a dictionary there is no overhead for allocating, initializing or copying
-any hash mapping for the keys.</li>
+<li>This leverages an <code>ImmutableArray&lt;T&gt;.Builder</code> under the hood to build the array
+directly. When the <code>ToImmutable()</code> method is called the builder is converted to the
+immutable state without any overhead of a copy.</li>
+<li>Since this is an array and not a dictionary there is no overhead for allocating,
+initializing or copying any hash mapping for the keys.</li>
 </ul>
 </li>
 </ul>
@@ -147,7 +148,7 @@ any hash mapping for the keys.</li>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

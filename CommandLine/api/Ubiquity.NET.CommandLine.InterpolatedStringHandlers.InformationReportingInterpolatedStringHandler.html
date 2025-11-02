@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Struct InformationReportingInterpolatedStringHandler | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct InformationReportingInterpolatedStringHandler | Ubiquity.NET ">
+      
+      <meta name="description" content="Interpolated string handler for an  using a fixed">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_CommandLine_InterpolatedStringHandlers_InformationReportingInterpolatedStringHandler.md&amp;value=---%0Auid%3A%20Ubiquity.NET.CommandLine.InterpolatedStringHandlers.InformationReportingInterpolatedStringHandler%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.CommandLine.InterpolatedStringHandlers.InformationReportingInterpolatedStringHandler">
+
+
+
+  <h1 id="Ubiquity_NET_CommandLine_InterpolatedStringHandlers_InformationReportingInterpolatedStringHandler" data-uid="Ubiquity.NET.CommandLine.InterpolatedStringHandlers.InformationReportingInterpolatedStringHandler" class="text-break">
+Struct InformationReportingInterpolatedStringHandler  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/InterpolatedStringHandlers/InformationReportingInterpolatedStringHandler.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.CommandLine.html">CommandLine</a>.<a class="xref" href="Ubiquity.NET.CommandLine.InterpolatedStringHandlers.html">InterpolatedStringHandlers</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.CommandLine.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Interpolated string handler for an <a class="xref" href="Ubiquity.NET.CommandLine.IDiagnosticReporter.html">IDiagnosticReporter</a> using a fixed <a class="xref" href="Ubiquity.NET.CommandLine.MsgLevel.html#Ubiquity_NET_CommandLine_MsgLevel_Information">Information</a></p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct InformationReportingInterpolatedStringHandler</code></pre>
+  </div>
+
+
+
+
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.equals">ValueType.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode">ValueType.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.tostring">ValueType.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="Ubiquity_NET_CommandLine_InterpolatedStringHandlers_InformationReportingInterpolatedStringHandler_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This handler will use the state of the <a class="xref" href="Ubiquity.NET.CommandLine.IDiagnosticReporter.Level.html#Ubiquity_NET_CommandLine_IDiagnosticReporter_Level">Level</a> to filter messages
+as interpolated strings. If the channel for the message is not enabled, then the handler filters
+the entire message and can skip even constructing the parameterized elements (unless it is the first
+one [Limit of how Handlers work in .NET]). The limitation of the first is further restricted to the
+first "thing" interpolated including a string literal. Thus, the parameterized elements are not generated
+if the channel isn't enabled unless the element is the first thing in the interpolated string. In that
+case only the first entry is evaluated.</p>
+<div class="IMPORTANT"><h5>important</h5><p>
+Apps should NOT depend on the subtleties of interpolated parameter evaluation to guarantee invocation
+(or not) of side effects. This is a "best-effort" optimization. In particular, apps should assume that
+a parameterized value may or may not be executed (i.e., non-deterministic). Therefore, it cannot assume
+(one way or another) that the side-effects of evaluation have, or have not, occurred.
+</p></div>
+<div class="NOTE"><h5>note</h5><p>Despite lots of samples (for preview variants) that use a 'ref struct', this is NOT
+a by ref like type. This is to allow use interpolating async parameters.</p></div>
+</div>
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.CommandLine.InterpolatedStringHandlers.InformationReportingInterpolatedStringHandler.-ctor.html#Ubiquity_NET_CommandLine_InterpolatedStringHandlers_InformationReportingInterpolatedStringHandler__ctor_System_Int32_System_Int32_Ubiquity_NET_CommandLine_IDiagnosticReporter_">InformationReportingInterpolatedStringHandler(int, int, IDiagnosticReporter)</a></dt>
+    <dd><p>Initializes a new instance of the <a class="xref" href="Ubiquity.NET.CommandLine.InterpolatedStringHandlers.InformationReportingInterpolatedStringHandler.html">InformationReportingInterpolatedStringHandler</a> struct.</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.CommandLine.InterpolatedStringHandlers.InformationReportingInterpolatedStringHandler.IsEnabled.html#Ubiquity_NET_CommandLine_InterpolatedStringHandlers_InformationReportingInterpolatedStringHandler_IsEnabled">IsEnabled</a></dt>
+    <dd><p>Gets a value indicating whether this handler is enabled</p>
+</dd>
+  </dl>
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.CommandLine.InterpolatedStringHandlers.InformationReportingInterpolatedStringHandler.AppendFormatted.html#Ubiquity_NET_CommandLine_InterpolatedStringHandlers_InformationReportingInterpolatedStringHandler_AppendFormatted__1___0_">AppendFormatted&lt;T&gt;(T)</a></dt>
+    <dd><p>Appends an interpolated value to the result of interpolation</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.CommandLine.InterpolatedStringHandlers.InformationReportingInterpolatedStringHandler.AppendFormatted.html#Ubiquity_NET_CommandLine_InterpolatedStringHandlers_InformationReportingInterpolatedStringHandler_AppendFormatted__1___0_System_String_">AppendFormatted&lt;T&gt;(T, string)</a></dt>
+    <dd><p>Appends an interpolated value to the result of interpolation</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.CommandLine.InterpolatedStringHandlers.InformationReportingInterpolatedStringHandler.AppendLiteral.html#Ubiquity_NET_CommandLine_InterpolatedStringHandlers_InformationReportingInterpolatedStringHandler_AppendLiteral_System_String_">AppendLiteral(string)</a></dt>
+    <dd><p>Appends a literal value to the results of interpolating a string</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.CommandLine.InterpolatedStringHandlers.InformationReportingInterpolatedStringHandler.GetFormattedText.html#Ubiquity_NET_CommandLine_InterpolatedStringHandlers_InformationReportingInterpolatedStringHandler_GetFormattedText">GetFormattedText()</a></dt>
+    <dd><p>Gets the full results of interpolation</p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/InterpolatedStringHandlers/InformationReportingInterpolatedStringHandler.cs/#L24" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-rc
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

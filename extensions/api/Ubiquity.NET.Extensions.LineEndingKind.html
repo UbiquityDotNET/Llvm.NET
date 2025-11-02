@@ -85,7 +85,7 @@
 
 
   <h1 id="Ubiquity_NET_Extensions_LineEndingKind" data-uid="Ubiquity.NET.Extensions.LineEndingKind" class="text-break">
-Enum LineEndingKind  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Extensions/StringNormalizer.cs/#L11"><i class="bi bi-code-slash"></i></a>
+Enum LineEndingKind  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/StringNormalizer.cs/#L7"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -125,19 +125,25 @@ Enum LineEndingKind  <a class="header-action link-secondary" title="View source"
   <h2 id="fields">Fields
 </h2>
   <dl class="parameters">
-    <dt id="Ubiquity_NET_Extensions_LineEndingKind_CarriageReturn"><code>CarriageReturn = 2</code></dt>
+    <dt id="Ubiquity_NET_Extensions_LineEndingKind_CarriageReturn"><code>CarriageReturn = 3</code></dt>
   <dd><p>Line endings consist of the single carriage return character '\r'</p>
 <p>This is the typical form for older Mac systems</p>
 </dd>
   
-    <dt id="Ubiquity_NET_Extensions_LineEndingKind_CarriageReturnLineFeed"><code>CarriageReturnLineFeed = 1</code></dt>
+    <dt id="Ubiquity_NET_Extensions_LineEndingKind_CarriageReturnLineFeed"><code>CarriageReturnLineFeed = 2</code></dt>
   <dd><p>Line endings consist of a pair of carriage return '\r' AND line feed '\n'</p>
 <p>This is the canonical form used in Windows environments</p>
 </dd>
   
-    <dt id="Ubiquity_NET_Extensions_LineEndingKind_LineFeed"><code>LineFeed = 0</code></dt>
+    <dt id="Ubiquity_NET_Extensions_LineEndingKind_LineFeed"><code>LineFeed = 1</code></dt>
   <dd><p>Line endings consist of the single line feed character '\n'</p>
 <p>This is the typical form for *nix systems, and Mac OS X and later</p>
+</dd>
+  
+    <dt id="Ubiquity_NET_Extensions_LineEndingKind_MixedOrUnknownEndings"><code>MixedOrUnknownEndings = 0</code></dt>
+  <dd><p>Source line endings are mixed or otherwise unknown.</p>
+<p>This kind is only allowed as a source description since it does NOT define any
+particular output format. Only an ambiguous input.</p>
 </dd>
   
   </dl>
@@ -147,7 +153,7 @@ Enum LineEndingKind  <a class="header-action link-secondary" title="View source"
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Extensions/StringNormalizer.cs/#L11" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/StringNormalizer.cs/#L7" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -163,7 +169,7 @@ Enum LineEndingKind  <a class="header-action link-secondary" title="View source"
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

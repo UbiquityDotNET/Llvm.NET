@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class SimpleJitMemoryAllocatorBase | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SimpleJitMemoryAllocatorBase | Ubiquity.NET ">
+      
+      <meta name="description" content="Base class for a simple MCJIT style memory allocator">
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/new/develop/apiSpec/new?filename=Ubiquity_NET_Llvm_OrcJITv2_SimpleJitMemoryAllocatorBase.md&amp;value=---%0Auid%3A%20Ubiquity.NET.Llvm.OrcJITv2.SimpleJitMemoryAllocatorBase%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+        </div>
+
+        <article data-uid="Ubiquity.NET.Llvm.OrcJITv2.SimpleJitMemoryAllocatorBase">
+
+
+
+  <h1 id="Ubiquity_NET_Llvm_OrcJITv2_SimpleJitMemoryAllocatorBase" data-uid="Ubiquity.NET.Llvm.OrcJITv2.SimpleJitMemoryAllocatorBase" class="text-break">
+Class SimpleJitMemoryAllocatorBase  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Llvm/OrcJITv2/SimpleJitMemoryAllocatorBase.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Ubiquity.html">Ubiquity</a>.<a class="xref" href="Ubiquity.NET.html">NET</a>.<a class="xref" href="Ubiquity.NET.Llvm.html">Llvm</a>.<a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.html">OrcJITv2</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Ubiquity.NET.Llvm.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Base class for a simple MCJIT style memory allocator</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class SimpleJitMemoryAllocatorBase : DisposableObject, IDisposable, IJitMemoryAllocator</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.DisposableObject.html">DisposableObject</a></div>
+      <div><span class="xref">SimpleJitMemoryAllocatorBase</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.IJitMemoryAllocator.html">IJitMemoryAllocator</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DisposableObject.Dispose.html#Ubiquity_NET_Llvm_DisposableObject_Dispose">DisposableObject.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DisposableObject.IsDisposed.html#Ubiquity_NET_Llvm_DisposableObject_IsDisposed">DisposableObject.IsDisposed</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="Ubiquity_NET_Llvm_OrcJITv2_SimpleJitMemoryAllocatorBase_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>Derived types need not be concrend with any of the low level native interop. Instead
+they simply implement the abstract methods to perform the required allocations. This
+base type handles all of the interop, including the reverse P/Invoke marhsalling for
+callbacks.</p>
+</div>
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SimpleJitMemoryAllocatorBase.-ctor.html#Ubiquity_NET_Llvm_OrcJITv2_SimpleJitMemoryAllocatorBase__ctor">SimpleJitMemoryAllocatorBase()</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SimpleJitMemoryAllocatorBase.AllocateCodeSection.html#Ubiquity_NET_Llvm_OrcJITv2_SimpleJitMemoryAllocatorBase_AllocateCodeSection_System_UIntPtr_System_UInt32_System_UInt32_Ubiquity_NET_InteropHelpers_LazyEncodedString_">AllocateCodeSection(nuint, uint, uint, LazyEncodedString)</a></dt>
+    <dd><p>Allocate a block of contiguous memory for use as code execution by the native code JIT engine</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SimpleJitMemoryAllocatorBase.AllocateDataSection.html#Ubiquity_NET_Llvm_OrcJITv2_SimpleJitMemoryAllocatorBase_AllocateDataSection_System_UIntPtr_System_UInt32_System_UInt32_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_">AllocateDataSection(nuint, uint, uint, LazyEncodedString, bool)</a></dt>
+    <dd><p>Allocate a block of contiguous memory for use as data by the native code JIT engine</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SimpleJitMemoryAllocatorBase.Dispose.html#Ubiquity_NET_Llvm_OrcJITv2_SimpleJitMemoryAllocatorBase_Dispose_System_Boolean_">Dispose(bool)</a></dt>
+    <dd><p>Abstract method that is implemented by derived types to perform the dispose operation</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SimpleJitMemoryAllocatorBase.FinalizeMemory.html#Ubiquity_NET_Llvm_OrcJITv2_SimpleJitMemoryAllocatorBase_FinalizeMemory_Ubiquity_NET_InteropHelpers_LazyEncodedString__">FinalizeMemory(out LazyEncodedString?)</a></dt>
+    <dd><p>Finalizes a previous allocation by applying page settings for the allocation</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SimpleJitMemoryAllocatorBase.ReleaseContext.html#Ubiquity_NET_Llvm_OrcJITv2_SimpleJitMemoryAllocatorBase_ReleaseContext">ReleaseContext()</a></dt>
+    <dd><p>Release the context for the memory. No further callbacks will occur for this allocator</p>
+</dd>
+  </dl>
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Llvm/OrcJITv2/SimpleJitMemoryAllocatorBase.cs/#L19" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.8-rc
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

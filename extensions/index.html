@@ -83,8 +83,8 @@
 <h1 id="about">About</h1>
 
 <p>Ubiquity.NET.Extensions contains general extensions for .NET. This is
-a bit of a <a href="https://www.merriam-webster.com/dictionary/grab%20bag">grab bag</a> of functionality used by
-but not actually part of multiple other Ubiquity.NET projects.</p>
+a bit of a <a href="https://www.merriam-webster.com/dictionary/grab%20bag">grab bag</a> of
+functionality used by but not actually part of multiple other Ubiquity.NET projects.</p>
 <h2 id="key-support">Key support</h2>
 <ul>
 <li>Computing a hash code for a ReadOnlySpan of bytes using
@@ -96,31 +96,32 @@ but not actually part of multiple other Ubiquity.NET projects.</p>
 </li>
 <li>MustUseReturnValueAttribute that is compatible with the <a href="https://github.com/mykolav/must-use-ret-val-fs">MustUseRetVal</a>
 package.</li>
-<li>StringNormalizer extensions to support converting line endings of strings
-for interoperability.</li>
+<li>StringNormalizer extensions to support converting line endings of strings for
+interoperability.</li>
 <li>Fluent style parameter value validation extensions.
 <ul>
-<li>These are useful when passing parameters to a function that produces a
-result that is fed to the base constructor. These are also useful in body
-expressions to validate input parameters.</li>
+<li>These are useful when passing parameters to a function that produces a result that is
+fed to the base constructor. These are also useful in body expressions to validate
+input parameters.</li>
 </ul>
 </li>
 <li>DictionaryBuilder to enable dictionary initializer style initialization of
 <code>ImmutableDictionary&lt;TKey, TValue&gt;</code> with significantly reduced overhead.
 <ul>
-<li>This leverages an <code>ImmutableDictionary&lt;TKey, TValue&gt;.Builder</code> under the hood to build the dictionary.
-When the <code>ToImmutable()</code> method is called the builder is converted to the immutable state without any
-overhead of a copy or re-construction of hash tables etc...</li>
+<li>This leverages an <code>ImmutableDictionary&lt;TKey, TValue&gt;.Builder</code> under the hood to build
+the dictionary. When the <code>ToImmutable()</code> method is called the builder is converted to
+the immutable state without any overhead of a copy or re-construction of hash tables
+etc...</li>
 </ul>
 </li>
 <li>KvpArrayBuilder to enable array initializer style initialization of
 <code>ImmutableArray&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;</code> with significantly reduced overhead.
 <ul>
-<li>This leverages an <code>ImmutableArray&lt;T&gt;.Builder</code> under the hood to build the array directly.
-When the <code>ToImmutable()</code> method is called the builder is converted to the immutable state without any
-overhead of a copy.</li>
-<li>Since this is an array and not a dictionary there is no overhead for allocating, initializing or copying
-any hash mapping for the keys.</li>
+<li>This leverages an <code>ImmutableArray&lt;T&gt;.Builder</code> under the hood to build the array
+directly. When the <code>ToImmutable()</code> method is called the builder is converted to the
+immutable state without any overhead of a copy.</li>
+<li>Since this is an array and not a dictionary there is no overhead for allocating,
+initializing or copying any hash mapping for the keys.</li>
 </ul>
 </li>
 </ul>
@@ -145,7 +146,7 @@ any hash mapping for the keys.</li>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

@@ -84,63 +84,67 @@
 
 <div class="WARNING">
 <h5>Warning</h5>
-<p>There is a fatal flaw in the current design of this support for an interactive
-runtime like Kaleidoscope thus far. It does NOT allow for re-defining a
-function. Once it is defined, you cannot define it again or an exception
-or application crash will occur. Hopefully a future variant of this sample
-will address tracking and removing that. See <a href="#special-notes-for-interactive-run-times">Special notes for interactive run-times</a>
+<p>There is a fatal flaw in the current design of this support for an interactive runtime
+like Kaleidoscope thus far. It does NOT allow for re-defining a function. Once it is
+defined, you cannot define it again or an exception or application crash will occur.
+This is handled in Kaleidoscope by setting an option in the <code>DynamicRuntimeState</code> to
+indicate that redefinition is not supported. This is then processed in the AST conversion
+to produce an error node. This reports the redefinition as an error in the input rather
+then an exception at runtime. Hopefully a future variant of this sample will address
+tracking and removing that. See <a href="#special-notes-for-interactive-run-times">Special notes for interactive run-times</a>
 for more details.</p>
 </div>
 <h1 id="7-kaleidoscope-extreme-lazy-jit">7. Kaleidoscope: Extreme Lazy JIT</h1>
-<p>In the previous chapters the code generation took an AST, converted it to LLVM IR, handed the IR
-to the JIT, which then generated the native code. For a top level anonymous expression that is
-pretty much all you need. But what if a function is defined but not used (yet or ever)? The
-process of generating the IR, and then subsequently the native code, is all wasted overhead in
-such a case. That's not really following through on the &quot;Just-In-Time&quot; part of the JIT. This
-chapter focuses on resolving that with truly lazy JIT that doesn't even generate the LLVM IR
-for a function until it is called for the first time.</p>
+<p>In the previous chapters the code generation took an AST, converted it to LLVM IR, handed
+the IR to the JIT, which then generated the native code. For a top level anonymous
+expression that is pretty much all you need. But what if a function is defined but not used
+(yet or ever)? The process of generating the IR, and then subsequently the native code, is
+all wasted overhead in such a case. That's not really following through on the
+&quot;Just-In-Time&quot; part of the JIT. This chapter focuses on resolving that with truly lazy JIT
+that doesn't even generate the LLVM IR for a function until it is called for the first time.</p>
 <h2 id="performance-trade-offs">Performance trade-offs</h2>
-<p>As with many things in software, there are trade-offs involved. In this case the trade-off is
-when you JIT compile vs. lazy compile. This choice is a major element to efficient use of a JIT.
-The more you have to JIT before anything can actually run the slower the application startup is.
-If you defer too much then the execution slows down as everything needs to compile code.
-Ultimately, there is no one &quot;right&quot; solution as many factors contribute to the results, including
-the level of optimizations applied during generation. (e.g. it might achieve better results to
-generate unoptimized code during startup, and later regenerate optimized versions of the most
-frequently used code.)</p>
-<p>The approach to balancing the trade-offs taken in this chapter is to eagerly compile top level
-expressions as it is obvious they are going to be called, and discarded afterwards. For function
-definitions, it isn't clear if the functions will or won't be called. While, the code generation
-could scan the function to find all functions it calls to generate them all at the same time -
-there is no guarantee that the input arguments to the function will go through a path that needs
-them all. Thus, for Kaleidoscope, function definitions are all lazy compiled on first use.</p>
+<p>As with many things in software, there are trade-offs involved. In this case the trade-off
+is when you JIT compile vs. lazy compile. This choice is a major element to efficient use of
+a JIT. The more you have to JIT before anything can actually run the slower the application
+startup is. If you defer too much then the execution slows down as everything needs to
+compile code. Ultimately, there is no one &quot;right&quot; solution as many factors contribute to the
+results, including the level of optimizations applied during generation. (e.g. it might
+achieve better results to generate unoptimized code during startup, and later regenerate
+optimized versions of the most frequently used code.)</p>
+<p>The approach to balancing the trade-offs taken in this chapter is to eagerly compile top
+level expressions as it is obvious they are going to be called, and discarded afterwards.
+For function definitions, it isn't clear if the functions will or won't be called. While,
+the code generation could scan the function to find all functions it calls to generate them
+all at the same time - there is no guarantee that the input arguments to the function will
+go through a path that needs them all. Thus, for Kaleidoscope, function definitions are all
+lazy compiled on first use.</p>
 <h2 id="general-concept-of-lazy-compilation">General Concept of Lazy Compilation</h2>
-<p>The general idea is that the language runtime registers every lazy JIT function with the JIT by
-name with a callback function to handle generating code for that function. This does two things
-in the JIT:</p>
+<p>The general idea is that the language runtime registers every lazy JIT function with the JIT
+by name with a callback function to handle generating code for that function. This does two
+things in the JIT:</p>
 <ol>
 <li>Adds the name to the function symbol table in the JIT</li>
-<li>Creates a stub implementation function in native code that will call back to the JIT when
-application code calls the function.</li>
+<li>Creates a stub implementation function in native code that will call back to the JIT
+when application code calls the function.</li>
 </ol>
 <p>The stub is implemented by the JIT to call back into the JIT in a way that includes the
-information needed to identify the correct function to generate code for. The JIT will do some
-of it's own internal setup and then call the code generation callback registered by the runtime
-code generator. This callback is what actually generates the LLVM IR, and ultimately the native
-code, for the function.</p>
+information needed to identify the correct function to generate code for. The JIT will do
+some of it's own internal setup and then call the code generation callback registered by the
+runtime code generator. This callback is what actually generates the LLVM IR, and ultimately
+the native code, for the function.</p>
 <p>Once the function is generated the generator uses the JIT to update the stub so that, in the
-future, it will just call to the generated function directly. One somewhat confusing aspect of
-this is that there are two symbols in the JIT for what is really only one function. One, is the
-stub that remains at a fixed location (to allow pointer to function patterns to work) the other
-is the JIT compiled actual implementation of the function. They can't both have the same name
-so the code generation for the implementation must use a unique name.</p>
+future, it will just call to the generated function directly. One somewhat confusing aspect
+of this is that there are two symbols in the JIT for what is really only one function. One,
+is the stub that remains at a fixed location (to allow pointer to function patterns to work)
+the other is the JIT compiled actual implementation of the function. They can't both have
+the same name so the code generation for the implementation must use a unique name.</p>
 <h2 id="code-changes-for-lazy-jit">Code changes for lazy JIT</h2>
 <h3 id="initialization">Initialization</h3>
-<p>The LLVM ORC JIT v2 uses a multi-layered system for materializing the IR and eventually the native
-executable code. The Kaleidoscope JIT includes transforms of IR modules to support setting the
-data layout for the module to match the JIT and also to run optimization passes on the module.
-To support lazy evaluation a few such components are needed for the code generator. These are
-setup in the constructor and destroyed in the Dispose method.</p>
+<p>The LLVM ORC JIT v2 uses a multi-layered system for materializing the IR and eventually the
+native executable code. The Kaleidoscope JIT includes transforms of IR modules to support
+setting the data layout for the module to match the JIT and also to run optimization passes
+on the module. To support lazy evaluation a few such components are needed for the code
+generator. These are setup in the constructor and destroyed in the Dispose method.</p>
 <pre><code class="lang-csharp" name="PrivateMembers">private Module? Module;
 private readonly DynamicRuntimeState RuntimeState;
 private readonly ThreadSafeContext ThreadSafeContext;
@@ -162,12 +166,12 @@ private readonly LazyCallThroughManager JitLCTM;
     ThreadSafeContext.Dispose();
 }
 </code></pre><h3 id="body-implementation">Body implementation</h3>
-<p>Since the lazy JIT registers the callback stub with the function's name when the actual function
-is generated it needs a new name for the backing body. So, we add a new helper method to
-effectively clone a FunctionDefinition AST node while renaming it. This only needs a shallow
-clone that changes the name so there isn't a lot of overhead for it. (Theoretically, this could
-be done with a readonly struct and 'with', such an optimization is left as an exercise for the
-reader 🤓)</p>
+<p>Since the lazy JIT registers the callback stub with the function's name when the actual
+function is generated it needs a new name for the backing body. So, we add a new helper
+method to effectively clone a FunctionDefinition AST node while renaming it. This only needs
+a shallow clone that changes the name so there isn't a lot of overhead for it.
+(Theoretically, this could be done with a readonly struct and 'with', such an optimization
+is left as an exercise for the reader 🤓)</p>
 <pre><code class="lang-csharp" name="CloneAndRenameFunction">[SuppressMessage( &quot;CodeQuality&quot;, &quot;IDE0051:Remove unused private members&quot;, Justification = &quot;Truly lazy JIT functionality for Windows is disabled for now...&quot; )]
 private static FunctionDefinition CloneAndRenameFunction( FunctionDefinition definition )
 {
@@ -186,14 +190,15 @@ private static FunctionDefinition CloneAndRenameFunction( FunctionDefinition def
     return implDefinition;
 }
 </code></pre>
-<p>The name used for the body is the original function name plus the suffix <code>$impl</code> tacked onto the
-end. This suffix was chosen as it includes characters not allowed within the Kaleidoscope
-language so there is no possibility of a name collision.</p>
+<p>The name used for the body is the original function name plus the suffix <code>$impl</code> tacked onto
+the end. This suffix was chosen as it includes characters not allowed within the
+Kaleidoscope language so there is no possibility of a name collision.</p>
 <h3 id="code-generation">Code generation</h3>
-<p>The next requirement is to change how we generate the functions. For an anonymous function the
-generation is pretty much the same. There's really no point in going through the process of
-setting up the lazy JIT when the next thing to do is get the address of the function and call it. For other definitions, though,
-things get different as they are selected for lazy JIT.</p>
+<p>The next requirement is to change how we generate the functions. For an anonymous function
+the generation is pretty much the same. There's really no point in going through the process
+of setting up the lazy JIT when the next thing to do is get the address of the function and
+call it. For other definitions, though, things get different as they are selected for lazy
+JIT.</p>
 <pre><code class="lang-csharp" name="Generate">public Value? Generate( IAstNode ast )
 {
     ArgumentNullException.ThrowIfNull( ast );
@@ -251,31 +256,30 @@ things get different as they are selected for lazy JIT.</p>
     }
 }
 </code></pre>
-<p>Function definitions for lazy JIT are first cloned and renamed, as discussed previously. Then a
-lazy module materializer is registered for the name of the function. This creates the stub
-function exported by the function's name with a callback that knows how to generate the LLVM IR
-for the function. The actual code generation call back is a local function that has captured the
-AST so it initializes a new module, generates the function using the visitor pattern to
-generate LLVM IR for the function into the freshly allocated module. (This is where keeping the
-code generation ignorant of the JIT comes in handy as the same code is called to generate a
-function into a module and doesn't need to care if it is eager or lazy)</p>
-<p>The JIT implementation will do the following after the generator
-callback returns:</p>
+<p>Function definitions for lazy JIT are first cloned and renamed, as discussed previously.
+Then a lazy module materializer is registered for the name of the function. This creates the
+stub function exported by the function's name with a callback that knows how to generate the
+LLVM IR for the function. The actual code generation call back is a local function that has
+captured the AST so it initializes a new module, generates the function using the visitor
+pattern to generate LLVM IR for the function into the freshly allocated module. (This is
+where keeping the code generation ignorant of the JIT comes in handy as the same code is
+called to generate a function into a module and doesn't need to care if it is eager or lazy)</p>
+<p>The JIT implementation will do the following after the generator callback returns:</p>
 <ol>
 <li>Add the returned module to the JIT</li>
 <li>Generate native code for the module</li>
 <li>Get the address of the implementation function</li>
-<li>Update the stub for the function with the address of the function instead of the internal
-callback.</li>
+<li>Update the stub for the function with the address of the function instead of the
+internal callback.</li>
 <li>return the address to the JIT engine so it can ultimately call the function and continue
 on it's merry way.</li>
 </ol>
 <h4 id="lazy-materializer">Lazy Materializer</h4>
-<p>The bulk of the work is in the ORCJIT v2 implementation however kaleidoscope must &quot;hook&quot; into
-the support there to provide a materializer that can convert the AST into an LLVM IR. Technically,
-it provides an LLVM module for a symbol (the body implementation name). The JIT couldn't care
-less about the AST. The materializer will generate the IR for a given symbol by processing the
-AST into a module and providing that to the JIT.</p>
+<p>The bulk of the work is in the ORCJIT v2 implementation however kaleidoscope must &quot;hook&quot;
+into the support there to provide a materializer that can convert the AST into an LLVM IR.
+Technically, it provides an LLVM module for a symbol (the body implementation name). The JIT
+couldn't care less about the AST. The materializer will generate the IR for a given symbol
+by processing the AST into a module and providing that to the JIT.</p>
 <pre><code class="lang-csharp" name="AddLazyMaterializer">        private void AddLazyMaterializer( FunctionDefinition definition )
         {
             FunctionDefinition implDefinition = CloneAndRenameFunction( definition );
@@ -369,46 +373,49 @@ AST into a module and providing that to the JIT.</p>
 </code></pre><h2 id="conclusion">Conclusion</h2>
 <p>Implementing Lazy JIT support with Ubiquity.NET.Llvm is a bit more complex, but still not
 significant. It took almost as many words to describe then actual lines of code. Efficiently,
-supporting lazy JIT is a much more complex matter. There are trade-offs doing things lazy, in
-particular the application can stall for a period, while the system generates new code to run
-&quot;on the fly&quot;. Optimizations, when fully enabled, add additional time to the code generation.
-While, for some applications, it may be obvious whether these factors matter or not, in general
-it's not something that can be known, thus the quest for optimal efficiency includes decisions
-on eager vs lazy JIT as well as optimized JIT or not. This can include lazy JIT with minimal
-optimization during startup of an app. Once things are up and going the engine can come back
-to re-generate the functions with full optimization. All sorts of possibilities exist, but the
-basics of how the lazy and eager generation works doesn't change no matter what approach a given
-language or runtime wants to use. For most DSLs like Kaleidoscope these trade-offs are not
-generally relevant (Or even necessary) as the fundamental point is to simplify expression of a
-particular domain problem in domain terminology. Performance trade-offs are often not that
-important for such cases. (And can occasionally get in the way - See <a href="#special-notes-for-interactive-run-times">Special notes for
-interactive run-times</a> below for more details)</p>
+supporting lazy JIT is a much more complex matter. There are trade-offs doing things lazy,
+in particular the application can stall for a period, while the system generates new code to
+run &quot;on the fly&quot;. Optimizations, when fully enabled, add additional time to the code
+generation. While, for some applications, it may be obvious whether these factors matter or
+not, in general it's not something that can be known, thus the quest for optimal efficiency
+includes decisions on eager vs lazy JIT as well as optimized JIT or not. This can include
+lazy JIT with minimal optimization during startup of an app. Once things are up and going
+the engine can come back to re-generate the functions with full optimization. All sorts of
+possibilities exist, but the basics of how the lazy and eager generation works doesn't
+change no matter what approach a given language or runtime wants to use. For most DSLs like
+Kaleidoscope these trade-offs are not generally relevant (Or even necessary) as the
+fundamental point is to simplify expression of a particular domain problem in domain
+terminology. Performance trade-offs are often not that important for such cases. (And can
+occasionally get in the way - See <a href="#special-notes-for-interactive-run-times">Special notes for interactive run-times</a>
+below for more details)</p>
 <h3 id="special-notes-for-interactive-run-times">Special notes for interactive run-times</h3>
-<p>It turns out that re-definition of a lazy JIT'd function is a rather complex problem involving
-a lot of moving pieces. The IR module for the AST is lazy generated asynchronously and added to
-the JIT AFTER production by the materialization by the infrastructure. That is, outside of the
-driving application code control so it can't specify a resource tracker. Additionally, there is
-no resource tracker for a materialization unit that can remove the unit BEFORE it is run.</p>
+<p>It turns out that re-definition of a lazy JIT'd function is a rather complex problem
+involving a lot of moving pieces. The IR module for the AST is lazy generated asynchronously
+and added to the JIT AFTER production by the materialization by the infrastructure. That is,
+outside of the driving application code control so it can't specify a resource tracker.
+Additionally, there is no resource tracker for a materialization unit that can remove the
+unit BEFORE it is run.</p>
 <p>There are at least three states of a function definition to deal with:</p>
 <ol>
 <li>Not defined anywhere yet (First occurrence)</li>
 <li>Materializer Created, but not yet materialized</li>
 <li>Already materialized.</li>
 </ol>
-<p>Tracking of each is different and thus handling removal will require different implementations.
-All of which requires thread synchronization as the JIT could materialize the function at ANY
-point along the way! So it is possible that while trying to remove a definition it transitions
-from #2 to #3. Even if code for removal looked at the state first it's a classic
-<a href="https://en.wikipedia.org/wiki/Time-of-check_to_time-of-use">TOCTOU</a> problem. There is no
-mechanism in the standard OrcJIT v2 for this scenario. It is arguable what the validity of such
-a thing is for an interactive language/runtime. For any sufficiently complex thing there's at
-least two high level default questions to ask:</p>
+<p>Tracking of each is different and thus handling removal will require different
+implementations. All of which requires thread synchronization as the JIT could materialize
+the function at ANY point along the way! So it is possible that while trying to remove a
+definition it transitions from #2 to #3. Even if code for removal looked at the state first
+it's a classic <a href="https://en.wikipedia.org/wiki/Time-of-check_to_time-of-use">TOCTOU</a> problem.
+There is no mechanism in the standard OrcJIT v2 for this scenario. It is arguable what the
+validity of such a thing is for an interactive language/runtime. For any sufficiently
+complex thing there's at least two high level default questions to ask:</p>
 <ol>
-<li>Is it worth the cost of implementation?</li>
 <li>Do we even know HOW to do it yet?</li>
+<li>Is it worth the cost of implementation?</li>
 </ol>
 <p>For an interactive language/runtime like Kaleidoscope, the answer to both thus far is a
-hard 'NO'. This sort of support is best for non-interactive run-times like .NET or Java.</p>
+hard 'NO'. This sort of support is best for non-interactive run-times like .NET or Java
+where redefinition isn't legal syntax and caught in the parser/AST transforms.</p>
 
 </article>
 
@@ -430,7 +437,7 @@ hard 'NO'. This sort of support is best for non-interactive run-times like .NET 
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

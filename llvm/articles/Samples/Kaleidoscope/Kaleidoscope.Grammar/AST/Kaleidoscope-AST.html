@@ -82,11 +82,12 @@
         <article data-uid="Kaleidoscope-AST">
 <h1 id="kaleidoscope-abstract-syntax-tree">Kaleidoscope Abstract Syntax Tree</h1>
 
-<p>As with many language parsing systems Kaleidoscope leverages an Abstract Syntax Tree (AST) to simplify
-generating code from the parsed language. Each type of node in the tree implements the IAstNode interface</p>
-<p>This interface provides the basic properties of any node in the tree for common uses. The Kaleidoscope
-language is a simple one and, therefore, has only a few kinds of nodes. The AST consist of the following
-basic categories of nodes:</p>
+<p>As with many language parsing systems Kaleidoscope leverages an Abstract Syntax Tree (AST)
+to simplify generating code from the parsed language. Each type of node in the AST
+implements the <code>IAstNode</code> interface</p>
+<p>This interface provides the basic properties of any node in the tree for common uses. The
+Kaleidoscope language is a simple one and, therefore, has only a few kinds of nodes. The AST
+consist of the following basic categories of nodes:</p>
 <ul>
 <li><a href="#root-node">Root Node</a>
 <ul>
@@ -125,8 +126,8 @@ support for all nodes.</p>
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -183,16 +184,16 @@ namespace Kaleidoscope.Grammar.AST
     }
 }
 </code></pre><h2 id="function-definition">Function Definition</h2>
-<p>FunctionDefinition, as the name implies, contains the definition of a function. This includes the signature
-and the full body of the function.</p>
+<p>FunctionDefinition, as the name implies, contains the definition of a function. This
+includes the signature and the full body of the function.</p>
 <pre><code class="lang-csharp" name="FunctionDefinition">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -304,8 +305,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -438,10 +439,10 @@ namespace Kaleidoscope.Grammar.AST
     }
 }
 </code></pre><h2 id="variable-declaration">Variable Declaration</h2>
-<p>IVariableDeclaration is implemented by local variable declarations and parameter declarations. The
-interface abstracts the differences between the two types of variable declarations for most common
-cases. Most code generation or AST consumers don't care about the differences (i.e. Parameters have
-an index but locals don't)</p>
+<p>IVariableDeclaration is implemented by local variable declarations and parameter
+declarations. The interface abstracts the differences between the two types of variable
+declarations for most common cases. Most code generation or AST consumers don't care about
+the differences (i.e. Parameters have an index but locals don't)</p>
 <pre><code class="lang-csharp" name="IVariableDeclaration">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
@@ -472,8 +473,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -564,8 +565,8 @@ namespace Kaleidoscope.Grammar.AST
 
 using System.Collections.Generic;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -623,9 +624,10 @@ namespace Kaleidoscope.Grammar.AST
     }
 }
 </code></pre><h2 id="expression">Expression</h2>
-<p>Kaleidoscope is a functional language, all expressions produce a value, even if it is always zero. There
-are no statements in the language. Expressions form the core of the language and the bulk of the AST.</p>
-<p>The IExpression interface forms the common interface for all AST expression nodes</p>
+<p>Kaleidoscope is a functional language, all expressions produce a value, even if it is always
+zero. There are no statements in the language. Expressions form the core of the language and
+the bulk of the AST.</p>
+<p>The <code>IExpression</code> interface forms the common interface for all AST expression nodes</p>
 <pre><code class="lang-csharp" name="IExpression">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
@@ -645,24 +647,24 @@ namespace Kaleidoscope.Grammar.AST
     }
 }
 </code></pre>
-<p>While this is an empty interface, it serves to distinguish between AST nodes that are not expressions.
-Thus providing some type safety for consumers. (i.e. it makes no sense to have a prototype as the operand
-for a binary operator so only nodes that implement the IExpression tag interface are allowed) This isn't
-a common or generally recommended pattern for interfaces but makes sense here since some form of differentiation
-is needed.</p>
+<p>While this is an empty interface, it serves to distinguish between AST nodes that are not
+expressions. Thus providing some type safety for consumers. (i.e. it makes no sense to have
+a prototype as the operand for a binary operator so only nodes that implement the
+<code>IExpression</code> tag interface are allowed) This isn't a common or generally recommended
+pattern for interfaces but makes sense here since some form of differentiation is needed.</p>
 <h3 id="unary-operator">Unary Operator</h3>
-<p>Unary operators are all user defined, so the AST simply represents them as a Function Definition. No
-additional node types are needed for unary operators in the AST.</p>
+<p>Unary operators are all user defined, so the AST simply represents them as a function
+definition. No additional node types are needed for unary operators in the AST.</p>
 <h3 id="binary-operator">Binary Operator</h3>
-<p>BinaryOperatorExpression covers the built-in operators, any user defined binary operators are transformed
-to a function declaration/definition</p>
+<p>BinaryOperatorExpression covers the built-in operators, any user defined binary operators
+are transformed to a function declaration/definition</p>
 <pre><code class="lang-csharp" name="BinaryOperatorExpression">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -768,8 +770,8 @@ namespace Kaleidoscope.Grammar.AST
     }
 }
 </code></pre>
-<p>The properties are fairly self explanatory, including the kind of operator and the left and right sides of the
-operator. The normal code generator pattern for the binary operators is:</p>
+<p>The properties are fairly self explanatory, including the kind of operator and the left and
+right sides of the operator. The normal code generator pattern for the binary operators is:</p>
 <ol>
 <li>Generate code for the left side expression to a new value</li>
 <li>Generate code for the right side expression to a new value</li>
@@ -777,23 +779,25 @@ operator. The normal code generator pattern for the binary operators is:</p>
 <li>Return the result</li>
 </ol>
 <h4 id="assignment">Assignment</h4>
-<p>Assignment is a special kind of binary operator to represent &quot;store&quot; semantics for a variable. (e.g. mutable variables).
-Code generation for the assignment must handle the left side operand with a slightly different pattern. In particular,
-the left hand side is not an evaluated expression. Instead, it is the variable to assign the right hand value to. Thus,
-there isn't anything to evaluate for the left hand side as it is always a Variable Reference for the variable to assign
-the value to.</p>
+<p>Assignment is a special kind of binary operator to represent &quot;store&quot; semantics for a
+variable. (e.g. mutable variables). Code generation for the assignment must handle the left
+side operand with a slightly different pattern. In particular, the left hand side is not an
+evaluated expression. Instead, it is the variable to assign the right hand value to. Thus,
+there isn't anything to evaluate for the left hand side as it is always a Variable Reference
+for the variable to assign the value to.</p>
 <h3 id="function-call">Function Call</h3>
-<p>Calls to functions (extern, user defined operators, or user defined functions) are represented in the AST as a
-FunctionCallExpression. The FunctionCallExpression contains the declaration of the function to call along with
-expressions for all of the arguments to the function.</p>
+<p>Calls to functions (extern, user defined operators, or user defined functions) are
+represented in the AST as a FunctionCallExpression. The FunctionCallExpression contains the
+declaration of the function to call along with expressions for all of the arguments to the
+function.</p>
 <pre><code class="lang-csharp" name="FunctionCallExpression">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 using System.Linq;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -856,15 +860,16 @@ namespace Kaleidoscope.Grammar.AST
     }
 }
 </code></pre><h3 id="variable-reference">Variable Reference</h3>
-<p>A variable reference is used to refer to a variable. In most cases this represents implicit &quot;load&quot; semantics for a
-variable. However, when used as the left hand side of an assignment operator, it has &quot;store&quot; semantics.</p>
+<p>A variable reference is used to refer to a variable. In most cases this represents implicit
+&quot;load&quot; semantics for a variable. However, when used as the left hand side of an assignment
+operator, it has &quot;store&quot; semantics.</p>
 <pre><code class="lang-csharp" name="VariableReferenceExpression">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -923,15 +928,16 @@ namespace Kaleidoscope.Grammar.AST
     }
 }
 </code></pre><h3 id="conditional">Conditional</h3>
-<p>In Kaleidoscope conditional expressions follow the familiar if/then/else form, even though they are really more
-like the ternary operator expression <code>( x ? y : z )</code> in C and related languages.</p>
+<p>In Kaleidoscope conditional expressions follow the familiar if/then/else form, even though
+they are really more like the ternary operator expression <code>( x ? y : z )</code> in C and related
+languages.</p>
 <pre><code class="lang-csharp" name="ConditionalExpression">// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Collections.Generic;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -1025,8 +1031,8 @@ namespace Kaleidoscope.Grammar.AST
 
 using System.Collections.Generic;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -1112,8 +1118,8 @@ namespace Kaleidoscope.Grammar.AST
 using System.Collections.Generic;
 using System.Text;
 
+using Ubiquity.NET.Extensions;
 using Ubiquity.NET.Runtime.Utils;
-using Ubiquity.NET.TextUX;
 
 namespace Kaleidoscope.Grammar.AST
 {
@@ -1205,7 +1211,7 @@ namespace Kaleidoscope.Grammar.AST
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

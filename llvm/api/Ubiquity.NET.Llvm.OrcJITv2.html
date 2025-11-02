@@ -113,6 +113,11 @@ Classes
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.GlobalMemoryAllocatorBase.html">GlobalMemoryAllocatorBase</a></dt>
+      <dd><p>Base class for a Global allocator for use as an Object layer in OrcJITv2</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.LLJit.html">LLJit</a></dt>
       <dd><p>ORC v2 LLJit instance</p>
 </dd>
@@ -155,6 +160,11 @@ Classes
     <dl class="jumplist">
       <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.ResourceTracker.html">ResourceTracker</a></dt>
       <dd><p>LLVM ORC JIT v2 Resource tracker</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.SimpleJitMemoryAllocatorBase.html">SimpleJitMemoryAllocatorBase</a></dt>
+      <dd><p>Base class for a simple MCJIT style memory allocator</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -223,6 +233,15 @@ Structs
     <h3 id="interfaces">
 Interfaces
 </h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.IJitMemoryAllocator.html">IJitMemoryAllocator</a></dt>
+      <dd></dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.IMaterializerCallbacks.html">IMaterializerCallbacks</a></dt>
+      <dd><p>Interface for a type that receives call backs for materialization (usually a type derived from <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.CustomMaterializationUnit.html">CustomMaterializationUnit</a>)</p>
+</dd>
+    </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.IOrcJit.html">IOrcJit</a></dt>
       <dd><p>Interface for an LLVM OrcV2 JIT</p>
@@ -295,7 +314,7 @@ Delegates
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

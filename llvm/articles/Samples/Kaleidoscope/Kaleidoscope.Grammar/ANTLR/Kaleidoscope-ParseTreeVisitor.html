@@ -82,12 +82,14 @@
         <article data-uid="Kaleidoscope-ParseTreeVisitor">
 <h1 id="kaleidoscope-parse-tree-visitors">Kaleidoscope Parse Tree Visitors</h1>
 
-<p>The Ubiquity.NET.Llvm Kaleidoscope tutorials all use ANTLR4 to parse the Kaleidoscope language When ANTLR processes the
-language grammar description to generate the lexer and parser it also generates a base &quot;visitor&quot; class for applying
-the <a href="https://en.wikipedia.org/wiki/Visitor_pattern">Visitor pattern</a> to the parse tree. This is the primary mechanism
-for generating the <a class="xref" href="../AST/Kaleidoscope-AST.html">AST</a> for these examples. The AST transformation classes derive from the ANTLR
-generated base visitor class.</p>
-<p>There are only a few top level rules in the grammar to consider (although each has many sub rules).</p>
+<p>The Ubiquity.NET.Llvm Kaleidoscope tutorials all use ANTLR4 to parse the Kaleidoscope
+language When ANTLR processes the grammar description to generate the lexer and parser it
+also generates a base &quot;visitor&quot; class for applying the <a href="https://en.wikipedia.org/wiki/Visitor_pattern">Visitor pattern</a>
+to the parse tree. This is the primary mechanism for generating the <a class="xref" href="../AST/Kaleidoscope-AST.html">AST</a>
+for these examples. The AST transformation classes derive from the ANTLR generated base
+visitor class.</p>
+<p>There are only a few top level rules in the grammar to consider (although each has many
+sub-rules).</p>
 <pre><code class="lang-antlr" name="repl">repl
     : DEF prototype expression[0] # FunctionDefinition
     | EXTERN prototype            # ExternalDeclaration
@@ -96,16 +98,18 @@ generated base visitor class.</p>
     ;
 
 </code></pre>
-<p>The parse tree consist of a tree of nodes generated for each rule in the grammar. The rule classes are generated at
-build time when the antlr grammar file is parsed. The C# target for ANTLR4 will generate the rule classes with the
-partial keyword, allowing the application code to add application specific support to the rule classes, and thus to
-the parse tree. For Kaleidoscope, this is used to provide simpler access to the information parsed from the Kaleidoscope
-language input simplifying generation of the AST. For simplicity and clarity of understanding each of the extended partial
-classes are placed into their own source file.</p>
-<p>Generally speaking, the use of ANTLR and the ParseTree is a hidden internal implementation detail of the Ubiquity.NET.Llvm
-Kaleidoscope tutorials. The actual code generation deals only with the AST so the parsing could be done with some
-other technology. (Though with all the functionality that ANTLR4 provides it would take a strong argument to justify
-something else)</p>
+<p>The parse tree consist of a tree of nodes generated for each rule in the grammar. The rule
+classes are generated at build time when the ANTLR grammar file is parsed. The C# target for
+ANTLR4 will generate the rule classes with the partial keyword, allowing the application
+code to add application specific support to the rule classes, and thus to the parse tree.
+For Kaleidoscope, this is used to provide simpler access to the information parsed from the
+Kaleidoscope language input simplifying generation of the AST. For simplicity and clarity of
+understanding each of the extended partial classes are placed into their own source file.</p>
+<p>Generally speaking, the use of ANTLR and the ParseTree is a hidden internal implementation
+detail of the Ubiquity.NET.Llvm Kaleidoscope tutorials. The actual code generation deals
+only with the AST so the parsing could be done with some other technology. (Though with all
+the functionality that ANTLR4 provides it would take a strong argument to justify something
+else)</p>
 
 </article>
 
@@ -127,7 +131,7 @@ something else)</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

@@ -94,11 +94,9 @@ release the resource.</li>
 This occurs when a child of a resource contains a reference to the parent. In
 such a case the handle should be considered like an alias and not disposed.</li>
 </ol>
-<p>The Handle implementations in Ubiquity.NET.Llvm follow consistent patterns for
-implementing each form of handle. All handle types are generated from the native C++
-headers. Thus, they area source only NuGet package built along with the native
-extended C API library.
-Ultimately, the handles are reduced to two forms:</p>
+<p>The Handle implementations in Ubiquity.NET.Llvm follow consistent patterns for implementing
+each form of handle. All handle types are generated from the native C++ headers contained in
+the <code>Ubiquity.NET.LibLLVM</code> package. Ultimately, the handles are reduced to two forms:</p>
 <ol>
 <li>Requires caller to release them
 <ul>
@@ -114,41 +112,43 @@ Ultimately, the handles are reduced to two forms:</p>
 </ol>
 <div class="NOTE">
 <h5>Note</h5>
-<p>The generated sources are not useful outside of the <code>Ubiquity.NET.Llvm.Interop</code> as
-they use classes within that as a base class. The use of code generation for the
-handles in a different repo is a bit fragile as the  generated handles are derived
-from and depend on support in a different consuming repository. This is a result of
-the historical split of the native code libraries. The build of that, takes a MUCH
-longer time AND requires distinct runners for each RID supported. While there is
-thinking about how to unify these repositories, that isn't done yet. The focus is
-on getting the support for LLVM20.x and especially the JIT support. [It's been a
-long run with LLVM10 as the only option.]</p>
+<p>The generated sources are not useful outside of the <code>Ubiquity.NET.Llvm.Interop</code> as they
+use classes within that as a base class. These are generated manually via the
+<code>Generate-HandleWrappers.ps1</code> script. This is done once for any updates to the LibLLVM
+package to ensure the handles are kept up to date with the underlying native library.</p>
 </div>
 <h3 id="contextual-handles-and-aliases">Contextual handles and Aliases</h3>
-<p>These handles are never manually released or disposed, though releasing their containers will
-make them invalid. The general pattern for implementing such handles is to use a generated
-struct that is marked as implementing the <code>IContextHandle&lt;THandle&gt;</code> interface. This interface
-is ONLY used during marshalling where the concrete type <code>THandle</code> is known and therefore does
-NOT require any boxing. The struct is essentially a strongly typed alias for an nint value.
-Contiguous sequences of these handles are re-interpret castable to a sequence of nint. (The
-interop support uses this for efficient marshalling of arrays.)</p>
+<p>These handles are never manually released or disposed, though releasing their containers
+will make them invalid. The general pattern for implementing such handles is to use a
+generated struct that is marked as implementing the <code>IContextHandle&lt;THandle&gt;</code> interface.
+This interface is ONLY used during marshalling where the concrete type <code>THandle</code> is known
+and therefore does NOT require any boxing. The struct is essentially a strongly typed alias
+for an nint value. Contiguous sequences of these handles are re-interpret castable to a
+sequence of nint. (The interop support uses this for efficient marshalling of arrays.)</p>
 <h3 id="global-handles">Global Handles</h3>
-<p>Global handles require the caller to explicitly release the resources. In
-Ubiquity.NET.Llvm.Interop these are managed with the .NET <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.runtime.interopservices.safehandle">SafeHandle</a>
-types through an LLVM interop specific derived type <code>GlobalHandleBase</code>. Since these types are
-derived from a <code>SafeHandle</code> they are cleaned up with the standard .NET <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a>.</p>
-<p>All resource handles in <code>Ubiquity.NET.Llvm,Interop</code> requiring explicit release are handled consistently
-using the generated handle types as a distinct type derived from <code>GlobalHandleBase</code></p>
+<p>Global handles require the caller to explicitly release the resources. These types all
+implement <code>IDisposable</code> even though they are value types. This ensures a consistency of the
+destruction at the API level. It's ALWAYS done via a call to the <code>Dispose()</code> method. Since
+these handles are value types they are immutable and the <code>Dispose()</code> method is not, and
+cannot be idempotent. This is generally handled in wrapper classes that ARE mutable and
+replace the wrapped handle with a default value on <code>Dispose()</code> or when &quot;moved&quot; (usually to
+native code) IFF, the wrapper supports &quot;move&quot; semantics then the <code>Dispose()</code> call is
+idempotent. Calling Dispose() may be a NOP. This ensures that applications need not worry
+about move semantics and just call <code>Dispose()</code> [Usually implicitly via a <code>using</code> expression]
+Thus, even if an exception occured and the move didn't complete, the resource is properly
+disposed of.</p>
+<p>All resource handles in <code>Ubiquity.NET.Llvm,Interop</code> requiring explicit release are handled
+consistently using the generated handle types as a distinct type implementing <code>IDisposable</code></p>
 <p>Global handles that also have an alias include a declaration of the alias type and allow
 conversion to the unowned form of the handle.</p>
 <h3 id="global-alias-handles">Global Alias handles</h3>
-<p>Global alias handles are a specialized form of global handles where they do not participate in
-ownership control/release. These are commonly used when a child of a global container exposes
-a property that references the parent container. In such cases the reference retrieved from the
-child shouldn't be used to destroy the parent when no longer used.</p>
+<p>Global alias handles are a specialized form of global handles where they do not participate
+in ownership control/release. These are commonly used when a child of a global container
+exposes a property that references the parent container. In such cases the reference
+retrieved from the child shouldn't be used to destroy the parent when no longer used.</p>
 <p>In Ubiquity.NET.Llvm.Interop this is represented as an unowned context handle, that is alias
-handles are the same as a context handle. There is no way to convert from an unowned alias to
-an owned global handle (The other way around is allowed and supported)</p>
+handles are the same as a context handle. There is no way to convert from an unowned alias
+to an owned global handle (The other way around is allowed and supported)</p>
 
 </article>
 
@@ -170,7 +170,7 @@ an owned global handle (The other way around is allowed and supported)</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

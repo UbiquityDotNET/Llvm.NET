@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_" data-uid="Ubiquity.NET.CommandLine.ArgsParsing.InvokeDefaultOptions*" class="text-break">
-Method InvokeDefaultOptions  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L76"><i class="bi bi-code-slash"></i></a>
+Method InvokeDefaultOptions  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L68"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -114,9 +114,9 @@ Method InvokeDefaultOptions  <a class="header-action link-secondary" title="View
 
 <a id="Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_" data-uid="Ubiquity.NET.CommandLine.ArgsParsing.InvokeDefaultOptions*"></a>
 
-<h3 id="Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_TextUX_IDiagnosticReporter_" data-uid="Ubiquity.NET.CommandLine.ArgsParsing.InvokeDefaultOptions(System.CommandLine.ParseResult,Ubiquity.NET.CommandLine.CmdLineSettings,Ubiquity.NET.TextUX.IDiagnosticReporter)">
+<h3 id="Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_CommandLine_IDiagnosticReporter_" data-uid="Ubiquity.NET.CommandLine.ArgsParsing.InvokeDefaultOptions(System.CommandLine.ParseResult,Ubiquity.NET.CommandLine.CmdLineSettings,Ubiquity.NET.CommandLine.IDiagnosticReporter)">
   InvokeDefaultOptions(ParseResult, CmdLineSettings, IDiagnosticReporter)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L68"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Invokes default options (<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.commandline.help.helpoption">HelpOption</a> or <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.commandline.versionoption">VersionOption</a>)</p>
@@ -135,7 +135,7 @@ Method InvokeDefaultOptions  <a class="header-action link-secondary" title="View
   <dt><code>settings</code> <a class="xref" href="Ubiquity.NET.CommandLine.CmdLineSettings.html">CmdLineSettings</a></dt>
   <dd><p>settings to determine if enabled (optimizes implementation to a skip if none set)</p>
 </dd>
-  <dt><code>diagnosticReporter</code> <a class="xref" href="../../TextUX/api/Ubiquity.NET.TextUX.IDiagnosticReporter.html">IDiagnosticReporter</a></dt>
+  <dt><code>diagnosticReporter</code> <a class="xref" href="Ubiquity.NET.CommandLine.IDiagnosticReporter.html">IDiagnosticReporter</a></dt>
   <dd><p>Reporter to use to report any diagnostics (Including the &quot;output&quot; of the option)</p>
 </dd>
 </dl>
@@ -153,7 +153,7 @@ Method InvokeDefaultOptions  <a class="header-action link-secondary" title="View
 
 
 
-<h4 class="section" id="Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_TextUX_IDiagnosticReporter__remarks">Remarks</h4>
+<h4 class="section" id="Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_CommandLine_IDiagnosticReporter__remarks">Remarks</h4>
 <div class="markdown level1 remarks"><p>The results of invoking defaults is a tuple of a flag indicating if the app should exit - default command handled,
 and the exit code for the application. The exit code is undefined if the flag indicates the app should not exit (e.g., not
 handled). If it is defined, then that is what the app should return. It may be 0 if the command had no errors. But if there
@@ -166,7 +166,7 @@ was an error with the execution of the default option</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L76" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L68" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -182,7 +182,7 @@ was an error with the execution of the default option</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

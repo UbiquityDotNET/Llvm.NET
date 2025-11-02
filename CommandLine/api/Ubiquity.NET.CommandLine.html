@@ -86,6 +86,13 @@
   <div class="markdown level0 conceptual"></div>
   <div class="markdown level0 remarks"></div>
 
+    <h3 id="namespaces">
+Namespaces
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.CommandLine.InterpolatedStringHandlers.html">Ubiquity.NET.CommandLine.InterpolatedStringHandlers</a></dt>
+      <dd></dd>
+    </dl>
     <h3 id="classes">
 Classes
 </h3>
@@ -100,8 +107,33 @@ Classes
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.CommandLine.ArgumentExceptionReporter.html">ArgumentExceptionReporter</a></dt>
+      <dd><p>Implementation of <a class="xref" href="Ubiquity.NET.CommandLine.IDiagnosticReporter.html">IDiagnosticReporter</a> that throws <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a> for any errors reported.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="Ubiquity.NET.CommandLine.CmdLineSettings.html">CmdLineSettings</a></dt>
       <dd><p>Contains settings for parsing a command line</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.CommandLine.ColoredConsoleReporter.html">ColoredConsoleReporter</a></dt>
+      <dd><p>Implementation of <a class="xref" href="Ubiquity.NET.CommandLine.IDiagnosticReporter.html">IDiagnosticReporter</a> that uses colorized console output</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.CommandLine.ConsoleReporter.html">ConsoleReporter</a></dt>
+      <dd><p>Implementation of <a class="xref" href="Ubiquity.NET.CommandLine.IDiagnosticReporter.html">IDiagnosticReporter</a> that reports messages to a <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.console">Console</a></p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.CommandLine.DiagnosticMessageCollection.html">DiagnosticMessageCollection</a></dt>
+      <dd><p>Reporter that collects diagnostic information without reporting it in any UI/UX</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.CommandLine.DiagnosticReporterExtensions.html">DiagnosticReporterExtensions</a></dt>
+      <dd><p>Extensions to <a class="xref" href="Ubiquity.NET.CommandLine.IDiagnosticReporter.html">IDiagnosticReporter</a> for specific message levels</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -114,6 +146,11 @@ Classes
       <dd><p>Utility class to provide extensions for validation of options and arguments</p>
 </dd>
     </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.CommandLine.TextWriterReporter.html">TextWriterReporter</a></dt>
+      <dd><p>Base class for reporting diagnostics via an instance of <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.textwriter">TextWriter</a></p>
+</dd>
+    </dl>
     <h3 id="structs">
 Structs
 </h3>
@@ -122,12 +159,22 @@ Structs
       <dd><p>Results of invoking the default handlers for <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.commandline.help.helpoption">HelpOption</a> or <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.commandline.versionoption">VersionOption</a></p>
 </dd>
     </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.CommandLine.DiagnosticMessage.html">DiagnosticMessage</a></dt>
+      <dd><p>Diagnostic message for reporting diagnostics as part of end-user facing experience (UX)</p>
+</dd>
+    </dl>
     <h3 id="interfaces">
 Interfaces
 </h3>
     <dl class="jumplist">
       <dt><a class="xref" href="Ubiquity.NET.CommandLine.ICommandLineOptions-1.html">ICommandLineOptions&lt;T&gt;</a></dt>
       <dd><p>Interface for a root command in command line parsing</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.CommandLine.IDiagnosticReporter.html">IDiagnosticReporter</a></dt>
+      <dd><p>Interface for UX message reporting</p>
 </dd>
     </dl>
     <h3 id="enums">
@@ -141,6 +188,11 @@ Enums
     <dl class="jumplist">
       <dt><a class="xref" href="Ubiquity.NET.CommandLine.DefaultOption.html">DefaultOption</a></dt>
       <dd><p>Flags to determine the default Options for an <a class="xref" href="Ubiquity.NET.CommandLine.AppControlledDefaultsRootCommand.html">AppControlledDefaultsRootCommand</a></p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Ubiquity.NET.CommandLine.MsgLevel.html">MsgLevel</a></dt>
+      <dd><p>Tool Message category</p>
 </dd>
     </dl>
 
@@ -163,7 +215,7 @@ Enums
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

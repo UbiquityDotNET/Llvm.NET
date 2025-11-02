@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Llvm_OrcJITv2_ObjectLayer" data-uid="Ubiquity.NET.Llvm.OrcJITv2.ObjectLayer" class="text-break">
-Class ObjectLayer  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Llvm/OrcJITv2/ObjectLayer.cs/#L9"><i class="bi bi-code-slash"></i></a>
+Class ObjectLayer  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Llvm/OrcJITv2/ObjectLayer.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -97,7 +97,7 @@ Class ObjectLayer  <a class="header-action link-secondary" title="View source" h
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class ObjectLayer : IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class ObjectLayer : DisposableObject, IDisposable</code></pre>
   </div>
 
 
@@ -107,6 +107,7 @@ Class ObjectLayer  <a class="header-action link-secondary" title="View source" h
     <dt>Inheritance</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.DisposableObject.html">DisposableObject</a></div>
       <div><span class="xref">ObjectLayer</span></div>
     </dd>
   </dl>
@@ -118,10 +119,22 @@ Class ObjectLayer  <a class="header-action link-secondary" title="View source" h
     </dd>
   </dl>
 
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.GlobalMemoryAllocatorBase.html">GlobalMemoryAllocatorBase</a></div>
+    </dd>
+  </dl>
 
   <dl class="typelist inheritedMembers">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DisposableObject.Dispose.html#Ubiquity_NET_Llvm_DisposableObject_Dispose">DisposableObject.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.DisposableObject.IsDisposed.html#Ubiquity_NET_Llvm_DisposableObject_IsDisposed">DisposableObject.IsDisposed</a>
+    </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
@@ -135,6 +148,9 @@ Class ObjectLayer  <a class="header-action link-secondary" title="View source" h
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
     </div>
     <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
     </div>
     <div>
@@ -145,6 +161,12 @@ Class ObjectLayer  <a class="header-action link-secondary" title="View source" h
 
 
 
+  <h2 id="Ubiquity_NET_Llvm_OrcJITv2_ObjectLayer_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>Since instances of an Object Linking layer are ONLY ever created by <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.ObjectLayerFactory.html">ObjectLayerFactory</a> and
+returned directly to the native code as the raw handle, they are not generally disposable. They do
+implement IDisposable as a means to enusre proper release in the face of an exception in an implementation
+of <a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.ObjectLayerFactory.html">ObjectLayerFactory</a> but are not something that generally needs disposal at a managed level.</p>
+</div>
 
   <h2 class="section" id="methods">Methods
 </h2>
@@ -160,8 +182,8 @@ Class ObjectLayer  <a class="header-action link-secondary" title="View source" h
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.ObjectLayer.Dispose.html#Ubiquity_NET_Llvm_OrcJITv2_ObjectLayer_Dispose">Dispose()</a></dt>
-    <dd><p>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</p>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.OrcJITv2.ObjectLayer.Dispose.html#Ubiquity_NET_Llvm_OrcJITv2_ObjectLayer_Dispose_System_Boolean_">Dispose(bool)</a></dt>
+    <dd><p>Abstract method that is implemented by derived types to perform the dispose operation</p>
 </dd>
   </dl>
   <dl class="jumplist">
@@ -175,7 +197,7 @@ Class ObjectLayer  <a class="header-action link-secondary" title="View source" h
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Llvm/OrcJITv2/ObjectLayer.cs/#L9" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Llvm/OrcJITv2/ObjectLayer.cs/#L15" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -191,7 +213,7 @@ Class ObjectLayer  <a class="header-action link-secondary" title="View source" h
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

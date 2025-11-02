@@ -82,70 +82,71 @@
         <article data-uid="Kaleidoscope-ch8">
 <h1 id="8-kaleidoscope-compiling-to-object-code">8. Kaleidoscope: Compiling to Object Code</h1>
 
-<p>This tutorial describes how to adapt the Kaleidoscope JIT engine into an Ahead of Time (AOT) compiler
-by generating target specific native object files.</p>
+<p>This tutorial describes how to adapt the Kaleidoscope JIT engine into an Ahead of Time (AOT)
+compiler by generating target specific native object files.</p>
 <h2 id="choosing-a-target">Choosing a target</h2>
-<p>LLVM has built-in support for cross-compilation. This allows compiling to the architecture of the platform
-you run the compiler on or, just as easily, for some other architecture. For the Kaleidoscope tutorial
-we'll focus on just the native target the compiler is running on.</p>
-<p>LLVM uses a &quot;Triple&quot; string to describe the target used for code generation. This takes the form
-<code>&lt;arch&gt;&lt;sub&gt;-&lt;vendor&gt;-&lt;sys&gt;-&lt;abi&gt;</code> (see the description of the <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.Triple.html">Triple</a> type for
-more details)</p>
+<p>LLVM has built-in support for cross-compilation. This allows compiling to the architecture
+of the platform you run the compiler on or, just as easily, for some other architecture. For
+the Kaleidoscope tutorial we'll focus on just the native target the compiler is running on.</p>
+<p>LLVM uses a &quot;Triple&quot; string to describe the target used for code generation. This takes the
+form <code>&lt;arch&gt;&lt;sub&gt;-&lt;vendor&gt;-&lt;sys&gt;-&lt;abi&gt;</code> (see the description of the <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.Triple.html">Triple</a>
+type for more details)</p>
 <p>Fortunately, it is normally not required to build such strings directly.</p>
 <h2 id="grammar">Grammar</h2>
-<p>In the preceding chapters the Kaleidoscope implementation provided an interactive JIT based on the classic
-Read Evaluate Print Loop (REPL). So the grammar focused on a top level rule &quot;repl&quot; that processes individual
-expressions one at a time. For native compilation this complicates the process of parsing and processing a
-complete file. To handle these two distinct scenarios the grammar has different rules. For the interactive
-scenario the previously mentioned &quot;repl&quot; rule is used. When parsing a full source file the &quot;fullsrc&quot; rule
+<p>In the preceding chapters the Kaleidoscope implementation provided an interactive JIT based
+on the classic Read Evaluate Print Loop (REPL). So the grammar focused on a top level rule
+&quot;repl&quot; that processes individual expressions one at a time. For native compilation this
+complicates the process of parsing and processing a complete file. To handle these two
+distinct scenarios the grammar has different rules. For the interactive scenario the
+previously mentioned &quot;repl&quot; rule is used. When parsing a full source file the &quot;fullsrc&quot; rule
 is used as the start.</p>
 <pre><code class="lang-antlr">// Full source parse accepts a series of definitions or prototypes, all top level expressions
 // are generated into a single function called Main()
 fullsrc
     : repl*;
 </code></pre>
-<p>This rule simply accepts any number of expressions so that a single source file is parsed to a single
-complete parse tree. (This particular point will become even more valuable when generating debug information
-in <a class="xref" href="../Chapter9/Kaleidoscope-ch9.html">Chapter 9</a> as the parse tree nodes contain the source location information based
-on the original input stream).</p>
+<p>This rule simply accepts any number of expressions so that a single source file is parsed to
+a single complete parse tree. (This particular point will become even more valuable when
+generating debug information in <a class="xref" href="../Chapter9/Kaleidoscope-ch9.html">Chapter 9</a> as the parse tree nodes
+contain the source location information based on the original input stream).</p>
 <h2 id="code-generation-changes">Code Generation Changes</h2>
-<p>The changes in code generation are fairly straight forward and consist of the following basic steps.</p>
+<p>The changes in code generation are fairly straight forward and consist of the following
+basic steps.</p>
 <ol>
 <li>Remove JIT engine support</li>
 <li>Expose the bit code module generated, so it is available to the &quot;driver&quot;.</li>
 <li>Saving the target machine (since it doesn't come from the JIT anymore)</li>
 <li>Keep track of all generated top level anonymous expressions</li>
-<li>Once generating from the parse tree is complete generate a main() that includes calls to all the
-previously generated anonymous expressions.</li>
+<li>Once generating from the parse tree is complete generate a main() that includes calls to
+all the previously generated anonymous expressions.</li>
 </ol>
-<p>Most of these steps are pretty straight forward. The anonymous function handling is a bit distinct.
-Since the language syntax allows anonymous expressions throughout the source file, and they don't
-actually execute during generation - they need to be organized into an executable form. Thus, a new
-list of the generated functions is maintained and, after the tree is generated, a new main() function
-is created and a call to each anonymous expression is made with a second call to printd() to show
-the results - just like they would appear if typed in an interactive console. A trick used in the
-code generation is to mark each of the anonymous functions as private and always inline so that a
-simple optimization pass can eliminate the anonymous functions after inlining them all into the main()
-function.</p>
-<pre><code class="lang-C#">// mark anonymous functions as always-inline and private so they can be inlined and then removed
-if( isAnonymous )
+<p>Most of these steps are pretty straight forward. The anonymous function handling is a bit
+distinct. Since the language syntax allows anonymous expressions throughout the source file,
+and they don't actually execute during generation - they need to be organized into an
+executable form. Thus, a new list of the generated functions is maintained and, after the
+tree is generated, a new main() function is created and a call to each anonymous expression
+is made with a second call to printd() to show the results - just like they would appear if
+typed in an interactive console. A trick used in the code generation is to mark each of the
+anonymous functions as private and always inline so that a simple optimization pass can
+eliminate the anonymous functions after inlining them all into the main() function.</p>
+<pre><code class="lang-C#">// mark anonymous functions as always-inline and private so they can be removed
+if(definition.IsAnonymous)
 {
-    retVal.AddAttribute( FunctionAttributeIndex.Function, AttributeKind.AlwaysInline )
-          .Linkage( Linkage.Private );
-}
-else
-{
-    retVal.Linkage( Linkage.External );
+    function.AddAttribute( FunctionAttributeIndex.Function, &quot;alwaysinline&quot;u8 )
+            .Linkage( Linkage.Private );
+
+    AnonymousFunctions.Add( function );
 }
 </code></pre>
-<p>These settings are leveraged after generating from the tree to create the main function. A simple
-loop generates a call to each expression along with the call to print the results.</p>
-<blockquote>
-<p>NOTE:
-The always inliner will inline the functions marked as inline and the dead code elimination pass will
-eliminate unused internal/private global symbols. This has the effect of generating the main function
-with all top level expressions inlined and the originally generated anonymous functions removed.</p>
-</blockquote>
+<p>These settings are leveraged after generating from the tree to create the main function. A
+simple loop generates a call to each expression along with the call to print the results.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The always inliner will inline the functions marked as inline and the dead code
+elimination pass will eliminate unused internal/private global symbols. This has the
+effect of generating the main function with all top level expressions inlined and the
+originally generated anonymous functions removed.</p>
+</div>
 <pre><code class="lang-csharp" name="Generate">public Module? Generate( IAstNode ast )
 {
     ArgumentNullException.ThrowIfNull( ast );
@@ -173,10 +174,11 @@ with all top level expressions inlined and the originally generated anonymous fu
     return Module;
 }
 </code></pre>
-<p>Most of the rest of the changes are pretty straightforward following the steps listed previously.</p>
+<p>Most of the rest of the changes are pretty straightforward following the steps listed
+previously.</p>
 <h3 id="anonymous-function-definitions">Anonymous Function Definitions</h3>
-<p>As previously mentioned, when generating the top level expression the resulting function is added to the
-list of anonymous functions to generate a call to it from main().</p>
+<p>As previously mentioned, when generating the top level expression the resulting function is
+added to the list of anonymous functions to generate a call to it from main().</p>
 <pre><code class="lang-csharp" name="FunctionDefinition">public override Value? Visit( FunctionDefinition definition )
 {
     ArgumentNullException.ThrowIfNull( definition );
@@ -233,19 +235,19 @@ list of anonymous functions to generate a call to it from main().</p>
     }
 }
 </code></pre><h2 id="driver-changes">Driver changes</h2>
-<p>To support generating object files the &quot;driver&quot; application code needs some alterations. The changes
-fall into two general categories:</p>
+<p>To support generating object files the &quot;driver&quot; application code needs some alterations. The
+changes fall into two general categories:</p>
 <ol>
 <li>Command line argument handling</li>
 <li>Generating the output files</li>
 </ol>
 <h3 id="adding-command-line-handling">Adding Command Line handling</h3>
-<p>To allow providing a file like a traditional compiler the driver app needs to have some basic
-command line argument handling. (&quot;Basic&quot; in this case means truly rudimentary 😁 )
+<p>To allow providing a file like a traditional compiler the driver app needs to have some
+basic command line argument handling. (&quot;Basic&quot; in this case means truly rudimentary 😁 )
 Generally this just gets a viable file path to use for the source code.</p>
 <pre><code class="lang-csharp" name="ProcessArgs"></code></pre><h3 id="update-main">Update Main()</h3>
-<p>The real work comes in the Main application driver, though there isn't a lot of additional code
-here either. The general plan is:</p>
+<p>The real work comes in the Main application driver, though there isn't a lot of additional
+code here either. The general plan is:</p>
 <ol>
 <li>Process the arguments to get the path to compile</li>
 <li>Open the file for reading</li>
@@ -332,10 +334,11 @@ public static int Main( string[] args )
     return 0;
 }
 </code></pre><h2 id="conclusion">Conclusion</h2>
-<p>That's it - seriously! Very little change was needed, mostly deleting code and adding the special handling
-of the anonymous expressions. Looking at the changes it should be clear that it is possible to support
-runtime choice between JIT and full native compilation instead of deleting the JIT code. (Implementing
-this feature is &quot;left as an exercise for the reader&quot; 😉)</p>
+<p>That's it - seriously! Very little change was needed, mostly deleting code and adding the
+special handling of the anonymous expressions. Looking at the changes it should be clear
+that it is possible to support runtime choice between JIT and full native compilation
+instead of deleting the JIT code. (Implementing this feature is &quot;left as an exercise for the
+reader&quot; 😉)</p>
 
 </article>
 
@@ -357,7 +360,7 @@ this feature is &quot;left as an exercise for the reader&quot; 😉)</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

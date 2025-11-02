@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Llvm_OrcJITv2_MaterializationUnit_Dispose_" data-uid="Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.Dispose*" class="text-break">
-Method Dispose  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Llvm/OrcJITv2/MaterializationUnit.cs/#L14"><i class="bi bi-code-slash"></i></a>
+Method Dispose  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Llvm/OrcJITv2/MaterializationUnit.cs/#L19"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -116,7 +116,7 @@ Method Dispose  <a class="header-action link-secondary" title="View source" href
 
 <h3 id="Ubiquity_NET_Llvm_OrcJITv2_MaterializationUnit_Dispose_System_Boolean_" data-uid="Ubiquity.NET.Llvm.OrcJITv2.MaterializationUnit.Dispose(System.Boolean)">
   Dispose(bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Llvm/OrcJITv2/MaterializationUnit.cs/#L14"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Llvm/OrcJITv2/MaterializationUnit.cs/#L19"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Abstract method that is implemented by derived types to perform the dispose operation</p>
@@ -142,10 +142,9 @@ Method Dispose  <a class="header-action link-secondary" title="View source" href
 
 
 <h4 class="section" id="Ubiquity_NET_Llvm_OrcJITv2_MaterializationUnit_Dispose_System_Boolean__remarks">Remarks</h4>
-<div class="markdown level1 remarks"><p>This is guaranteed to only be called if <a class="xref" href="Ubiquity.NET.Llvm.DisposableObject.IsDisposed.html#Ubiquity_NET_Llvm_DisposableObject_IsDisposed">IsDisposed</a> returns <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>
-so the implementation should only be concerned with the actual release of resources. If <code class="paramref">disposing</code>
-is <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> then the implementation should release managed and unmanaged resources, otherwise it should
-only release the unmanaged resources</p>
+<div class="markdown level1 remarks"><p>For this class, this is an idempotent method. This allows MOVE semantics for native
+code to function and callers remain oblivious. Callers should always call this for
+correctness if it was succesfully moved to native code then such a call is a NOP.</p>
 </div>
 
 
@@ -154,7 +153,7 @@ only release the unmanaged resources</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-epsilon/src/Ubiquity.NET.Llvm/OrcJITv2/MaterializationUnit.cs/#L14" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Llvm/OrcJITv2/MaterializationUnit.cs/#L19" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -170,7 +169,7 @@ only release the unmanaged resources</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

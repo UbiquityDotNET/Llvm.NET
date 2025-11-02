@@ -82,35 +82,35 @@
         <article data-uid="">
 <h1 id="about">About</h1>
 
-<p>Ubiquity.NET.InteropHelpers helper support common to low level interop libraries. While this
-library is intended to support the Ubiquity.NET.Llvm interop requirements there isn't anything
-bound to that library in the support here. That is it is independent and a useful library for
-any code base providing interop support.</p>
+<p><code>Ubiquity.NET.InteropHelpers</code> helper support common to low level interop libraries. While
+this library is intended to support the Ubiquity.NET.Llvm interop requirements there isn't
+anything bound to that library in the support here. That is it is independent and a useful
+library for any code base providing interop support.</p>
 <h1 id="key-features">Key Features</h1>
 <ul>
 <li>String handling
 <ul>
-<li>A lot of interop deals with strings in some form or another and handling them
-is a major amount of effort for most interop libraries. The support provided here
-enables lazy evaluation/marshalling and encoding of native strings and managed strings.
-These allow a simple <code>byte[]</code> to store a native string and ONLY marshals to a UTF16
-managed string once when needed. This allows storing and passing strings in their
-native form for FAST retrieval from a native call and then providing that same string
-as an <code>in</code> parameter in another call. All without the need to marshal from native and
-then back again just for the call. This is a MAJOR performance enhancement for APIs
-that deal in strings.</li>
+<li>A lot of interop deals with strings in some form or another and handling them is a
+major amount of effort for most interop libraries. The support provided here enables
+lazy evaluation/marshalling and encoding of native strings and managed strings. These
+allow a simple <code>byte[]</code> to store a native string and ONLY marshals to a UTF16 managed
+string once when needed. This allows storing and passing strings in their native form
+for FAST retrieval from a native call and then providing that same string as an <code>in</code>
+parameter in another call. All without the need to marshal from native and then back
+again just for the call. This is a MAJOR performance enhancement for APIs that deal in
+strings.</li>
 </ul>
 </li>
 <li>Delegates and NativeCallbacks as Function pointers
 <ul>
 <li>Function pointers are a new feature of C# that makes for very high performance interop
 scenarios. However, sometimes the callback for a function pointer actually needs
-additional data not part of the parameters of the function to work properly. This library
-provides support for such scenarios where a delegate is used to &quot;capture&quot; the data while
-still supporting AOT scenarios. (NOTE: Marshal.GetFunctionPointerForDelegate() must
-dynamically emit a thunk that contains the proper signature and the captured &quot;this&quot; pointer
-so is NOT AOT friendly) The support offered in this library, though a bit more tedious,
-is AOT friendly.</li>
+additional data not part of the parameters of the function to work properly. This
+library provides support for such scenarios where a delegate is used to &quot;capture&quot; the
+data while still supporting AOT scenarios. (NOTE: <code>Marshal.GetFunctionPointerForDelegate()</code>
+must dynamically emit a thunk that contains the proper signature and the captured
+&quot;this&quot; pointer so is NOT AOT friendly) The support offered in this library, though a
+bit more tedious, is AOT friendly.</li>
 </ul>
 </li>
 </ul>
@@ -135,7 +135,7 @@ is AOT friendly.</li>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

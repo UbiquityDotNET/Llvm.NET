@@ -82,9 +82,9 @@
         <article data-uid="">
 <h1 id="release-notes">Release Notes</h1>
 
-<h1 id="v2018alpha">V20.1.8.Alpha</h1>
-<p>Major re-work to support LLVM 20 and .NET 9 and later with focus on performance and heading towards AOT.
-Major changes include:</p>
+<h1 id="v2018">V20.1.8</h1>
+<p>Major re-work to support LLVM 20 and .NET 9 and later with focus on performance and heading
+towards AOT. Major changes include:</p>
 <ul>
 <li>OrcJIT v2 support
 <ul>
@@ -97,37 +97,38 @@ Major changes include:</p>
 </li>
 <li>Opaque pointers
 <ul>
-<li>Underlying LLVM uses only opaque pointers however these wrappers account for
-that as much as possible without significant impact on calling code. The wrappers,
-when used with debug information, support tracking the LLVM type of the <code>pointee</code>
-for you in most cases. Though if not using any debug information or otherwise dealing
-in the raw types applications will need to keep track of the type of a pointer
-instead of relying on the LLVM IR to do that for you.</li>
+<li>Underlying LLVM uses only opaque pointers however these wrappers account for that as
+much as possible without significant impact on calling code. The wrappers, when used
+with debug information, support tracking the LLVM type of the <code>pointee</code> for you in
+most cases. Though if not using any debug information or otherwise dealing in the raw
+types applications will need to keep track of the type of a pointer instead of relying
+on the LLVM IR to do that for you.</li>
 </ul>
 </li>
 <li>Dropped reference equality to support multi-threaded nature of OrcJIT.
 <ul>
-<li>Things got complicated and broke around chapter 5 of the Kaleidoscope tutorials.
-The basic problem with interning is that it doesn't account for ownership. In fact
-it downright ignores the point. This is a serious problem when dealing with a
-multi-threaded JIT engine as you might end up disposing something you own that
-was transferred to the native API or worse an alias is resolved to an owned
-instance which is then destroyed - OOPS! [Bad idea - seemed like a good idea
-at the time! 🤦 ]</li>
+<li>Things got complicated and broke around chapter 5 of the Kaleidoscope tutorials. The
+basic problem with interning is that it doesn't account for ownership. In fact it
+downright ignores the point. This is a serious problem when dealing with a
+multi-threaded JIT engine as you might end up disposing something you own that was
+transferred to the native API or worse an alias is resolved to an owned instance which
+is then destroyed - OOPS! [Bad idea - seemed like a good idea at the time!
+🤦 ]</li>
 </ul>
 </li>
 <li>Consumers need to consider IDispose and &quot;ownership&quot; in general
 <ul>
-<li>Usually this is as simple as a <code>using</code> statement to properly handle
-cleanup in scope if there is an exception. Sometimes it takes a bit more
-thought to handle properly. (.NET, C# and the general community have no concept of the
-common native code &quot;move semantics&quot; pattern)</li>
+<li>Usually this is as simple as a <code>using</code> statement to properly handle cleanup in scope
+if there is an exception. Sometimes it takes a bit more thought to handle properly.
+(.NET, C# and the general community have no concept of the common native code
+&quot;move semantics&quot; pattern)</li>
 </ul>
 </li>
 <li>A significant impact of ownership is in the LLVM transition to DebugRecords
 <ul>
-<li>While the core API has not changed, the ownership of the classes has and
-in particular that a DIBuilder is now a &quot;ref like&quot; type (<code>ref struct</code> in C#).
+<li>While the core API has not changed, the ownership of the classes has and in particular
+that a <code>DIBuilder</code> is now a stand alone type and NOT accesible as a member of a
+<code>Module</code>.
 <ul>
 <li>Such a type can reference the module and compile unit but is NOT owned by
 the module and therefore not exposed as a property for it.</li>
@@ -137,14 +138,13 @@ the module and therefore not exposed as a property for it.</li>
 </li>
 </ul>
 <h2 id="breaking-changes">Breaking changes</h2>
-<p>This is a major release and there are a LOT of changes though they are all fairly
-small. Ownership is the big change as things have changed in the underlying LLVM and
-this library has shifted to NOT support cached instances as it confuses the question
-of ownership (more specifically the release of resources). A look at the samples and
-test code will show that the core of the library didn't change but some things about
-how you use it did. Additional support packages were created to move common re-usable
-code out of the samples and now exist as part of the same release. [See: the <a href="../index.html">index
-for these docs</a> for more details]</p>
+<p>This is a major release and there are a LOT of changes though they are all fairly small.
+Ownership is the big change as things have changed in the underlying LLVM and this library
+has shifted to NOT support cached instances as it confuses the question of ownership (more
+specifically the release of resources). A look at the samples and test code will show that
+the core of the library didn't change but some things about how you use it did. Additional
+support packages were created to move common re-usable code out of the samples and now exist
+as part of the same release. [See: the <a href="../index.html">index for these docs</a> for more details]</p>
 <h3 id="new-projects">New projects</h3>
 <p>If you are just starting out and not upgrading to this release then</p>
 <ol>
@@ -156,12 +156,13 @@ for these docs</a> for more details]</p>
 <p>With the 10.* release the Ubiquity.NET.Llvm.* libs have made a number of breaking changes.
 While these are mostly small and easily adapted to, they are still a breaking change. Thus,
 these changes were held to only occur on a Major release. Despite the pain of updating code
-we think the changes are worth the effort to create a cleaner simpler and more consistent library.</p>
+we think the changes are worth the effort to create a cleaner simpler and more consistent
+library.</p>
 <h3 id="library-name-changes">Library name changes</h3>
-<p>With the 10.* release the names of the assemblies, and therefore the packages, are all changed.
-This was done to unify them all under a common organization name to allow use of the facilities
-provided by NuGet for organizations and to help clarify these libraries from some other similar
-projects no longer maintained.</p>
+<p>With the 10.* release the names of the assemblies, and therefore the packages, are all
+changed. This was done to unify them all under a common organization name to allow use of
+the facilities provided by NuGet for organizations and to help clarify these libraries from
+some other similar projects no longer maintained.</p>
 <table>
 <thead>
 <tr>
@@ -185,15 +186,16 @@ projects no longer maintained.</p>
 </tbody>
 </table>
 <h3 id="library-initialization">Library initialization</h3>
-<p>The library initialization and target registration was changed to better reflect the requirements
-and proper sequence of usage. In particular the <code>Ubiquity.Net.Llvm.Interop.Library.InitializeLLVM()</code>
-static function now returns an <code>ILibLLVM</code> interface (that is still disposable). All target registration
-is done through this interface. This prevents accidental use of the registration methods <strong>BEFORE</strong>
+<p>The library initialization and target registration was changed to better reflect the
+requirements and proper sequence of usage. In particular the
+<code>Ubiquity.Net.Llvm.Interop.Library.InitializeLLVM()</code> static function now returns an
+<code>ILibLLVM</code> interface (that is still disposable). All target registration is done through
+this interface. This prevents accidental use of the registration methods <strong>BEFORE</strong>
 initializing the library (as that's a guaranteed app crash!)</p>
-<h3 id="c8-and-non-nullable-references">C#8 and non-Nullable references</h3>
-<p>With the 10.* release the Ubiquity.NET.Llvm.* libs all updated to target .NET Standard 2.1 and C#8. This allows
-use of nullable types to make nullability more explicit. This necessitated a few minor breaking changes in the
-object model surface.</p>
+<h3 id="c-8-and-non-nullable-references">C# 8 and non-Nullable references</h3>
+<p>With the 10.* release the Ubiquity.NET.Llvm.* libs all updated to target .NET Standard 2.1
+and C#8. This allows use of nullable types to make nullability more explicit. This
+necessitated a few minor breaking changes in the object model surface.</p>
 <table>
 <thead>
 <tr>
@@ -209,9 +211,11 @@ object model surface.</p>
 </tbody>
 </table>
 <h3 id="renamed-instruction-predicate-enumerator-values">Renamed instruction predicate enumerator values</h3>
-<p>The comparison instruction predicates <code>Ubiquity.NET.Llvm.Instructions.[Predicate|IntPredicate]</code>were renamed for greater
-consistency and clarity (Some of the float predicates had 'Than' in the name while the integer counterparts did not. (See:
-<a href="https://github.com/UbiquityDotNET/Llvm.NET/issues/152">Bug #152</a> for details.)</p>
+<p>The comparison instruction predicates
+<code>Ubiquity.NET.Llvm.Instructions.[Predicate|IntPredicate]</code>were renamed for greater
+consistency and clarity (Some of the float predicates had 'Than' in the name while the
+integer counterparts did not. (See: <a href="https://github.com/UbiquityDotNET/Llvm.NET/issues/152">Bug #152</a>
+for details.)</p>
 <table>
 <thead>
 <tr>
@@ -288,8 +292,9 @@ consistency and clarity (Some of the float predicates had 'Than' in the name whi
 </tbody>
 </table>
 <h3 id="types-no-longer-disposable">Types no longer disposable</h3>
-<p>Some types are no longer disposable. The LLVMObjectRef type uses SafeHandle, which eliminates the need
-for Dispose for top level global objects. The following types no longer support IDispose:</p>
+<p>Some types are no longer disposable. The LLVMObjectRef type uses SafeHandle, which
+eliminates the need for Dispose for top level global objects. The following types no longer
+support IDispose:</p>
 <ul>
 <li>Transforms.ModulePassManager</li>
 <li>Transforms.FunctionPassManager</li>
@@ -297,24 +302,29 @@ for Dispose for top level global objects. The following types no longer support 
 </ul>
 <h3 id="altered-behavior">Altered Behavior</h3>
 <h4 id="contextcreatestructtype">Context.CreateStructType()</h4>
-<p>As part of resolving <a href="https://github.com/UbiquityDotNET/Llvm.NET/issues/184">bug #184</a> the CreateStructType
-methods were re-evaluated and found lacking in functionality (the bug) and clarity. The docs were misleading
-and the implementations overly restrictive in some cases. Thus these have been re-worked to make it more clear
-when a Sized vs. Opaque structure type is created, in particular, for <strong>ALL</strong> overloads taking a 'packed' parameter
-a sized type is created, even if the size is 0 because no members are provided. This allows creation of named or
-anonymous empty structs, used in many languages. To create a named opaque type then the overload with just the
-name is used. This isn't expected to impact many consumers, other than the tests, but it is a breaking change.</p>
+<p>As part of resolving <a href="https://github.com/UbiquityDotNET/Llvm.NET/issues/184">bug #184</a> the
+CreateStructType methods were re-evaluated and found lacking in functionality (the bug) and
+clarity. The docs were misleading and the implementations overly restrictive in some cases.
+Thus these have been re-worked to make it more clear when a Sized vs. Opaque structure type
+is created, in particular, for <strong>ALL</strong> overloads taking a 'packed' parameter a sized type is
+created, even if the size is 0 because no members are provided. This allows creation of
+named or anonymous empty structs, used in many languages. To create a named opaque type then
+the overload with just the name is used. This isn't expected to impact many consumers, other
+than the tests, but it is a breaking change.</p>
 <h4 id="contextcreateconstantstring">Context.CreateConstantString()</h4>
-<p>The behavior of Context.CreateConstantString(string) has changed slightly. It now constructs a valid C string with
-a null terminator, which is generally what would be expected of something called &quot;string&quot;. (The (string,bool)
-overload remains, to allow apps to be explicit with intent) Additionally, the ConstantDataSequential.IsString
-property now reflects whether the string is a C string (terminating null but no embedded nulls) and the
-ConstantDataSequential.IsI8Sequence was added to provide the previous behavior of IsString, which was simply that
-the underlying sequence element type was i8 (with or without a terminator)</p>
+<p>The behavior of Context.CreateConstantString(string) has changed slightly. It now constructs
+a valid C string with a null terminator, which is generally what would be expected of
+something called &quot;string&quot;. (The (string,bool) overload remains, to allow apps to be explicit
+with intent) Additionally, the ConstantDataSequential.IsString property now reflects whether
+the string is a C string (terminating null but no embedded nulls) and the
+ConstantDataSequential.IsI8Sequence was added to provide the previous behavior of IsString,
+which was simply that the underlying sequence element type was i8 (with or without a
+terminator)</p>
 <h3 id="removed-redundant-apis">Removed redundant APIs</h3>
-<p>LLVM has made additional APIs available in the standard LLVM-C library that are either identical to or functionality
-equivalent to APIs that were custom in previous versions of the Ubiquity.NET.Llvm DLLs. This is only observable at
-the interop library layer where some of the custom APIs were removed and replaced with the official ones.</p>
+<p>LLVM has made additional APIs available in the standard LLVM-C library that are either
+identical to or functionality equivalent to APIs that were custom in previous versions of
+the <code>Ubiquity.NET.Llvm</code> DLLs. This is only observable at the interop library layer where
+some of the custom APIs were removed and replaced with the official ones.</p>
 <table>
 <thead>
 <tr>
@@ -330,12 +340,17 @@ the interop library layer where some of the custom APIs were removed and replace
 </tbody>
 </table>
 <h3 id="disabled-orcjit-lazyfunction-binding">Disabled ORCJIT LazyFunction binding</h3>
-<p>Unfortunately, the ORCJIT truly lazy function generation callback support is currently disabled. LLVM itself is
-transitioning to the ORCJIT v2 and in the process broke the lazy function binding support (At least for Windows+COFF).
-Previously a workaround for the issue of the COFF exports was applied in the Llvm.NET ORCJIT library code for symbol
-lookups. However, with ORCJIT v2 the JIT itself is doing lookups and it does so only for external symbols assuming the
-symbols it generates internally will be exports, but are not (at least for COFF modules anyway). For more details see
-the LLVM bugs <a href="https://bugs.llvm.org/show_bug.cgi?id=25493">25493</a> and <a href="https://bugs.llvm.org/show_bug.cgi?id=28699">28699</a></p>
+<p>Unfortunately, the ORCJIT truly lazy function generation callback support is currently
+disabled. LLVM itself is transitioning to the ORCJIT v2 and in the process broke the lazy
+function binding support (At least for Windows+COFF). Previously a workaround for the issue
+of the COFF exports was applied in the Llvm.NET ORCJIT library code for symbol lookups.
+However, with ORCJIT v2 the JIT itself is doing lookups and it does so only for external
+symbols assuming the symbols it generates internally will be exports, but are not (at least
+for COFF modules anyway). For more details see the LLVM bugs:</p>
+<ul>
+<li><a href="https://bugs.llvm.org/show_bug.cgi?id=25493">25493</a></li>
+<li><a href="https://bugs.llvm.org/show_bug.cgi?id=28699">28699</a></li>
+</ul>
 <h2 id="v801">v8.0.1</h2>
 <h3 id="bug-fixes">Bug Fixes</h3>
 <table>
@@ -357,45 +372,48 @@ the LLVM bugs <a href="https://bugs.llvm.org/show_bug.cgi?id=25493">25493</a> an
 </tbody>
 </table>
 <h3 id="additional-changes">Additional changes</h3>
-<p>Additionally the internal build scripts were updated to simplify the consistent cross solution versioning. Previously,
-a complex process of building a dummy project to generate a data file was used, however that was no longer necessary
-as the <a href="https://github.com/UbiquityDotNET/CSemVer.GitBuild">CSemVer.Build.Tasks </a> package can figure out all except
-the CiBuildIndex, which, for this project, is an ISO-8601 formatted time-stamp (of the latest commit for automated
-builds or the build start for local developer builds)</p>
+<p>Additionally the internal build scripts were updated to simplify the consistent cross
+solution versioning. Previously, a complex process of building a dummy project to generate a
+data file was used, however that was no longer necessary as the
+<a href="https://github.com/UbiquityDotNET/CSemVer.GitBuild">CSemVer.Build.Tasks </a> package can
+figure out all except the CiBuildIndex, which, for this project, is an ISO-8601 formatted
+time-stamp (of the latest commit for automated builds or the build start for local developer
+builds)</p>
 <h2 id="v800">v8.0.0</h2>
 <h3 id="ubiquitynetllvminterop-new-library">Ubiquity.NET.Llvm.Interop (New library)</h3>
-<p>Ubiquity.NET.Llvm 8.0 adds a new library (Ubiquity.NET.Llvm.Interop)  that contains the raw P/Invoke
-APIs and support needed to inter-operate with the native library. The NuGet package
-for the interop library includes the native code binaries as they are tightly coupled.
-This package contains the native LibLLVM.dll and the P/Invoke interop support layers.
-Ubiquity.NET.Llvm uses this library to define a clean projection of LLVM for .NET consumers.
-This will, hopefully, allow for future development and enhancement of the Ubiquity.NET.Llvm
-object model without changing the underlying P/Invoke layers. (e.g.
-the Ubiquity.NET.Llvm.Interop can &quot;snap&quot; to LLVM versions, but the Ubiquity.NET.Llvm model can have
-multiple incremental releases) This isn't a hard/fast rule as it is possible that
-getting new functionality in the object model requires new custom extensions. At
-this point in time both libraries are built together and share build numbers.
-Though, that may change in the future.</p>
+<p>Ubiquity.NET.Llvm 8.0 adds a new library (Ubiquity.NET.Llvm.Interop)  that contains the raw
+P/Invoke APIs and support needed to inter-operate with the native library. The NuGet package
+for the interop library includes the native code binaries as they are tightly coupled. This
+package contains the native LibLLVM.dll and the P/Invoke interop support layers.
+<code>Ubiquity.NET.Llvm</code> uses this library to define a clean projection of LLVM for .NET
+consumers. This will, hopefully, allow for future development and enhancement of the
+<code>Ubiquity.NET.Llvm</code> object model without changing the underlying P/Invoke layers. (e.g. the
+<code>Ubiquity.NET.Llvm.Interop</code> can &quot;snap&quot; to LLVM versions, but the <code>Ubiquity.NET.Llvm</code> model
+can have multiple incremental releases) This isn't a hard/fast rule as it is possible that
+getting new functionality in the object model requires new custom extensions. At this point
+in time both libraries are built together and share build numbers. Though, that may change
+in the future.</p>
 <h4 id="auto-generated-pinvoke">Auto-generated P/Invoke</h4>
-<p>LLVM-C API now includes most of the debug APIs so, significantly fewer custom
-extensions are needed (That's a good thing!). To try and keep things simpler this
-moves the interop back to using code generation for the bulk of the P/Invoke interop.
-However, unlike the first use of generation, the <a href="https://github.com/UbiquityDotNET/Llvm.NET/tree/master/src/Interop/LlvmBindingsGenerator">LLVMBindingsGenerator</a>
-is much more targeted and includes specialized handling to prevent the need for
-additional &quot;by-hand&quot; tweaking of the generated code, such as:</p>
+<p>LLVM-C API now includes most of the debug APIs so, significantly fewer custom extensions are
+needed (That's a good thing!). To try and keep things simpler this moves the interop back to
+using code generation for the bulk of the P/Invoke interop. However, unlike the first use of
+generation, the <a href="https://github.com/UbiquityDotNET/Llvm.NET/tree/master/src/Interop/LlvmBindingsGenerator">LLVMBindingsGenerator</a>
+is much more targeted and includes specialized handling to prevent the need for additional
+&quot;by-hand&quot; tweaking of the generated code, such as:</p>
 <ol>
 <li>Marshaling of strings with the many ways to dispose (or not) a returned string</li>
-<li>LLVMBool vs LLVMStatus</li>
+<li><code>LLVMBool</code> vs <code>LLVMStatus</code></li>
 <li>&quot;smart ref&quot; handle types, including aliases that should not be released by
 client code.</li>
 </ol>
 <p>The generated code is combined with some fixed support classes to create a new
-Ubiquity.NET.Llvm.Interop Library and NuGet Package.</p>
+<code>Ubiquity.NET.Llvm.Interop</code> Library and NuGet Package.</p>
 <h3 id="new-features">New features</h3>
 <ul>
 <li>ObjectFile Support
 <ul>
-<li>Ubiquity.NET.Llvm.ObjectFile namespace contains support for processing object files using LLVM</li>
+<li>Ubiquity.NET.Llvm.ObjectFile namespace contains support for processing object files
+using LLVM.</li>
 </ul>
 </li>
 <li>Eager compilation JIT
@@ -411,12 +429,12 @@ Ubiquity.NET.Llvm.Interop Library and NuGet Package.</p>
 <li>Added accessors to allow retrieval/addition of metadata on instructions</li>
 </ul>
 <h3 id="breaking-changes-2">Breaking Changes</h3>
-<p>This is a Major release and, as such, can, and does, have breaking changes. While there
-are several such changes the actual impact to a code base is fairly trivial. Most are
-driven by either obsolescence of functionality in LLVM or general naming cleanup in the
-Ubiquity.NET.Llvm library:</p>
+<p>This is a Major release and, as such, can, and does, have breaking changes. While there are
+several such changes the actual impact to a code base is fairly trivial. Most are driven by
+either obsolescence of functionality in LLVM or general naming cleanup in the
+<code>Ubiquity.NET.Llvm</code> library:</p>
 <ol>
-<li><p>New namespace and assembly for some classes (Ubiquity.NET.Llvm.Interop)</p>
+<li>New namespace and assembly for some classes (Ubiquity.NET.Llvm.Interop)
 <ol>
 <li>Ubiquity.NET.Llvm.DisposableAction -&gt; Ubiquity.NET.Llvm.Interop.DisposableAction</li>
 <li>Ubiquity.NET.Llvm.DisposableObject -&gt; Ubiquity.NET.Llvm.Interop.DisposableObject</li>
@@ -424,92 +442,84 @@ Ubiquity.NET.Llvm library:</p>
 <li>Ubiquity.NET.Llvm.TargetRegistrations -&gt; Ubiquity.NET.Llvm.Interop.TargetRegistrations</li>
 </ol>
 </li>
-<li><p>StaticState class is renamed to Ubiquity.NET.Llvm.Interop.Library as it is fundamentally
-part of the low level interop (and &quot;StaticState&quot; was always a bad name)</p>
-</li>
-<li><p>Instructions no longer have a SetDebugLocation, instead that is provided via a new
+<li>StaticState class is renamed to Ubiquity.NET.Llvm.Interop.Library as it is fundamentally
+part of the low level interop (and &quot;StaticState&quot; was always a bad name)</li>
+<li>Instructions no longer have a SetDebugLocation, instead that is provided via a new
 fluent method on the InstructionBuilder since the normal use is to set the location
 on the builder and then generate a sequence of IR instructions for a given expression
-in code.</p>
-</li>
-<li><p>Legacy JIT engine support is dropped. ORCJit is the only supported JIT engine</p>
+in code.</li>
+<li>Legacy JIT engine support is dropped. ORCJit is the only supported JIT engine
 <ol>
 <li>Removed Ubiquity.NET.Llvm.JIT.EngineKind</li>
-<li>Removed all use of Ubiquity.NET.Llvm.JIT.IJitModuleHandle. Handles are now just an integral value</li>
+<li>Removed all use of Ubiquity.NET.Llvm.JIT.IJitModuleHandle. Handles are now just an
+integral value.</li>
 <li>Removed Ubiquity.NET.Llvm.LegacyExecutionEngine</li>
 </ol>
 </li>
-<li><p>Context.CreateBasicBlock() now only creates detached blocks, if append to a function
-is desired, there is a method on IrFunction to create and append a block.</p>
-<ol>
+<li>Context.CreateBasicBlock() now only creates detached blocks, if append to a function is
+desired, there is a method on IrFunction to create and append a block.</li>
 <li>CreateBasicBlock signature changed to remove the function and block parameters</li>
-</ol>
-</li>
-<li><p>PassManager, ModulePassManager, and FunctionPassManager are IDisposable to help apps
+<li>PassManager, ModulePassManager, and FunctionPassManager are IDisposable to help apps
 ensure that a function pass manager, which is bound to a module, is destroyed before
 the module it is bound to. Failure to do so can result in app crashes from access
-violations in the native LLVM code.</p>
-</li>
-<li><p>Module</p>
+violations in the native LLVM code.</li>
+<li>Module
 <ol>
-<li>MakeShared and shared refs of modules is removed. (This was created for
-OrcJIT use of shared_ptr under the hood, which is no longer used. OrcJit now uses the
-same ownership transfer model as the legacy engines. E.g. the ownership for the module
+<li>MakeShared and shared refs of modules is removed. (This was created for OrcJIT use of
+<code>shared_ptr</code> under the hood, which is no longer used. OrcJit now uses the same
+ownership transfer model as the legacy engines. E.g. the ownership for the module
 is transferred to the JIT engine)</li>
-<li>Module is now Disposable backed by a safe handle, this allows for detaching and
-invalidating the underlying LLVMModuleRef when the module is provided to the JIT</li>
-<li>CreateFunction() signature changed, Dropped the default null node parameters
-not supported by the LLVM-C implementation.</li>
+<li><code>Module</code> is now <code>IDisposable</code> backed by a safe handle, this allows for detaching and
+invalidating the underlying LLVMModuleRef when the module is provided to the JIT.</li>
+<li>CreateFunction() signature changed, Dropped the default null node parameters not
+supported by the LLVM-C implementation.</li>
 </ol>
 </li>
-<li><p>Renamed Function class to IrFunction to avoid potential collision with common language
-keywords</p>
-</li>
-<li><p>Renamed Select to SelectInstruction to avoid potential collision with language keyword
+<li>Renamed Function class to IrFunction to avoid potential collision with common language
+keywords</li>
+<li>Renamed Select to SelectInstruction to avoid potential collision with language keyword
 and make consistent with ReturnInstruction, ResumeInstruction and other similar cases
-for instructions.</p>
-</li>
-<li><p>Removed transform pass functions not supported in LLVM-C</p>
+for instructions.</li>
+<li>Removed transform pass functions not supported in LLVM-C
 <ol>
 <li>SclaraTransforms.AddLateCFGSimplificationPass()</li>
 </ol>
 </li>
-<li><p><code>GlobalValueExtensions.UnnameAddress&lt;T&gt;(T,bool)</code> was changed to
+<li><code>GlobalValueExtensions.UnnameAddress&lt;T&gt;(T,bool)</code> was changed to
 <code>GlobalValueExtensions.UnnameAddress&lt;T&gt;(T,UnnamedAddressKind)</code> to support changes in
-underlying LLVM</p>
-</li>
-<li><p>Removed ValueExtensions.SetDugLocation() [All overloaded forms], debug location is set
+underlying LLVM</li>
+<li>Removed ValueExtensions.SetDugLocation() [All overloaded forms], debug location is set
 in the InstructionBuilder and remains in effect for all instructions until reset or
-cleared by setting it to null.</p>
-</li>
-<li><p>DIBuilder</p>
+cleared by setting it to null.</li>
+<li>DIBuilder
 <ol>
 <li>CreateFunction() signature changed, Dropped the default null node parameters
 not supported by the LLVM-C implementation.</li>
-<li>DIBuilder.CreateReplaceableCompositeType() and CreateUnionType() signatures changed to
-include unique ID
+<li>DIBuilder.CreateReplaceableCompositeType() and CreateUnionType() signatures changed
+to include a unique ID
 <ol>
-<li>The id is set to default to string.Empty so this should largely go without actually
-breaking anything</li>
+<li>The id is set to default to string.Empty so this should largely go without
+actually breaking anything</li>
 </ol>
 </li>
 <li>CreateBasicType Added DebugIngoFlags parameter</li>
-<li>CreateEnumerationType removed uniqueId string parameter as it isn't supported by LLVM-C</li>
-<li>Obsoleted CreateStructType signature taking <code>DINodeArray</code> in favor of <code>IEnumerable&lt;DINode&gt;</code></li>
+<li>CreateEnumerationType removed uniqueId string parameter as it isn't supported by
+LLVM-C.</li>
+<li>Obsoleted CreateStructType signature taking <code>DINodeArray</code> in favor of
+<code>IEnumerable&lt;DINode&gt;</code>.</li>
 </ol>
 </li>
-<li><p>Ubiquity.NET.Llvm.DebugInfo.ExpressionOp names changed to correct PascalCasing and eliminate
-underscores in the value names for better consistency and style compliance.</p>
-</li>
-<li><p>Renamed some Ubiquity.NET.Llvm.DebugInfo.SourceLanguage vendor specific values to conform with
-underlying LLVM names</p>
+<li>Ubiquity.NET.Llvm.DebugInfo.ExpressionOp names changed to correct PascalCasing and
+eliminate underscores in the value names for better consistency and style compliance.</li>
+<li>Renamed some Ubiquity.NET.Llvm.DebugInfo.SourceLanguage vendor specific values to
+conform with underlying LLVM names
 <ol>
 <li>RenderScript -&gt; GoogleRenderScript</li>
 <li>Delphi -&gt; BorlandDelphi</li>
 </ol>
 </li>
-<li><p>Renamed or removed some of the Ubiquity.NET.Llvm.DebugInfo.Tag values to better reflect underlying
-LLVM names and avoid potential language keyword conflicts.</p>
+<li>Renamed or removed some of the Ubiquity.NET.Llvm.DebugInfo.Tag values to better reflect
+underlying LLVM names and avoid potential language keyword conflicts.
 <ol>
 <li>Label -&gt; TagLabel</li>
 <li>PtrToMemberType -&gt; PointerToMemberType</li>
@@ -517,31 +527,32 @@ LLVM names and avoid potential language keyword conflicts.</p>
 don't exist in the LLVM support.</li>
 </ol>
 </li>
-<li><p>InstructionBuilder</p>
+<li>InstructionBuilder
 <ol>
-<li>Obsoleted Methods that don't support opaque pointers in preparation for LLVM's transition</li>
-<li>Changed MemCpy, MemMove, and MemSet signatures to remove alignment as LLVM intrinsic no
-longer includes an alignment parameter. It is applied as a parameter attribute for each
-of the pointer parameters (source and destination).</li>
+<li>Obsoleted Methods that don't support opaque pointers in preparation for LLVM's
+transition.</li>
+<li>Changed MemCpy, MemMove, and MemSet signatures to remove alignment as LLVM intrinsic
+no longer includes an alignment parameter. It is applied as a parameter attribute for
+each of the pointer parameters (source and destination).</li>
 </ol>
 </li>
-<li><p>Ubiquity.NET.Llvm.JIT.IExecutionEngine</p>
+<li>Ubiquity.NET.Llvm.JIT.IExecutionEngine
 <ol>
-<li>Replaced AddModule with AddEagerlyCompiledModule to make it more explicit on the behavior</li>
+<li>Replaced AddModule with AddEagerlyCompiledModule to make it more explicit on the
+behavior.</li>
 </ol>
 </li>
-<li><p>Ubiquity.NET.Llvm.ILazyCompileExecutionEngine</p>
+<li>Ubiquity.NET.Llvm.ILazyCompileExecutionEngine
 <ol>
-<li>Replaced AddModule [From IExecutionEngine] with AddLazyCompiledModule to make it explicit</li>
-<li>Removed DefalultSymbolResolver from interface as it should not have been in the interface
-to start with.</li>
+<li>Replaced AddModule [From IExecutionEngine] with AddLazyCompiledModule to make it
+explicit.</li>
+<li>Removed DefalultSymbolResolver from interface as it should not have been in the
+interface to start with.</li>
 </ol>
 </li>
-<li><p>Deleted Ubiquity.NET.Llvm.LegacyExecutionEngine</p>
-</li>
-<li><p>Ubiquity.NET.Llvm.JIT.OrcJit - updated to reflect changes in the IExecutionEngine and
-ILazyCompileExecutionEngine interfaces.</p>
-</li>
+<li>Deleted Ubiquity.NET.Llvm.LegacyExecutionEngine</li>
+<li>Ubiquity.NET.Llvm.JIT.OrcJit - updated to reflect changes in the IExecutionEngine and
+ILazyCompileExecutionEngine interfaces.</li>
 </ol>
 
 </article>
@@ -564,7 +575,7 @@ ILazyCompileExecutionEngine interfaces.</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>

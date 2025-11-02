@@ -82,22 +82,24 @@
         <article data-uid="Kaleidoscope-ch7">
 <h1 id="7-kaleidoscope-mutable-variables">7. Kaleidoscope: Mutable Variables</h1>
 
-<p>The previous chapters introduced the Kaleidoscope language and progressively implemented a variety of
-language features to make a fully featured, though simplistic, functional programming language. To a
-certain extent the choice of a functional language was a bit of a cheat. Generating LLVM IR for a
-functional language is straight forward as functional languages map very easily into the LLVM native
-<a href="http://en.wikipedia.org/wiki/Static_single_assignment_form">SSA form</a>. While the SSA form is very
-useful for transformations and optimizations it is sometimes overwhelming to new users of LLVM. In
-particular it may seem like LLVM doesn't support imperative languages with mutable variables or that
-you need to convert all such languages into SSA form before generating LLVM IR. That is a bit of a
-daunting task that might scare off a number of users. The good news is, there is no need for a language
-front-end to convert to SSA form directly.</p>
+<p>The previous chapters introduced the Kaleidoscope language and progressively implemented a
+variety of language features to make a fully featured, though simplistic, functional
+programming language. To a certain extent the choice of a functional language was a bit of a
+cheat. Generating LLVM IR for a functional language is straight forward as functional
+languages map very easily into the LLVM native <a href="http://en.wikipedia.org/wiki/Static_single_assignment_form">SSA form</a>.
+While the SSA form is very useful for transformations and optimizations it is sometimes
+overwhelming to new users of LLVM. In particular it may seem like LLVM doesn't support
+imperative languages with mutable variables or that you need to convert all such languages
+into SSA form before generating LLVM IR. That is a bit of a daunting task that might scare
+off a number of users. The good news is, there is no need for a language front-end to
+convert to SSA form directly.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p><em><strong>In LLVM There is no need for a language front-end to convert to SSA form directly!</strong></em> In fact,
-<em><strong>manually</strong></em> converting to SSA form is strongly discouraged! LLVM already has very efficient,
-and more importantly, well tested, support for converting to SSA form (though how that works might
-be a bit surprising - read on!). The use of this support is the focus of this chapter.</p>
+<p><em><strong>In LLVM There is no need for a language front-end to convert to SSA form directly!</strong></em>
+In fact, <em><strong>manually</strong></em> converting to SSA form is strongly discouraged! LLVM already has
+very efficient, and more importantly, well tested, support for converting to SSA form
+(though how that works might be a bit surprising - read on!). The use of this support is
+the focus of this chapter.</p>
 </div>
 <h2 id="mutable-variables-in-llvm">Mutable Variables in LLVM</h2>
 <h3 id="mutable-variables-vs-ssa-whats-the-big-deal">Mutable Variables vs. SSA, What's the big deal?</h3>
@@ -115,8 +117,8 @@ int test(_Bool Condition)
 }
 </code></pre>
 <p>The general idea of how to handle this in LLVM SSA form was already covered in <a class="xref" href="../Chapter5/Kaleidoscope-ch5.html">Chapter 5</a>.
-Since there are two possible values for X when the function returns, a PHI node is inserted to merge the values.
-The LLVM IR for this would look like this:</p>
+Since there are two possible values for X when the function returns, a PHI node is inserted
+to merge the values. The LLVM IR for this would look like this:</p>
 <pre><code class="lang-llvm">@G = weak global i32 0   ; type of @G is i32*
 @H = weak global i32 0   ; type of @H is i32*
 
@@ -137,32 +139,36 @@ cond_next:
   ret i32 %X.2
 }
 </code></pre>
-<p>A full treatise on SSA is beyond the scope of this tutorial. If you are interested, there are plenty of
-<a href="http://en.wikipedia.org/wiki/Static_single_assignment_form">resources available on-line</a>. The focus for
-this chapter is on how traditional imperative language front-ends can use the LLVM support for mutable
-values without performing SSA conversion up-front. While, LLVM requires IR in SSA form (there's no such
-thing as &quot;non-SSA mode&quot;). Constructing the SSA form usually would require non-trivial algorithms and data
-structures, so it is both wasteful and error-prone for every front-end to have to manage implementing such
-a thing. Thus, LLVM provides a consistent and simpler solution.</p>
+<p>A full treatise on SSA is beyond the scope of this tutorial. If you are interested, there
+are plenty of <a href="http://en.wikipedia.org/wiki/Static_single_assignment_form">resources available on-line</a>.
+The focus for this chapter is on how traditional imperative language front-ends can use the
+LLVM support for mutable values without performing SSA conversion up-front. While, LLVM
+requires IR in SSA form (there's no such thing as &quot;non-SSA mode&quot;). Constructing the SSA form
+usually would require non-trivial algorithms and data structures, so it is both wasteful and
+error-prone for every front-end to have to manage implementing such a thing. Thus, LLVM
+provides a consistent and simpler solution.</p>
 <h3 id="memory-in-llvm">Memory in LLVM</h3>
-<p>The trick to the apparent incompatibility of SSA in LLVM IR and mutable values in imperative languages
-lies in how LLVM deals with memory. While LLVM requires all register values in SSA form, it does not
-require, or even permit, memory objects in SSA form. In the preceding example, access to global values G
-and H are direct loads of memory. They are not named or versioned in any way. This differs from some other
-compiler implementations that try to version memory objects. In LLVM, instead of encoding data-flow
-analysis of memory in the IR, it is handled with Analysis Passes, which are computed on demand. This
-further helps to reduce the work load of building a front-end while re-using well tested support in the
-LLVM libraries.</p>
-<p>Given all of that, the general idea is to create a stack variable, which lives in memory, for each mutable
-object in a function. Since LLVM supports loads and stores from/to memory - mutable values are fairly
-straight forward. Though, they may seem terribly inefficient at first. But, fear not LLVM has a way to deal
-with that. (Optimizations and efficiency is getting ahead of things a bit.)</p>
-<p>In LLVM, memory accesses are always explicit with load/store instructions. LLVM has no &quot;address-of&quot;
-operator, and doesn't need one. Notice the type of the LLVM variables @G, and @H from the sample are
-actually <code>i32*</code> even though the variable is defined as i32. In other words, @G (and @H) defines space for
-an i32, but the actual symbolic name refers to the address for that space (e.g. it's a pointer). Stack
-variables work the same way, except that instead of static allocation via a global declaration they are
-declared with the <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.Instructions.Alloca.html">LLVM alloca instruction</a>.</p>
+<p>The trick to the apparent incompatibility of SSA in LLVM IR and mutable values in imperative
+languages lies in how LLVM deals with memory. While LLVM requires all register values in SSA
+form, it does not require, or even permit, memory objects in SSA form. In the preceding
+example, access to global values G and H are direct loads of memory. They are not named or
+versioned in any way. This differs from some other compiler implementations that try to
+version memory objects. In LLVM, instead of encoding data-flow analysis of memory in the IR,
+it is handled with Analysis Passes, which are computed on demand. This further helps to
+reduce the work load of building a front-end while re-using well tested support in the LLVM
+libraries.</p>
+<p>Given all of that, the general idea is to create a stack variable, which lives in memory,
+for each mutable object in a function. Since LLVM supports loads and stores from/to memory -
+mutable values are fairly straight forward. Though, they may seem terribly inefficient at
+first. But, fear not LLVM has a way to deal with that. (Optimizations and efficiency is
+getting ahead of things a bit.)</p>
+<p>In LLVM, memory accesses are always explicit with load/store instructions. LLVM has no
+&quot;address-of&quot; operator, and doesn't need one. Notice the type of the LLVM variables @G, and
+@H from the sample are actually <code>i32*</code> even though the variable is defined as i32. In other
+words, @G (and @H) defines space for an i32, but the actual symbolic name refers to the
+address for that space (e.g. it's a pointer). Stack variables work the same way, except that
+instead of static allocation via a global declaration they are declared with the
+<a class="xref" href="../../../../api/Ubiquity.NET.Llvm.Instructions.Alloca.html">LLVM alloca instruction</a>.</p>
 <pre><code class="lang-llvm">define i32 @example() {
 entry:
   %X = alloca i32           ; type of %X is i32*.
@@ -172,10 +178,10 @@ entry:
   store i32 %tmp2, i32* %X  ; store it back
   ...
 </code></pre>
-<p>This code shows how LLVM supports creation and manipulation of stack based variables. Stack memory allocated
-with alloca is completely generalized. you can pass the address of a stack slot to a function, store it in
-a variable, etc... Using alloca, the previous example could be re-written using alloca without the PHI node
-as follows:</p>
+<p>This code shows how LLVM supports creation and manipulation of stack based variables. Stack
+memory allocated with alloca is completely generalized. you can pass the address of a stack
+slot to a function, store it in a variable, etc... Using alloca, the previous example could
+be re-written using alloca without the PHI node as follows:</p>
 <pre><code class="lang-llvm">@G = weak global i32 0   ; type of @G is i32*
 @H = weak global i32 0   ; type of @H is i32*
 
@@ -199,20 +205,21 @@ cond_next:
   ret i32 %X.2
 }
 </code></pre>
-<p>This example shows the general approach for handling arbitrary mutable values in LLVM IR without the need
-for PHI nodes.</p>
+<p>This example shows the general approach for handling arbitrary mutable values in LLVM IR
+without the need for PHI nodes.</p>
 <ol>
 <li>Mutable Variables become a stack allocation</li>
 <li>Reading the variable uses a load instruction to retrieve the value from memory</li>
 <li>Updates of the variable become a store instruction to write the value to memory</li>
 <li>Taking the address of a variable just uses the stack address directly</li>
 </ol>
-<p>This nicely and cleanly handles mutable variables in a fairly simple and easy to generate form. However, it
-has apparently introduced a new problem. Every variable use requires stack memory and reads/writes operate
-directly on stack memory - a major performance penalty. Fortunately, as previously hinted, LLVM has a well
-tuned optimization pass named &quot;mem2reg&quot; that handles this case, promoting allocas into SSA registers, inserting
-PHI nodes as necessary. For example if you run the alloca version of the IR code through the mem2reg optimization
-pass you get:</p>
+<p>This nicely and cleanly handles mutable variables in a fairly simple and easy to generate
+form. However, it has apparently introduced a new problem. Every variable use requires stack
+memory and reads/writes operate directly on stack memory - a major performance penalty.
+Fortunately, as previously hinted, LLVM has a well tuned optimization pass named &quot;mem2reg&quot;
+that handles this case, promoting allocas into SSA registers, inserting PHI nodes as
+necessary. For example if you run the alloca version of the IR code through the mem2reg
+optimization pass you get:</p>
 <pre><code class="lang-llvm">$ llvm-as &lt; example.ll | opt -mem2reg | llvm-dis
 @G = weak global i32 0
 @H = weak global i32 0
@@ -234,47 +241,57 @@ cond_next:
   ret i32 %X.01
 }
 </code></pre>
-<p>The mem2reg pass implements the standard &quot;iterated dominance frontier&quot; algorithm for building
-the SSA form with specialized optimizations to speed up common degenerate cases. The mem2reg pass
-is an integral part of the full solution to mutable variables. Using mem2reg is highly recommended.
-There are a few conditions for using mem2reg correctly.</p>
+<p>The mem2reg pass implements the standard &quot;iterated dominance frontier&quot; algorithm for
+building the SSA form with specialized optimizations to speed up common degenerate cases.
+The mem2reg pass is an integral part of the full solution to mutable variables. Using
+mem2reg is highly recommended. There are a few conditions for using mem2reg correctly.</p>
 <ol>
-<li>mem2reg is based on alloca: it looks for and promotes alloca. It does not apply to globals or heap allocations.</li>
-<li>mem2reg only looks for alloca instructions in the <strong>entry block</strong> of the function. Placing Alloca instructions for
-all variables, in all scopes, in the entry block ensures they are executed only once, which makes the conversion
-simpler.</li>
-<li>mem2reg only promotes Alloca instructions whose only uses are direct loads and stores. If the address of the object
-is passed to a function or any pointer math applied the alloca is <strong>not</strong> promoted.</li>
-<li>mem2reg only works on Alloca instructions of first class values (such as pointers, scalars and vectors), and only if
-the array size of the allocation is 1.</li>
-<li>mem2reg is not capable of promoting structs or arrays to registers. (The SROA pass is more powerful and can promote structs, unions and arrays in many cases)</li>
+<li>mem2reg is based on alloca: it looks for and promotes alloca. It does not apply to
+globals or heap allocations.</li>
+<li>mem2reg only looks for alloca instructions in the <strong>entry block</strong> of the function.
+<ol>
+<li>Placing Alloca instructions for all variables, in all scopes, in the entry block
+ensures they are executed only once, which makes the conversion simpler.</li>
 </ol>
-<p>These may seem onerous but are really fairly straight forward and easy to abide, the rest of this chapter
-will focus on doing that with the Kaleidoscope language. If you are considering doing your own SSA construction,
-then please stop and consider the following aspects of the existing LLVM patterns and mem2reg:</p>
+</li>
+<li>mem2reg only promotes Alloca instructions whose only uses are direct loads and stores.
+If the address of the object is passed to a function or any pointer math applied the
+alloca is <strong>not</strong> promoted.</li>
+<li>mem2reg only works on Alloca instructions of first class values (such as pointers,
+scalars and vectors), and only if the array size of the allocation is 1.</li>
+<li>mem2reg is not capable of promoting structs or arrays to registers. (The SROA pass is
+more powerful and can promote structs, unions and arrays in many cases)</li>
+</ol>
+<p>These may seem onerous but are really fairly straight forward and easy to abide, the rest of
+this chapter will focus on doing that with the Kaleidoscope language. If you are considering
+doing your own SSA construction, then please stop and consider the following aspects of the
+existing LLVM patterns and mem2reg:</p>
 <ul>
-<li>The mem2reg and alloca pattern is proven and very well tested. The most common clients of LLVM use this
-for the bulk of their variables, bugs are found fast and early.</li>
-<li>It is fast, the LLVM implementation has a number of optimizations that make it fast in common cases and
-fully general. This includes fast-paths for variables used only in a single block, variables with only a
-single assignment point, and heuristics to help avoid phi nodes when not needed.</li>
-<li>It is needed for debug info generation, debug info in LLVM relies on having the address of the variable
-exposed so that debugging data is attached to it. The mem2reg+alloca pattern fits well with this debug info
-style.</li>
-<li>It's really simple to do, letting you focus on the core of the front-end instead of the details of correctly
-building SSA form.</li>
+<li>The mem2reg and alloca pattern is proven and very well tested. The most common clients of
+LLVM use this for the bulk of their variables, bugs are found fast and early.</li>
+<li>It is fast, the LLVM implementation has a number of optimizations that make it fast in
+common cases and fully general. This includes fast-paths for variables used only in a
+single block, variables with only a single assignment point, and heuristics to help avoid
+phi nodes when not needed.</li>
+<li>It is needed for debug info generation, debug info in LLVM relies on having the address of
+the variable exposed so that debugging data is attached to it. The mem2reg+alloca pattern
+fits well with this debug info style.</li>
+<li>It's really simple to do, letting you focus on the core of the front-end instead of the
+details of correctly building SSA form.</li>
 </ul>
 <h2 id="generating-llvm-ir-for-mutable-variables">Generating LLVM IR for Mutable Variables</h2>
-<p>Now that we've covered the general concepts of how LLVM supports mutable variables we can focus on implementing
-mutable variables in Kaleidoscope. This includes the following new features:</p>
+<p>Now that we've covered the general concepts of how LLVM supports mutable variables we can
+focus on implementing mutable variables in Kaleidoscope. This includes the following new
+features:</p>
 <ol>
 <li>Mutate variables with an assignment operator '='</li>
 <li>Ability to define new variables</li>
 </ol>
-<p>Generally the first item is the primary feature here. Though, at this point, the Kaleidoscope language only
-has variables for incoming arguments and for loop induction variables. Defining variables is just a generally
-useful concept that can serve many purposes, including self documentation. The following is an example on
-how these features are used:</p>
+<p>Generally the first item is the primary feature here. Though, at this point, the
+Kaleidoscope language only has variables for incoming arguments and for loop induction
+variables. Defining variables is just a generally useful concept that can serve many
+purposes, including self documentation. The following is an example on how these features
+are used:</p>
 <pre><code class="lang-Kaleidoscope"># Define ':' for sequencing: as a low-precedence operator that ignores operands
 # and just returns the RHS.
 def binary : 1 (x y) y;
@@ -298,17 +315,19 @@ def fibi(x)
 # Call it.
 fibi(10);
 </code></pre>
-<p>In order to mutate variables the current implementation needs to change to leverage the &quot;alloca trick&quot;.
-Then support for assignment will complete the mutable variables support.</p>
+<p>In order to mutate variables the current implementation needs to change to leverage the
+&quot;alloca trick&quot;. Then support for assignment will complete the mutable variables support.</p>
 <h2 id="adjusting-existing-variables-for-mutation">Adjusting Existing Variables for Mutation</h2>
-<p>Currently the symbol stack in Kaleidoscope stores LLVM Values directly. To support mutable values the
-NamedValues ScopeStack needs to switch to using <a class="xref" href="../../../../api/Ubiquity.NET.Llvm.Instructions.Alloca.html">Alloca</a>.</p>
+<p>Currently the symbol stack in Kaleidoscope stores LLVM Values directly. To support mutable
+values the NamedValues ScopeStack needs to switch to using
+<a class="xref" href="../../../../api/Ubiquity.NET.Llvm.Instructions.Alloca.html">Alloca</a>.</p>
 <pre><code class="lang-C#">private readonly ScopeStack&lt;Alloca&gt; NamedValues;
 </code></pre>
 <h3 id="update-visitor-for-variablereferenceexpression">Update Visitor for VariableReferenceExpression</h3>
-<p>The first change to the existing code generation is to update handling of variable expressions to generate
-a load through the pointer created with an alloca instruction. This is pretty straight forward since the
-scope map now stores the alloca instructions for the variable.</p>
+<p>The first change to the existing code generation is to update handling of variable
+expressions to generate a load through the pointer created with an alloca instruction. This
+is pretty straight forward since the scope map now stores the alloca instructions for the
+variable.</p>
 <pre><code class="lang-csharp" name="VisitVariableExpression">public override Value? Visit( VariableReferenceExpression reference )
 {
     ArgumentNullException.ThrowIfNull( reference );
@@ -322,11 +341,11 @@ scope map now stores the alloca instructions for the variable.</p>
                              .RegisterName( reference.Name );
 }
 </code></pre><h3 id="update-visitor-for-conditionalexpression">Update Visitor for ConditionalExpression</h3>
-<p>Now that we have the alloca support we can update the conditional expression handling to remove the need
-for direct PHI node construction. This involves adding a new compiler generated local var for the result
-of the condition and storing the result value into that location for each side of the branch. Then, in the
-continue block load the value from the location so that it is available as a value for the result of the
-expression.</p>
+<p>Now that we have the alloca support we can update the conditional expression handling to
+remove the need for direct PHI node construction. This involves adding a new compiler
+generated local var for the result of the condition and storing the result value into that
+location for each side of the branch. Then, in the continue block load the value from the
+location so that it is available as a value for the result of the expression.</p>
 <pre><code class="lang-csharp" name="VisitConditionalExpression">public override Value? Visit( ConditionalExpression conditionalExpression )
 {
     ArgumentNullException.ThrowIfNull( conditionalExpression );
@@ -385,8 +404,9 @@ expression.</p>
                              .RegisterName( &quot;ifresult&quot; );
 }
 </code></pre><h3 id="update-visitor-for-forinexpression">Update Visitor for ForInExpression</h3>
-<p>Next up is to update the for loop handling to use Alloca. The code is almost identical except for the
-use of load/store for the variables and removal of the manually generated PHI nodes.</p>
+<p>Next up is to update the for loop handling to use Alloca. The code is almost identical
+except for the use of load/store for the variables and removal of the manually generated PHI
+nodes.</p>
 <pre><code class="lang-csharp" name="VisitForExpression">public override Value? Visit( ForInExpression forInExpression )
 {
     ArgumentNullException.ThrowIfNull( forInExpression );
@@ -479,10 +499,10 @@ use of load/store for the variables and removal of the manually generated PHI no
     }
 }
 </code></pre><h3 id="update-visitor-for-functiondefinition">Update Visitor for FunctionDefinition</h3>
-<p>To support mutable function argument variables the handler for functions requires a small update to create
-the Alloca for each incoming argument and for each of the local variables used by the function. The AST
-generation tracks the variable declarations in a function so they are all available to generate directly
-into the entry block.</p>
+<p>To support mutable function argument variables the handler for functions requires a small
+update to create the Alloca for each incoming argument and for each of the local variables
+used by the function. The AST generation tracks the variable declarations in a function so
+they are all available to generate directly into the entry block.</p>
 <pre><code class="lang-csharp" name="DefineFunction">public override Value? Visit( FunctionDefinition definition )
 {
     ArgumentNullException.ThrowIfNull( definition );
@@ -531,15 +551,17 @@ into the entry block.</p>
     }
 }
 </code></pre><h3 id="initializemoduleandpassmanager">InitializeModuleAndPassManager</h3>
-<p>The last piece required for mutable variables support is to include the optimization pass to promote memory
-to registers. This is always enabled, so that the proper SSA form is correctly generated.</p>
+<p>The last piece required for mutable variables support is to include the optimization pass to
+promote memory to registers. This is always enabled, so that the proper SSA form is
+correctly generated.</p>
 <pre><code class="lang-csharp" name="InitializeModuleAndPassManager"></code></pre><h3 id="add-operator-support-for-assignment-expressions">Add operator support for Assignment Expressions</h3>
-<p>Unlike the other binary operators assignment doesn't follow the same emit left, emit right, emit operator
-sequence. This is because an expression like '(x+1) = expression' is nonsensical and therefore not allowed.
-The left hand side is always a variable reference expression as the destination of a store. To handle this
-special case the Generator doesn't generate for the left side, but instead looks up the Alloca for the
-variable for the store. The generator then implements a store operation of the right hand side value to the
-Alloca for the left side.</p>
+<p>Unlike the other binary operators assignment doesn't follow the same emit left, emit right,
+emit operator sequence. This is because an expression like '(x+1) = expression' is
+nonsensical and therefore not allowed. The left hand side is always a variable reference
+expression as the destination of a store. To handle this special case the Generator doesn't
+generate for the left side, but instead looks up the Alloca for the variable for the store.
+The generator then implements a store operation of the right hand side value to the <code>alloca</code>
+for the left side.</p>
 <pre><code class="lang-csharp" name="BinaryOperatorExpression">public override Value? Visit( BinaryOperatorExpression binaryOperator )
 {
     ArgumentNullException.ThrowIfNull( binaryOperator );
@@ -598,8 +620,8 @@ Alloca for the left side.</p>
     }
 }
 </code></pre>
-<p>Now that we have mutable variables and assignment we can mutate loop variables or input parameters. For
-example:</p>
+<p>Now that we have mutable variables and assignment we can mutate loop variables or input
+parameters. For example:</p>
 <pre><code class="lang-Kaleidoscope"># Function to print a double.
 extern printd(x);
 
@@ -616,15 +638,17 @@ test(123);
 </code></pre>
 <p>When run, this prints <code>1234</code> and <code>4</code>, showing that the value was mutated as, expected.</p>
 <h2 id="user-defined-local-variables">User-defined Local Variables</h2>
-<p>As described in the general syntax discussion of the Kaleidoscope language <a class="xref" href="../Chapter2/Kaleidoscope-ch2.html#varinexpression">VarInExpression</a>
-the VarIn expression is used to declare local variables for a scope. A few changes are required to support
-this language construct.</p>
+<p>As described in the general syntax discussion of the Kaleidoscope language
+<a class="xref" href="../Chapter2/Kaleidoscope-ch2.html#varinexpression">VarInExpression</a> the VarIn expression is used to
+declare local variables for a scope. A few changes are required to support this language
+construct.</p>
 <h3 id="add-visitor-for-varinexpression">Add Visitor for VarInExpression</h3>
-<p>The VarIn expression visitor needs to handle the mutability of the scoped variables. The basic idea for each
-VarIn expression is to push a new scope on the scope stack then walk through all the variables in the
-expression to define them and emit the expression for the initializer. After all the values are defined the
-child expression &quot;scope&quot; is emitted, which may contain another VarIn or loop expression. Once the emit
-completes, the variable scope is popped from the stack to restore back the previous level.</p>
+<p>The VarIn expression visitor needs to handle the mutability of the scoped variables. The
+basic idea for each VarIn expression is to push a new scope on the scope stack then walk
+through all the variables in the expression to define them and emit the expression for the
+initializer. After all the values are defined the child expression &quot;scope&quot; is emitted, which
+may contain another VarIn or loop expression. Once the emit completes, the variable scope is
+popped from the stack to restore back the previous level.</p>
 <pre><code class="lang-csharp" name="VisitVarInExpression">public override Value? Visit( VarInExpression varInExpression )
 {
     ArgumentNullException.ThrowIfNull( varInExpression );
@@ -649,8 +673,9 @@ completes, the variable scope is popped from the stack to restore back the previ
     }
 }
 </code></pre><h2 id="conclusion">Conclusion</h2>
-<p>This completes the updates needed to support mutable variables with potentially nested scopes. All of this
-without needing to manually deal with PHI nodes or generate SSA form! Now, that's convenient!</p>
+<p>This completes the updates needed to support mutable variables with potentially nested
+scopes. All of this without needing to manually deal with PHI nodes or generate SSA form!
+Now, that's convenient!</p>
 
 </article>
 
@@ -672,7 +697,7 @@ without needing to manually deal with PHI nodes or generate SSA form! Now, that'
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-epsilon
+          - Build: 20.1.8-rc
         </div>
       </div>
     </footer>
