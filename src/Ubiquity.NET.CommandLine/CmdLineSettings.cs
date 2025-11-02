@@ -1,11 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
-using System.CommandLine;
-using System.CommandLine.Completions;
-using System.CommandLine.Parsing;
-
 namespace Ubiquity.NET.CommandLine
 {
     /// <summary>Flags to determine the default Options for an <see cref="AppControlledDefaultsRootCommand"/></summary>

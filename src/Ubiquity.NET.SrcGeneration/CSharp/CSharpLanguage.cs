@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
-using System.Collections.Immutable;
-
 namespace Ubiquity.NET.SrcGeneration.CSharp
 {
     /// <summary>Support for generating source files in the C# language</summary>
@@ -104,9 +101,12 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
         {
             ArgumentNullException.ThrowIfNull( self );
 
+            // always replace invalid characters
+            // TODO: more sophisticated Regex that matches anything NOT a valid identifier char
+            string retVal = self.Replace( " ", "_", StringComparison.Ordinal );
             return KeyWords.Contains( self )
-                    ? $"@{self}"
-                    : self.Replace( " ", "_", StringComparison.Ordinal );
+                    ? $"@{retVal}"
+                    : retVal;
         }
     }
 }

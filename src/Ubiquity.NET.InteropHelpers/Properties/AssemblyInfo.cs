@@ -1,10 +1,6 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
-using System.Resources;
-using System.Runtime.InteropServices;
-
 // In SDK-style projects such as this one, several assembly attributes that were historically
 // defined in this file are now automatically added during build and populated with
 // values defined in project properties. For details of which attributes are included

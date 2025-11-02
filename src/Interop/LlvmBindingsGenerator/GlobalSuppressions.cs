@@ -6,6 +6,4 @@
 // a specific target and scoped to a namespace, type, member, etc.
 */
 
-using System.Diagnostics.CodeAnalysis;
-
 [assembly: SuppressMessage( "", "SA0001: XML comment analysis is disabled due to project configuration", Justification = "Internal tool")]

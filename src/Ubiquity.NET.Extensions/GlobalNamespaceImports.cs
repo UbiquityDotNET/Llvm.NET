@@ -13,33 +13,14 @@ For an explanation of the benefits of the language feature see: https://www.hans
 */
 
 global using System;
+global using System.Collections;
+global using System.Collections.Generic;
 global using System.Collections.Immutable;
+global using System.ComponentModel;
 global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
 global using System.Globalization;
 global using System.IO;
-global using System.Linq;
 global using System.Reflection;
 global using System.Runtime.CompilerServices;
-global using System.Runtime.InteropServices;
-global using System.Runtime.InteropServices.Marshalling;
 global using System.Threading;
-
-global using Ubiquity.NET.Extensions;
-global using Ubiquity.NET.InteropHelpers;
-global using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
-global using Ubiquity.NET.Llvm.Interop.ABI.llvm_c;
-global using Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling;
-global using Ubiquity.NET.Llvm.Interop.Properties;
-global using Ubiquity.NET.Versioning;
-
-global using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.OrcJITv2Bindings;
-global using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TargetRegistrationBindings;
-global using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Error;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.ErrorHandling;
-
-// global using for the NativeMethods type to allow simpler access to the
-// string const for the library name.
-global using static Ubiquity.NET.Llvm.Interop.NativeMethods;

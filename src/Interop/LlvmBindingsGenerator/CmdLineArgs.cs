@@ -1,23 +1,18 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System.CommandLine.Parsing;
-using System.IO;
-
-using CppSharp;
-
 namespace LlvmBindingsGenerator
 {
     internal partial class CmdLineArgs
     {
         // [Option("-l", Required=true, Description="Root of source with the LLVM headers to parse (Assumes and validates a sub-folder 'include')"]
         // [AcceptExistingFolderOnly]
-        // [Validator( "CmdLineArgs.ValidateIncludeFolder" )]
+        // [Validator( nameof(ValidateIncludeFolder) )]
         public required DirectoryInfo LlvmRoot { get; init; }
 
         // [Option("-e", Required=true, Description="Root of source with the LibLLVM extension headers to parse (Assumes and validates a sub-folder 'include')"]
         // [AcceptExistingFolderOnly]
-        // [Validator( "CmdLineArgs.ValidateIncludeFolder" )]
+        // [Validator( nameof(ValidateIncludeFolder) )]
         public required DirectoryInfo ExtensionsRoot { get; init; }
 
         // [Option("-e", Required=true, Description="Output to place the generated code for handles. No handle source is generated if this is not provided")]

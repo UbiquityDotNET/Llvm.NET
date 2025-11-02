@@ -1,13 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-
 namespace Ubiquity.NET.Extensions
 {
     // This does NOT use the new C# 14 extension syntax due to several reasons

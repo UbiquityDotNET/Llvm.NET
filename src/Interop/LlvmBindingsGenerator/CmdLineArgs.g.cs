@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
+// Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
+
+using System;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Parsing;
@@ -45,7 +48,7 @@ namespace LlvmBindingsGenerator
         {
             // description is hard coded and should come from generation attribute on the "CmdLineArgs" type
             // TODO: Check for duplicate options.
-            //       (-?,-h, --help, and --version) are used by default options so nothing should use those values.
+            //       (-?, -h, --help, and --version) are used by default options so nothing should use those values.
             //       Generator/analyzer should validate that so it isn't a runtime hit.
             return new AppControlledDefaultsRootCommand( settings, "LLVM handle wrapper source generator" )
             {
