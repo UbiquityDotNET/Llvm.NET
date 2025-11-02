@@ -1,17 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
-using Antlr4.Runtime.Tree;
-
-using static System.Math;
-
 namespace Ubiquity.NET.ANTLR.Utils
 {
     /// <summary>Utility functions for extending ANTLR types</summary>
@@ -33,7 +22,7 @@ namespace Ubiquity.NET.ANTLR.Utils
 
             int startChar = ruleContext.Start.StartIndex;
             int endChar = ruleContext.Stop.StopIndex - 1;
-            return Interval.Of( Min( startChar, endChar ), Max( startChar, endChar ) );
+            return Interval.Of( Math.Min( startChar, endChar ), Math.Max( startChar, endChar ) );
         }
 
         /// <summary>Gets the source <see cref="ICharStream"/> from a recognizer if it is available</summary>

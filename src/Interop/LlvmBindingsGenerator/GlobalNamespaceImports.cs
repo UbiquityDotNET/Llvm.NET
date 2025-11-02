@@ -13,33 +13,28 @@ For an explanation of the benefits of the language feature see: https://www.hans
 */
 
 global using System;
+global using System.Collections.Generic;
 global using System.Collections.Immutable;
-global using System.Diagnostics;
+global using System.CommandLine.Parsing;
 global using System.Diagnostics.CodeAnalysis;
-global using System.Globalization;
 global using System.IO;
 global using System.Linq;
 global using System.Reflection;
-global using System.Runtime.CompilerServices;
 global using System.Runtime.InteropServices;
-global using System.Runtime.InteropServices.Marshalling;
-global using System.Threading;
+global using System.Text;
 
-global using Ubiquity.NET.Extensions;
-global using Ubiquity.NET.InteropHelpers;
-global using Ubiquity.NET.Llvm.Interop.ABI.libllvm_c;
-global using Ubiquity.NET.Llvm.Interop.ABI.llvm_c;
-global using Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling;
-global using Ubiquity.NET.Llvm.Interop.Properties;
-global using Ubiquity.NET.Versioning;
+global using CppSharp;
+global using CppSharp.AST;
+global using CppSharp.Generators;
+global using CppSharp.Generators.CSharp;
+global using CppSharp.Parser;
+global using CppSharp.Passes;
+global using CppSharp.Types;
+global using CppSharp.Utils;
 
-global using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.OrcJITv2Bindings;
-global using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TargetRegistrationBindings;
-global using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.ValueBindings;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Error;
-global using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.ErrorHandling;
+global using LlvmBindingsGenerator.Configuration;
+global using LlvmBindingsGenerator.CppSharpExtensions;
+global using LlvmBindingsGenerator.Passes;
+global using LlvmBindingsGenerator.Templates;
 
-// global using for the NativeMethods type to allow simpler access to the
-// string const for the library name.
-global using static Ubiquity.NET.Llvm.Interop.NativeMethods;
+global using Ubiquity.NET.CommandLine;

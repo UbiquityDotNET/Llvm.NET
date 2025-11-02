@@ -1,12 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using Ubiquity.NET.Versioning;
-
-using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.TargetRegistrationBindings;
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.ErrorHandling;
-
 namespace Ubiquity.NET.Llvm.Interop
 {
     /// <summary>Provides support for various LLVM static state initialization and manipulation</summary>

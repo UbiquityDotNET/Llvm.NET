@@ -1,16 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
-using System.Collections.Immutable;
-using System.IO;
-
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
-
-using Ubiquity.NET.Extensions;
-using Ubiquity.NET.Runtime.Utils;
-
 namespace Ubiquity.NET.ANTLR.Utils
 {
     /// <summary>Adapter to translate ANTLR error listeners to an <see cref="IParseErrorListener"/></summary>

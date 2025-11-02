@@ -68,7 +68,7 @@ While other languages are possible this is the only one currently "built-in".
 * `TextWriterCsExtension` to provide more extensions to a `TextWriter` that are specific to
   the C# language.
     * Method to write an attribute line
-    * Method to write (without new line) and attribute
+    * Method to write (without new line) an attribute
     * Method to write an XML Doc comment `summary` tag.
     * Method to write an XML Doc comment `remarks` tag.
     * Method to write an XML Doc comment `summary` and  `remarks` tags with optional default

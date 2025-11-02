@@ -1,16 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System.Collections.Generic;
-using System.Linq;
-
-using CppSharp;
-using CppSharp.Generators;
-using CppSharp.Passes;
-
-using LlvmBindingsGenerator.Configuration;
-using LlvmBindingsGenerator.CppSharpExtensions;
-
 namespace LlvmBindingsGenerator
 {
     // Factory class for the templates needed in code generation

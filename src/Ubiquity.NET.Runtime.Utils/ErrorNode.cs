@@ -1,11 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
-using System.Collections.Generic;
-using Ubiquity.NET.CommandLine;
-using Ubiquity.NET.Extensions;
-
 namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Represents an IAstNode where an error occurred in the parse</summary>

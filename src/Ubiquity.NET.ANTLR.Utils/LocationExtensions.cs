@@ -1,13 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
-
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-
-using Ubiquity.NET.Extensions;
-
 namespace Ubiquity.NET.ANTLR.Utils
 {
     /// <summary>Utility class to provide extensions for translation of ANTLR location data into a <see cref="SourceRange"/></summary>

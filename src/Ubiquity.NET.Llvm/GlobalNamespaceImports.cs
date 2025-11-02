@@ -29,6 +29,7 @@ global using System.IO;
 global using System.Linq;
 global using System.Runtime.CompilerServices;
 global using System.Runtime.InteropServices;
+global using System.Security.Cryptography;
 global using System.Text;
 global using System.Threading;
 

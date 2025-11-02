@@ -4,8 +4,6 @@
 // Elements ARE ordered correctly, analyzer has dumb defaults and doesn't allow override of order
 #pragma warning disable SA1202 // Elements should be ordered by access
 
-using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Orc;
-
 namespace Ubiquity.NET.Llvm.OrcJITv2
 {
     /// <summary>Abstract base class for an LLVM ORC JIT v2 Materialization Unit</summary>

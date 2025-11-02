@@ -1,18 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.IO;
-using System.Text;
-
-using Ubiquity.NET.Extensions;
-using Ubiquity.NET.InteropHelpers;
-using Ubiquity.NET.SrcGeneration.CSharp;
-
 namespace Ubiquity.NET.Runtime.Utils
 {
     /// <summary>Simple implementation of common Variable scoping</summary>
