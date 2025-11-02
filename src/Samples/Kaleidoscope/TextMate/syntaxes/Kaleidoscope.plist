@@ -31,9 +31,9 @@
         <key>name</key>
         <string>comment.line.number-sign.kaleidoscope</string>
         <key>begin</key>
-          <string>#</string>
-          <key>end</key>
-          <string>\n</string>
+        <string>#</string>
+        <key>end</key>
+        <string>\n</string>
       </dict>
       <dict>
         <!-- NOTE: In VS these become tagged as "number" unless overridden with a custom definition -->
