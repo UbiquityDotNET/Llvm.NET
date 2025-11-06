@@ -3,26 +3,42 @@
 
 namespace Ubiquity.NET.Extensions
 {
-    // This does NOT use the new C# 14 extension syntax due to several reasons
-    // 1) Code lens does not work https://github.com/dotnet/roslyn/issues/79006 [Sadly marked as "not planned" - e.g., dead-end]
-    // 2) MANY analyzers get things wrong and need to be supressed (CA1000, CA1034, and many others [SAxxxx])
-    // 3) Many tools (like docfx don't support the new syntax yet)
-    // 4) No clear support for Caller* attributes ([CallerArgumentExpression(...)]).
-    //
-    // Bottom line it's a good idea with an incomplete implementation lacking support
-    // in the overall ecosystem. Don't use it unless you absolutely have to until all
-    // of that is sorted out.
-
     /// <summary>Utility class to provide extensions for consumers</summary>
+    [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "Extension" )]
     public static class AssemblyExtensions
     {
-        /// <summary>Gets the value of the <see cref="AssemblyInformationalVersionAttribute"/> from an assembly</summary>
-        /// <param name="self">Assembly to get informational version from</param>
-        /// <param name="exp">Expression for <paramref name="self"/>; Normally set by compiler.</param>
-        /// <returns>Information version of the assembly or an empty string if not available</returns>
-        public static string GetInformationalVersion(this Assembly self, [CallerArgumentExpression(nameof(self))] string? exp = null)
+        // VS2026 builds of this are OK, however command line/PR/CI builds will generate an error
+        // No idea why there's a difference the $(NETCoreSdkVersion) is the same in both so it's
+        // unclear why the two things behave differently. This is just another example of why the
+        // `extension` keyword is "not yet ready for prime time". Too many things don't support it
+        // properly yet. [Hopefully, that works itself out in short order as it's useless unless
+        // fully supported]
+#if COMPILER_SUPPORTS_CALLER_ATTRIBUES_ON_EXTENSION
+        extension(Assembly self)
         {
-            ArgumentNullException.ThrowIfNull(self, exp);
+            /// <summary>Gets the informational version from an assembly</summary>
+            /// <param name="exp">Expresssion for the assembly to retrieve the attribute data from; normally provided by compiler</param>
+            /// <returns>String contents from the <see cref="AssemblyInformationalVersionAttribute"/> in the assembly or <see cref="string.Empty"/></returns>
+            [SuppressMessage( "Performance", "CA1822:Mark members as static", Justification = "Instance extension" )]
+            public string GetInformationalVersion( [CallerArgumentExpression( nameof( self ) )] string? exp = null )
+            {
+                ArgumentNullException.ThrowIfNull( self, exp );
+
+                var assemblyVersionAttribute = self.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+
+                return assemblyVersionAttribute is not null
+                    ? assemblyVersionAttribute.InformationalVersion
+                    : self.GetName().Version?.ToString() ?? string.Empty;
+            }
+        }
+#else
+        /// <summary>Gets the informational version from an assembly</summary>
+        /// <param name="self">Assembly to extract the version from</param>
+        /// <param name="exp">Expresssion for the assembly to retrieve the attribute data from; normally provided by compiler</param>
+        /// <returns>String contents from the <see cref="AssemblyInformationalVersionAttribute"/> in the assembly or <see cref="string.Empty"/></returns>
+        public static string GetInformationalVersion(this Assembly self, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
+        {
+            ArgumentNullException.ThrowIfNull( self, exp );
 
             var assemblyVersionAttribute = self.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
 
@@ -30,5 +46,7 @@ namespace Ubiquity.NET.Extensions
                 ? assemblyVersionAttribute.InformationalVersion
                 : self.GetName().Version?.ToString() ?? string.Empty;
         }
+#endif
+
     }
 }

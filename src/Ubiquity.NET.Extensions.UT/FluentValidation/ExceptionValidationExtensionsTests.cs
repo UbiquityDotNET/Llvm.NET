@@ -1,22 +1,20 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
-using System.ComponentModel;
+using Ubiquity.NET.Extensions.FluentValidation;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace Ubiquity.NET.Extensions.UT
+namespace Ubiquity.NET.Extensions.UT.FluentValidation
 {
     [TestClass]
-    public sealed class FluentValidationExtensionsTests
+    [ExcludeFromCodeCoverage]
+    public sealed class ExceptionValidationExtensionsTests
     {
         [TestMethod]
         public void ThrowIfNull_throws_expected_exception_when_null( )
         {
             var ex = Assert.ThrowsExactly<ArgumentNullException>(()=>
             {
-                FluentValidationExtensions.ThrowIfNull<string>( null );
+                ExceptionValidationExtensions.ThrowIfNull<string>( null );
             } );
             Assert.AreEqual("null", ex.ParamName, "parameter name should match input expression");
         }
@@ -26,7 +24,7 @@ namespace Ubiquity.NET.Extensions.UT
         {
             const string input = "This is a test";
 
-            Assert.AreSame(input, FluentValidationExtensions.ThrowIfNull(input), "Fluent API should return input value on success" );
+            Assert.AreSame(input, ExceptionValidationExtensions.ThrowIfNull(input), "Fluent API should return input value on success" );
         }
 
         [TestMethod]
@@ -35,7 +33,7 @@ namespace Ubiquity.NET.Extensions.UT
             const string exp = "My-Expression";
             var ex = Assert.ThrowsExactly<ArgumentNullException>(()=>
             {
-                FluentValidationExtensions.ThrowIfNull<string>( null, exp );
+                ExceptionValidationExtensions.ThrowIfNull<string>( null, exp );
             } );
             Assert.AreEqual( exp, ex.ParamName, "parameter name should match input expression" );
         }
@@ -43,7 +41,7 @@ namespace Ubiquity.NET.Extensions.UT
         [TestMethod]
         public void ThrowIfNotDefined_does_not_throw_for_defined_value()
         {
-            Assert.AreEqual(TestEnum.Max, FluentValidationExtensions.ThrowIfNotDefined(TestEnum.Max), "Fluent API should return input value on success" );
+            Assert.AreEqual(TestEnum.Max, ExceptionValidationExtensions.ThrowIfNotDefined(TestEnum.Max), "Fluent API should return input value on success" );
         }
 
         [TestMethod]
@@ -53,7 +51,7 @@ namespace Ubiquity.NET.Extensions.UT
             double min = 0.0;
             double max = 2.0;
 
-            Assert.AreEqual(value, FluentValidationExtensions.ThrowIfOutOfRange(value, min, max), "Fluent API should return input value on success");
+            Assert.AreEqual(value, ExceptionValidationExtensions.ThrowIfOutOfRange(value, min, max), "Fluent API should return input value on success");
         }
 
         [TestMethod]
@@ -65,7 +63,7 @@ namespace Ubiquity.NET.Extensions.UT
 
             var ex = Assert.ThrowsExactly<ArgumentOutOfRangeException>(()=>
             {
-                _ = FluentValidationExtensions.ThrowIfOutOfRange( value, min, max );
+                _ = ExceptionValidationExtensions.ThrowIfOutOfRange( value, min, max );
             } );
             Assert.AreEqual(value, ex.ActualValue);
             Assert.AreEqual(nameof(value), ex.ParamName);
@@ -81,7 +79,7 @@ namespace Ubiquity.NET.Extensions.UT
             const string exp = "My Expression";
             var ex = Assert.ThrowsExactly<ArgumentOutOfRangeException>(()=>
             {
-                _ = FluentValidationExtensions.ThrowIfOutOfRange( value, min, max, exp );
+                _ = ExceptionValidationExtensions.ThrowIfOutOfRange( value, min, max, exp );
             } );
             Assert.AreEqual( value, ex.ActualValue );
             Assert.AreEqual( exp, ex.ParamName );
@@ -93,14 +91,14 @@ namespace Ubiquity.NET.Extensions.UT
             var temp = (TestEnum)4;
             var ex = Assert.ThrowsExactly<InvalidEnumArgumentException>( ( ) =>
             {
-                FluentValidationExtensions.ThrowIfNotDefined(temp);
+                ExceptionValidationExtensions.ThrowIfNotDefined(temp);
             } );
             Assert.AreEqual(nameof(temp), ex.ParamName, "parameter name should match input expression" );
 
             var temp2 = (TestByteEnum)4;
             var ex2 = Assert.ThrowsExactly<InvalidEnumArgumentException>( ( ) =>
             {
-                FluentValidationExtensions.ThrowIfNotDefined(temp2);
+                ExceptionValidationExtensions.ThrowIfNotDefined(temp2);
             } );
             Assert.AreEqual( nameof( temp2 ), ex2.ParamName, "parameter name should match input expression" );
 
@@ -108,7 +106,7 @@ namespace Ubiquity.NET.Extensions.UT
             var temp3 = (TestU64Enum)int.MaxValue;
             var ex3 = Assert.ThrowsExactly<InvalidEnumArgumentException>( ( ) =>
             {
-                FluentValidationExtensions.ThrowIfNotDefined(temp3);
+                ExceptionValidationExtensions.ThrowIfNotDefined(temp3);
             } );
             Assert.AreEqual( nameof( temp3 ), ex3.ParamName, "parameter name should match input expression" );
 
@@ -117,7 +115,7 @@ namespace Ubiquity.NET.Extensions.UT
             var temp4 = (TestU64Enum)(UInt64.MaxValue - 1);
             var ex4 = Assert.ThrowsExactly<InvalidEnumArgumentException>( ( ) =>
             {
-                FluentValidationExtensions.ThrowIfNotDefined(temp4);
+                ExceptionValidationExtensions.ThrowIfNotDefined(temp4);
             } );
             Assert.IsNull( ex4.ParamName, "parameter name not available for non-int formattable enums" );
         }

@@ -12,7 +12,11 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
         /// <summary>Closing of a scope for C#</summary>
         public const string ScopeClose = "}";
 
-        /// <summary>Gets the language keywords used to make identifiers</summary>
+        /// <summary>Gets the language keywords</summary>
+        /// <remarks>
+        /// This is normally used from within <see cref="MakeIdentifier(string)"/>
+        /// to escape keywords as identifiers. But is available for any use.
+        /// </remarks>
         public static ImmutableArray<string> KeyWords { get; }
             = [ // Source: Language spec. §6.4.4 Keywords
                 "abstract",
@@ -97,13 +101,24 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
         /// <summary>Makes an identifier (Escaping a language keyword)</summary>
         /// <param name="self">identifier string to convert</param>
         /// <returns>Syntactically valid identifier</returns>
+        /// <remarks>
+        /// Current implementation simplisticly performs keyword escaping AND
+        /// conversion of space to `'_'`. Specifically, it does NOT (yet anyway)
+        /// validate that the result satisfies the language definition of an
+        /// identifier (which limits the characters allowed and further restricts
+        /// the first such character)
+        /// </remarks>
         public static string MakeIdentifier( this string self )
         {
             ArgumentNullException.ThrowIfNull( self );
 
             // always replace invalid characters
             // TODO: more sophisticated Regex that matches anything NOT a valid identifier char
+#if NETSTANDARD2_0
+            string retVal = self.Replace( " ", "_" );
+#else
             string retVal = self.Replace( " ", "_", StringComparison.Ordinal );
+#endif
             return KeyWords.Contains( self )
                     ? $"@{retVal}"
                     : retVal;

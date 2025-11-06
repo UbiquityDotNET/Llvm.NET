@@ -2,6 +2,7 @@
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,3 +23,4 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 [assembly: CLSCompliant( false )]
 
 [assembly: Parallelize( Scope = ExecutionScope.ClassLevel )]
+[assembly: ExcludeFromCodeCoverage]

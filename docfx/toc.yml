@@ -21,3 +21,5 @@
       href: interop-helpers/index.md
     - name: CommandLine Parsing
       href: CommandLine/index.md
+    - name: Source Generation
+      href: SrcGeneration/index.md

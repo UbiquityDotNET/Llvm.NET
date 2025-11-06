@@ -80,6 +80,7 @@
     <Project Path="Ubiquity.NET.InteropHelpers.UT/Ubiquity.NET.InteropHelpers.UT.csproj" />
     <Project Path="Ubiquity.NET.Llvm.JIT.Tests/Ubiquity.NET.Llvm.JIT.Tests.csproj" />
     <Project Path="Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.UT.csproj" />
+    <Project Path="Ubiquity.NET.SrcGeneration.UT/Ubiquity.NET.SrcGeneration.UT.csproj" Id="eaf06b2e-fb6c-450c-9fb2-774b043acf4d" />
   </Folder>
   <Project Path="../docfx/documentation.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
   <Project Path="../PsModules/CommonBuild/CommonBuild.pssproj" Type="f5034706-568f-408a-b7b3-4d38c6db8a32" Id="6cafc0c6-a428-4d30-a9f9-700e829fea51" />
