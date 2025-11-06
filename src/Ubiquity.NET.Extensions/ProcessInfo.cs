@@ -18,7 +18,10 @@ namespace Ubiquity.NET.Extensions
         public static string ExecutablePath => Environment.GetCommandLineArgs()[ 0 ];
 
         /// <summary>Gets the name of the executable for this instance of an application</summary>
-        /// <remarks>This is a short hand for Path.GetFileNameWithoutExtension( <see cref="ExecutablePath"/> )</remarks>
+        /// <remarks>
+        /// This is a short hand for <see cref="Path.GetFileNameWithoutExtension(string)"/> using
+        /// <see cref="ExecutablePath"/> as the path.
+        /// </remarks>
         public static string ExecutableName => Path.GetFileNameWithoutExtension( ExecutablePath );
     }
 }

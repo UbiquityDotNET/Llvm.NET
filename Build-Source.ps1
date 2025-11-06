@@ -31,7 +31,7 @@ try
     $buildInfo = Initialize-BuildEnvironment -FullInit:$FullInit
 
     # build the Managed code support
-    Write-Information "dotnet build 'src\Ubiquity.NET.Llvm.slnx' -c $Configuration"
+    Write-Information "dotnet build --tl:off 'src\Ubiquity.NET.Llvm.slnx' -c $Configuration"
     Invoke-External dotnet build --tl:off 'src\Ubiquity.NET.Llvm.slnx' '-c' $Configuration
 }
 catch

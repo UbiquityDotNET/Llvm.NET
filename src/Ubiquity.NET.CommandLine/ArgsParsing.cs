@@ -18,20 +18,14 @@ namespace Ubiquity.NET.CommandLine
         /// <param name="settings">Settings for the parse</param>
         /// <returns>Results of the parse</returns>
         /// <remarks>
-        /// Additional steps might include:
-        /// <para>
-        /// <list type="number">
-        ///     <item>App specific Validation/semantic analysis</item>
-        ///     <item>Binding of results to an app specific type</item>
-        ///     <item>
-        ///     Act on the results as proper for the application
-        ///     <list type="number">
-        ///         <item>This might include actions parsed but generally isolating the various stages is an easier to understand/maintain model</item>
-        ///         <item>Usually this is just app specific code that uses the bound results to adapt behavior</item>
-        ///     </list>
-        ///     </item>
-        /// </list>
-        /// </para>
+        /// Additional steps might include:<br/>
+        ///
+        /// 1) App specific Validation/semantic analysis<br/>
+        /// 2) Binding of results to an app specific type<br/>
+        /// 3) Act on the results as proper for the application<br/>
+        ///     a. This might include actions parsed but generally isolating the various stages is an easier to understand/maintain model<br/>
+        ///     b. Usually this is just app specific code that uses the bound results to adapt behavior<br/>
+        ///
         /// <para>
         /// This isolation of stages fosters clean implementation AND allows for variances not considered or accounted for in the
         /// parsing library. (For instance mutual exclusion of options etc...) validation is an APP specific thing. There
@@ -39,7 +33,7 @@ namespace Ubiquity.NET.CommandLine
         /// on the app and sometimes the runtime environment. (i.e., Should an app maintain strict adherence to a command line options
         /// even when such options/patterns are NOT the norm on that environment/OS?)</para>
         /// <para>The <see cref="System.CommandLine"/> system already confuses the help and version "options" as they are conceptually
-        /// "commands" in terms of that library. (To be fair, the POSIX description it is based on confuses the point as well) This
+        /// "commands" in terms of that library. To be fair, the POSIX description it is based on confuses the point as well. This
         /// ambiguity continues by attaching actions and validation to many symbols. While that might seem like it's a good thing,
         /// almost every app needs to customize the behavior. Some apps simply can't do so using the current models. Thus, this
         /// implementation simply removes the actions and validation to leave both stages to the calling application as it keeps
@@ -124,29 +118,29 @@ namespace Ubiquity.NET.CommandLine
         /// <param name="exitCode">Exit code for the process (only valid when return is <see langword="false"/> (see remarks)</param>
         /// <returns><see langword="true"/> if the app should continue and <see langword="false"/> if not</returns>
         /// <remarks>
-        /// <para>
-        /// Since this wraps several common operations, some of which may require exiting the app the return value
+        /// <para>Since this wraps several common operations, some of which may require exiting the app, the return value
         /// has the semantics of "App should continue". In the event of parse errors or failures in invocation of
         /// the default options the result is a <see langword="false"/> with an <paramref name="exitCode"/> set to
         /// a proper exit code value. (non-zero for errors and zero for success even though the app should still
-        /// exit)
-        /// </para>
+        /// exit)</para>
+        ///
         /// <para>This wraps the common pattern of parsing a command line, invoking default options, and binding the results of a parse
         /// using a standard .NET "try pattern". The invocation of default options may return <see langword="false"/> with
-        /// <paramref name="exitCode"/> set to <c>0</c>. this indicates the parse was successful AND that the default option was
+        /// <paramref name="exitCode"/> set to <c>0</c>. This indicates the parse was successful AND that the default option was
         /// run successfully and the app should exit.</para>
-        /// <para>In short this wraps the following sequence of common operations and exiting on completion of
-        /// any operation with errors or successful invocation of default options:
-        /// <list type="number">
-        /// <item><see cref="Parse{T}(string[], CmdLineSettings?)"/></item>
-        /// <item><see cref="ReportErrors(ParseResult, IDiagnosticReporter)"/></item>
-        /// <item><see cref="InvokeDefaultOptions(ParseResult, CmdLineSettings, IDiagnosticReporter)"/></item>
-        /// <item><see cref="ICommandLineOptions{T}.Bind(ParseResult)"/></item>
-        /// </list>
-        /// </para>
-        /// <para>
-        /// The <paramref name="exitCode"/> is set to the exit code of the app on failures
-        /// </para>
+        ///
+        /// In short, this wraps the following sequence of common operations and exiting on completion of
+        /// any operation with errors or successful invocation of default options:<br/>
+        /// 1) <see cref="Parse{T}(string[], CmdLineSettings?)"/><br/>
+        /// 2) <see cref="ReportErrors(ParseResult, IDiagnosticReporter)"/><br/>
+        /// 3) <see cref="InvokeDefaultOptions(ParseResult, CmdLineSettings, IDiagnosticReporter)"/><br/>
+        /// 4) <see cref="ICommandLineOptions{T}.Bind(ParseResult)"/><br/>
+        ///
+        /// <para>The <paramref name="exitCode"/> is set to the exit code for the app on failures. This code indicates the
+        /// parse errors and is the result of invoking <see cref="ParseErrorAction"/> which, as of the current release,
+        /// is always 1, though this behavior is not documented and therefore subject to change. Thus, calling applications
+        /// should ***NOT*** rely on this value and instead use their own value to indicate a parse error that is documented
+        /// and stable.</para>
         /// </remarks>
         public static bool TryParse<T>(
             string[] args,

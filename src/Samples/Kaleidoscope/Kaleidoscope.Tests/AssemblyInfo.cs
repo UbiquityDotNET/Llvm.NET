@@ -1,6 +1,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,3 +22,4 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 [assembly: Guid("8ebe7a8e-6ee2-4762-8d6d-333a4497dc96")]
 
 [assembly: Parallelize( Scope = ExecutionScope.ClassLevel )]
+[assembly: ExcludeFromCodeCoverage]

@@ -12,6 +12,11 @@ where it belongs. For a good explanation of this problem see: https://rehansaeed
 For an explanation of the benefits of the language feature see: https://www.hanselman.com/blog/implicit-usings-in-net-6
 */
 
+// BUG: False positive from IDE0005 - Using directive is unnecessary
+// Attempts to remove/sort are at least able to figure it out and do the right thing.
+// Bug seems to be related to multi-targetting.
+#pragma warning disable IDE0005
+
 global using System;
 global using System.Collections;
 global using System.Collections.Generic;
@@ -23,4 +28,11 @@ global using System.Globalization;
 global using System.IO;
 global using System.Reflection;
 global using System.Runtime.CompilerServices;
+global using System.Text;
 global using System.Threading;
+
+global using Ubiquity.NET.Extensions;
+global using Ubiquity.NET.Extensions.Properties;
+
+// alias allows simpler porting of polyfill from .NET sources
+global using SR = Ubiquity.NET.Extensions.Properties.Resources;

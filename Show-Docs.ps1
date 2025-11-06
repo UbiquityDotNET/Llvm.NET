@@ -18,7 +18,7 @@ Param(
     [string]$DocsPathToHost
 )
 
-$docFXToolVersion = '2.78.3'
+$docFXToolVersion = '2.78.4'
 
 $InformationPreference = 'Continue'
 $ErrorInformationPreference = 'Stop'

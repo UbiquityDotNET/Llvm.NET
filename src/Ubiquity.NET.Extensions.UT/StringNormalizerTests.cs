@@ -1,13 +1,11 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace Ubiquity.NET.Extensions.UT
 {
-    // NOTE: Test output will include special characters for CR and LF characters that makes it easy to visualize
+    // NOTE: Test output will include special characters for CR (U+240D) and LF (U+240A) characters that makes it easy to visualize
+    //       line ending differences.
+    //
     // Example:
     //     Assert.AreEqual failed. Expected string length 51 but was 52. 'expected' expression: 'expectedOutput', 'actual' expression: 'systemNormalizedInput'.
     // Expected: "This is a line␊This is anotherline␊And..."
@@ -16,15 +14,17 @@ namespace Ubiquity.NET.Extensions.UT
 
     // NOTE: In C# the string "line1\nLine2" has exactly what was put in the string
     //       That is, it contains a SINGLE LF '\n' character. NOT an environment
-    //       specific "newline". Thus, if a string needs to represent an platform specific
+    //       specific "newline". Thus, if a string needs to represent a platform specific
     //       newline sequence it can use `Environment.NewLine` or `string.ReplaceLineEndings()`.
     //       The docs on `ReplaceLineEndings()` are silent on the point of input forms
-    //       replaced. However, seplunking the code indicates it follows Unicode standard §5.8,
+    //       replaced. However, spelunking the code indicates it follows Unicode standard §5.8,
     //       Recommendation R4 and Table 5-2 (CR, LF, CRLF, NEL, LS, FF, PS). Explicitly excluded
     //       is VT. Thus, that will normalize ANY newline sequence to the form expected by the
     //       environment.
+    //       Unfortunately, ReplaceLineEndings() is NOT available in downlevel runtimes...
 
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public sealed class StringNormalizerTests
     {
         [TestMethod]
@@ -36,7 +36,7 @@ namespace Ubiquity.NET.Extensions.UT
         [TestMethod]
         public void Normalize_with_default_endings_does_nothing( )
         {
-            string testInput = "This is a line\nAnd so is this".ReplaceLineEndings(); // Platform sepecific
+            string testInput = "This is a line" + Environment.NewLine + "And so is this"; // Platform sepecific
             string normalizedOutput = testInput.NormalizeLineEndings(StringNormalizer.SystemLineEndings);
             Assert.AreSame(testInput, normalizedOutput, "Should return same instance (zero copy)");
         }
@@ -44,7 +44,7 @@ namespace Ubiquity.NET.Extensions.UT
         [TestMethod]
         public void Normalize_with_alternate_endings_produces_new_string( )
         {
-            string testInput = "This is a line\nAnd so is this".ReplaceLineEndings(); // Platform sepecific
+            string testInput = "This is a line"+ Environment.NewLine + "And so is this"; // Platform sepecific
             const string expectedOutput = "This is a line\rAnd so is this";
 
             // CR Only is not the default for any currently supported runtinme for .NET so this
@@ -60,7 +60,7 @@ namespace Ubiquity.NET.Extensions.UT
         public void Normalize_with_mixed_input_succeeds()
         {
             const string mixedInput = "This is a line\r\nThis is anotherline\rAnd aonther line";
-            string expectedOutput = "This is a line\nThis is anotherline\nAnd aonther line".ReplaceLineEndings(); // Platform sepecific
+            string expectedOutput = "This is a line"+ Environment.NewLine + "This is anotherline"+ Environment.NewLine + "And aonther line"; // Platform sepecific
             string systemNormalizedInput = mixedInput.NormalizeLineEndings(LineEndingKind.MixedOrUnknownEndings, StringNormalizer.SystemLineEndings);
             Assert.AreEqual(expectedOutput, systemNormalizedInput);
         }

@@ -94,6 +94,7 @@ namespace Ubiquity.NET.Extensions
                 return string.Empty;
             }
 
+#if NET6_0_OR_GREATER
             if(End.Line == 0)
             {
                 return Start.Column == 0
@@ -110,6 +111,24 @@ namespace Ubiquity.NET.Extensions
                      ? string.Create(formatProvider, $"({Start.Line}-{End.Line})")
                      : string.Create(formatProvider, $"({Start.Line}, {Start.Column}, {End.Line}, {End.Column})");
             }
+#else
+            if(End.Line == 0)
+            {
+                return Start.Column == 0
+                     ? string.Format( formatProvider, "({0})", Start.Line)
+                     : string.Format( formatProvider, "({0}, {1})", Start.Line, Start.Column );
+            }
+            else if(End.Line == Start.Line)
+            {
+                return string.Format( formatProvider, "({0}, {1}-{2})", Start.Line, Start.Column, End.Column );
+            }
+            else
+            {
+                return Start.Column == 0 && End.Column == 0
+                     ? string.Format( formatProvider, "({0}-{1})", Start.Line, End.Line )
+                     : string.Format( formatProvider, "({0}, {1}, {2}, {3})", Start.Line, Start.Column, End.Line, End.Column );
+            }
+#endif
         }
 
         [SuppressMessage( "Style", "IDE0046:Convert to conditional expression", Justification = "Place holder for future work" )]

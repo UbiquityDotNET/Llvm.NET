@@ -10,9 +10,10 @@ including JIT execution. Several useful generalized libraries are also included.
 
 | Library | Description |
 |---------|-------------|
-| [Ubiquity.NET.Llvm](llvm/index.md) | This library contains The core of the LLVM projection to .NET |
-| [Ubiquity.NET.Runtime.Utils](runtime-utils/index.md) | This library contains common support for DSL runtime and language implementors |
-| [Ubiquity.NET.Extensions](extensions/index.md) | This library contains general extensions and helpers for many scenarios using .NET |
 | [Ubiquity.NET.Antlr.Utils](antlr-utils/index.md) | This library contains extensions and helpers for using ANTLR with .NET |
 | [Ubiquity.NET.CommandLine](CommandLine/index.md) | This library contains extensions and helpers for command line parsing via `System.CommandLine` |
+| [Ubiquity.NET.Extensions](extensions/index.md) | This library contains general extensions and helpers for many scenarios using .NET |
+| [Ubiquity.NET.Llvm](llvm/index.md) | This library contains The core of the LLVM projection to .NET |
+| [Ubiquity.NET.Runtime.Utils](runtime-utils/index.md) | This library contains common support for DSL runtime and language implementors |
 | [Ubiquity.NET.InteropHelpers](interop-helpers/index.md) | This library contains extensions and helpers for implementing interop support for native libraries |
+| [Ubiquity.NET.SrcGeneration](SrcGeneration/index.md) | This library contains extensions and helpers for implementing source generators |

@@ -1,0 +1,5 @@
+# TOC (Left nav) for SrcGeneration folder
+- name: Overview
+  href: index.md
+- name: Namespaces
+  href: api/toc.yml

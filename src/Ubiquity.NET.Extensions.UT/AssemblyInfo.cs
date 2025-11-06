@@ -1,10 +1,6 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
-using System.Runtime.InteropServices;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 // In SDK-style projects such as this one, several assembly attributes that were historically
 // defined in this file are now automatically added during build and populated with
 // values defined in project properties. For details of which attributes are included
@@ -25,7 +21,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 // see: https://github.com/microsoft/testfx/issues/5555#issuecomment-3448956323
 [assembly: Parallelize( Scope = ExecutionScope.ClassLevel )]
 
+// can't use this at assembly level as it isn't supported there for downlevel... [Sigh...]
+//[assembly: ExcludeFromCodeCoverage]
+
 // NOTE: use of this and `internal` test classes results in a flurry of
-// error CA1812: '<class name>' is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static members, make it 'static' (Module in Visual Basic). (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1812)
+// error CA1812: '<class name>' is an internal class that is apparently never instantiated. If so, remove the code from the assembly.
+//       If this class is intended to contain only static members, make it 'static' (Module in Visual Basic).
+//       (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1812)
 // In other words, not worth the bother...
 // [assembly: DiscoverInternals]

@@ -6,7 +6,7 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
     /// <summary>Utility extensions for a <see cref="TextWriter"/> specific to the C# language</summary>
     [SuppressMessage( "Performance", "CA1822:Mark members as static", Justification = "extension" )]
     [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "extension" )]
-    public static class TextWriterCsExtension
+    public static class TextWriterExtensions
     {
         /// <summary>Writes an attribute as a line</summary>
         /// <param name="self">The writer to write to</param>
@@ -15,6 +15,7 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
         public static void WriteAttributeLine( this TextWriter self, string attributeName, params string[] attribArgs )
         {
             ArgumentNullException.ThrowIfNull( self );
+            ArgumentException.ThrowIfNullOrWhiteSpace(attributeName);
 
             self.WriteAttribute( attributeName, attribArgs );
             self.WriteLine();
@@ -27,11 +28,12 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
         public static void WriteAttribute(this TextWriter self, string attributeName, params string[] attribArgs )
         {
             ArgumentNullException.ThrowIfNull( self );
+            ArgumentException.ThrowIfNullOrWhiteSpace( attributeName );
 
             self.Write( $"[{attributeName}" );
             if(attribArgs.Length > 0)
             {
-                self.Write( $"({string.Join( ",", attribArgs )})" );
+                self.Write( $"({string.Join( ", ", attribArgs )})" );
             }
 
             self.Write( "]" );
@@ -39,7 +41,7 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
 
         /// <summary>Writes an XML Doc comment summary</summary>
         /// <param name="self">The writer to write to</param>
-        /// <param name="description">Text to include in the summary (Nothing is written if this is <see langword="null"/> </param>
+        /// <param name="description">Text to include in the summary (Nothing is written if this is <see langword="null"/> or all whitespace </param>
         public static void WriteSummaryComment(this TextWriter self, string? description )
         {
             ArgumentNullException.ThrowIfNull( self );
@@ -60,12 +62,13 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
         public static void WriteRemarksComment( this TextWriter self, string? txt )
         {
             ArgumentNullException.ThrowIfNull( self );
+
             if(string.IsNullOrWhiteSpace( txt ))
             {
                 return;
             }
 
-            string[] lines = [ .. txt.GetCommentLines() ];
+            string[] lines = [ .. txt!.GetCommentLines() ];
             if(lines.Length > 0)
             {
                 self.WriteLine( "/// <remarks>" );
@@ -88,7 +91,7 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
         /// is used as the summary. If <paramref name="defaultSummary"/> is also empty or all Whitespace then nothing
         /// is output.
         /// </remarks>
-        public static void WriteSummaryAndRemarksComments( this TextWriter self, string? txt, string defaultSummary = "" )
+        public static void WriteSummaryAndRemarksComments( this TextWriter self, string? txt, string? defaultSummary = null )
         {
             ArgumentNullException.ThrowIfNull( self );
 
@@ -96,14 +99,15 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
             {
                 if(!string.IsNullOrWhiteSpace( defaultSummary ))
                 {
-                    self.WriteLine( $"/// <summary>{defaultSummary}</summary>" );
+                    self.WriteLine( $"/// <summary>{defaultSummary!.Trim()}</summary>" );
                 }
 
                 return;
             }
 
-            self.WriteLine( $"/// <summary>{defaultSummary}</summary>" );
-            string[] lines = [ .. txt.GetCommentLines() ];
+            ArgumentException.ThrowIfNullOrWhiteSpace(defaultSummary);
+            self.WriteLine( $"/// <summary>{defaultSummary.Trim()}</summary>" );
+            string[] lines = [ .. txt!.GetCommentLines() ];
             if(lines.Length > 0)
             {
                 // summary + remarks.
@@ -123,6 +127,9 @@ namespace Ubiquity.NET.SrcGeneration.CSharp
         /// <param name="namespaceName">Namespace for the using directive</param>
         public static void WriteUsingDirective(this TextWriter self, string namespaceName )
         {
+            ArgumentNullException.ThrowIfNull( self );
+            ArgumentException.ThrowIfNullOrWhiteSpace(namespaceName);
+
             self.WriteLine( $"using {namespaceName};" );
         }
     }

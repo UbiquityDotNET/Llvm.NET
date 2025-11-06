@@ -10,6 +10,7 @@
     will ensure the folder exists during restore so that it won't fail.
     -->
     <Target Name="EnsureBuildOutputPaths" Condition="!Exists($(PackageOutputPath))">
+        <Message Importance="high" Text="PackageOutputPath: $(PackageOutputPath)"/>
         <MakeDir Directories="$(PackageOutputPath)"/>
     </Target>
 
@@ -26,6 +27,7 @@
         <Message Importance="normal" Text="                  Platform: $(Platform)"/>
         <Message Importance="normal" Text="             Configuration: $(Configuration)"/>
         <Message Importance="normal" Text="         NETCoreSdkVersion: $(NETCoreSdkVersion)"/>
+        <Message Importance="normal" Text="           TargetFramework: $(TargetFramework)"/>
     </Target>
 
     <Target Name="VerifyProjectSettings" Condition="'$(MSBuildProjectExtension)'=='.csproj'">

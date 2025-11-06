@@ -1,3 +1,8 @@
+// NOTE: docfx does NOT support multi-targetting
+// It can generate docs for ONLY one version of the library
+// docfx merge was supposed to resolve that, but is broken (https://github.com/dotnet/docfx/issues/2289).
+// Sadly that's been open since 2017 so not likely to ever be resolved.
+// Use of this tool is likely abandoned and an alternative should be sought.
 {
     "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
     "metadata": [
@@ -8,12 +13,12 @@
         // to find and check etc...
         {
             // Interop helpers library
-            "memberLayout":"separatePages",
-            "namespaceLayout":"nested",
+            "memberLayout": "separatePages",
+            "namespaceLayout": "nested",
             "src": [
                 {
                     "src": "../src/Ubiquity.NET.InteropHelpers",
-                    "files": ["**.csproj"]
+                    "files": [ "**.csproj" ]
                 }
             ],
             "dest": "interop-helpers/api"
@@ -22,63 +27,83 @@
         // NOTE: Sample projects are not generating docs, they are... samples 8^)
         {
             // ANTLR Utilities library
-            "memberLayout":"separatePages",
-            "namespaceLayout":"nested",
+            "memberLayout": "separatePages",
+            "namespaceLayout": "nested",
             "src": [
                 {
                     "src": "../src/Ubiquity.NET.ANTLR.Utils",
-                    "files": ["**.csproj"]
+                    "files": [ "**.csproj" ]
                 }
             ],
             "dest": "antlr-utils/api"
         },
         {
             // ANTLR Utilities library
-            "memberLayout":"separatePages",
-            "namespaceLayout":"nested",
+            "memberLayout": "separatePages",
+            "namespaceLayout": "nested",
             "src": [
                 {
                     "src": "../src/Ubiquity.NET.CommandLine",
-                    "files": ["**.csproj"]
+                    "files": [ "**.csproj" ]
                 }
             ],
             "dest": "CommandLine/api"
         },
         {
             // Extensions library
-            "memberLayout":"separatePages",
-            "namespaceLayout":"nested",
+            "memberLayout": "separatePages",
+            "namespaceLayout": "nested",
             "src": [
                 {
                     "src": "../src/Ubiquity.NET.Extensions",
-                    "files": ["**.csproj"]
+                    "files": [ "**.csproj" ]
                 }
             ],
-            "dest": "extensions/api"
+            "dest": "extensions/api",
+            "properties": {
+                // use .NET 8.0 for the TFM as it is multi-targeting
+                // Sadly, DocFX can't find the dependent project builds if this is .NET 9.0
+                // and then generates warnings as a result. (DocFX metadata generation is
+                // pretty well borked and needs replacement as there are a LOT of workarounds
+                // in this project let alone all the ones found on-line.)
+                "TargetFramework": "net8.0"
+            }
         },
         {
             // LLVM OO Wrappers library
-            "memberLayout":"separatePages",
-            "namespaceLayout":"nested",
+            "memberLayout": "separatePages",
+            "namespaceLayout": "nested",
             "src": [
                 {
                     "src": "../src/Ubiquity.NET.Llvm",
-                    "files": ["**.csproj"]
+                    "files": [ "**.csproj" ]
                 }
             ],
             "dest": "llvm/api"
         },
         {
             // Runtime utilities library
-            "memberLayout":"separatePages",
-            "namespaceLayout":"nested",
+            "memberLayout": "separatePages",
+            "namespaceLayout": "nested",
             "src": [
                 {
                     "src": "../src/Ubiquity.NET.Runtime.Utils",
-                    "files": ["**.csproj"]
+                    "files": [ "**.csproj" ]
                 }
             ],
             "dest": "runtime-utils/api",
+        },
+        {
+            // SrcGeneration library
+            "memberLayout": "separatePages",
+            "namespaceLayout": "nested",
+            "src": [
+                {
+                    "src": "../src/Ubiquity.NET.SrcGeneration",
+                    "files": [ "**.csproj" ]
+                }
+            ],
+            "dest": "SrcGeneration/api",
             "properties": {
                 // use .NET 8.0 for the TFM as it is multi-targeting
                 // Sadly, DocFX can't find the dependent project builds if this is .NET 9.0
@@ -183,6 +208,18 @@
                 // NOTE: File paths are relative to the location of this file
                 "files": [
                     "runtime-utils/**.{md,yml}"
+                ],
+                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
+                "exclude": [
+                    "**/namespaces/**.md",
+                    "**/*-xref.yml"
+                ]
+            },
+            {
+                // SrcGenerations project additional content, Includes the generated metadata API folder
+                // NOTE: File paths are relative to the location of this file
+                "files": [
+                    "SrcGeneration/**.{md,yml}"
                 ],
                 // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
                 "exclude": [

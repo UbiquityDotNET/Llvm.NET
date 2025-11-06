@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <!--
+  <!--
     Global references are included in ALL projects in this repository
-    -->
-    <ItemGroup>
-        <GlobalPackageReference Include="Ubiquity.NET.Versioning.Build.Tasks" Version="5.0.7-alpha.0.1" />
-        <GlobalPackageReference Include="IDisposableAnalyzers" Version="4.0.8" Condition="'$(NoCommonAnalyzers)' !=' true'" />
-        <GlobalPackageReference Include="MustUseRetVal" Version="0.0.2" Condition="'$(NoCommonAnalyzers)' !=' true'" />
-        <!--
+  -->
+  <ItemGroup>
+    <GlobalPackageReference Include="Ubiquity.NET.Versioning.Build.Tasks" Version="5.0.7" />
+    <GlobalPackageReference Include="IDisposableAnalyzers" Version="4.0.8" Condition="'$(NoCommonAnalyzers)' !=' true'" />
+    <GlobalPackageReference Include="MustUseRetVal" Version="0.0.2" Condition="'$(NoCommonAnalyzers)' !=' true'" />
+    <!--
         NOTE: This analyzer is sadly, perpetually in "pre-release mode". There have been many issues/discussion on the point
         and it has all fallen on deaf ears. So policies regarding "NO-Prerelease" components need to be overruled on this one
         -->
-        <GlobalPackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556" Condition="'$(UseStyleCop)' != 'false'" />
-    </ItemGroup>
-    <!--
+    <GlobalPackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556" Condition="'$(UseStyleCop)' != 'false'" />
+  </ItemGroup>
+
+  <!--
     Package versions made consistent across all packages referenced in this repository
-    -->
-    <ItemGroup>
-        <!-- Roslyn Analyzers ***MUST*** target older framework -->
-        <PackageVersion Include="AnsiCodes" Version="0.2.1" />
-        <PackageVersion Include="Microsoft.CodeAnalysis" Version="4.14.0" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="4.14.0" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.14.0" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="4.14.0" />
-        <PackageVersion Include="Basic.Reference.Assemblies.Net80" Version="1.8.3" />
-        <PackageVersion Include="System.Buffers" Version="4.6.1" />
-        <PackageVersion Include="System.Collections.Immutable" Version="9.0.8" />
-        <PackageVersion Include="System.CommandLine" Version="2.0.0-rc.2.25502.107" />
+  -->
+  <ItemGroup>
+    <!-- Roslyn Analyzers ***MUST*** target older framework -->
+    <PackageVersion Include="AnsiCodes" Version="0.2.1" />
+    <PackageVersion Include="Microsoft.CodeAnalysis" Version="4.14.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="4.14.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.14.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="4.14.0" />
+    <PackageVersion Include="Basic.Reference.Assemblies.Net80" Version="1.8.3" />
+    <PackageVersion Include="PolySharp" Version="1.15.0" />
+    <PackageVersion Include="System.Buffers" Version="4.6.1" />
+    <PackageVersion Include="System.Collections.Immutable" Version="9.0.10" />
+    <PackageVersion Include="System.CommandLine" Version="2.0.0-rc.2.25502.107" />
 
-        <!-- Security vulnerability overrides -->
-        <!-- Workaround(2): https://github.com/dotnet/roslyn-sdk/issues/1191 -->
-        <PackageVersion Include="System.Formats.Asn1" Version="9.0.10" />
+    <!-- Security vulnerability overrides -->
+    <!-- Workaround(2): https://github.com/dotnet/roslyn-sdk/issues/1191 -->
+    <PackageVersion Include="System.Formats.Asn1" Version="9.0.10" />
 
-        <!-- Common packages for solution -->
-        <PackageVersion Include="System.Linq.Async" Version="6.0.3" />
-        <PackageVersion Include="Ubiquity.NET.LibLLVM" Version="20.1.8" />
-        <PackageVersion Include="Ubiquity.NET.Versioning" Version="6.0.2-beta" />
-        <PackageVersion Include="Antlr4BuildTasks" Version="12.11.0" />
-        <PackageVersion Include="Antlr4.Runtime.Standard" Version="4.13.1" />
-        <PackageVersion Include="OpenSoftware.DgmlBuilder" Version="2.1.0" />
-        <PackageVersion Include="CppSharp" Version="1.1.5.3168" />
-        <PackageVersion Include="System.CodeDom" Version="9.0.7" />
+    <!-- Common packages for solution -->
+    <PackageVersion Include="System.Linq.Async" Version="6.0.3" />
+    <PackageVersion Include="Ubiquity.NET.LibLLVM" Version="20.1.8" />
+    <PackageVersion Include="Ubiquity.NET.Versioning" Version="6.0.2-beta" />
+    <PackageVersion Include="Antlr4BuildTasks" Version="12.11.0" />
+    <PackageVersion Include="Antlr4.Runtime.Standard" Version="4.13.1" />
+    <PackageVersion Include="OpenSoftware.DgmlBuilder" Version="2.1.0" />
+    <PackageVersion Include="CppSharp" Version="1.1.5.3168" />
+    <PackageVersion Include="System.CodeDom" Version="9.0.7" />
 
-        <!-- Tests all use the same framework versions -->
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
-        <PackageVersion Include="MSTest.TestAdapter" Version="4.0.1" />
-        <PackageVersion Include="MSTest.TestFramework" Version="4.0.1" />
-        <PackageVersion Include="Tmds.ExecFunction" Version="0.8.0" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.2" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing" Version="1.1.2" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.CodeRefactoring.Testing" Version="1.1.2" />
-    </ItemGroup>
+    <!-- Tests all use the same framework versions -->
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="4.0.1" />
+    <PackageVersion Include="MSTest.TestFramework" Version="4.0.1" />
+    <PackageVersion Include="Tmds.ExecFunction" Version="0.8.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.2" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing" Version="1.1.2" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.CodeRefactoring.Testing" Version="1.1.2" />
+  </ItemGroup>
 </Project>
