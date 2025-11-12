@@ -149,5 +149,23 @@ namespace Ubiquity.NET.Extensions.Properties {
                 return ResourceManager.GetString("ArgumentOutOfRange_Generic_MustBeNotEqual", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; ({1}) is invalid for Enum of type &apos;{2}&apos;.
+        /// </summary>
+        internal static string InvalidEnumArgument_NonInt {
+            get {
+                return ResourceManager.GetString("InvalidEnumArgument_NonInt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing resource. Name=&apos;{0}&apos;.
+        /// </summary>
+        internal static string Missing_Resource_Exception_Message_fmt {
+            get {
+                return ResourceManager.GetString("Missing_Resource_Exception_Message_fmt", resourceCulture);
+            }
+        }
     }
 }

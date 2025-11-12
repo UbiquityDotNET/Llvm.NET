@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
         <!--Until C#14 and the "field" and "extension" keywords are available use the preview language -->
         <LangVersion>preview</LangVersion>
         <Nullable>enable</Nullable>
@@ -27,16 +27,21 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
 
-    <!--<ItemGroup>
-    <PackageReference Include="System.IO.Hashing" />
-    </ItemGroup>-->
+    <ItemGroup Condition="$(TargetFramework)=='netstandard2.0'">
+        <PackageReference Include="PolySharp">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="System.Collections.Immutable" />
+    </ItemGroup>
 
     <ItemGroup>
         <None Include="ReadMe.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
+      <ProjectReference Include="..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -54,4 +59,8 @@
         </EmbeddedResource>
     </ItemGroup>
 
+    <Import Condition="$(TargetFramework)=='netstandard2.0'"
+            Project="..\Ubiquity.NET.PollyFill.SharedSources\Ubiquity.NET.PollyFill.SharedSources.projitems"
+            Label="Shared"
+            />
 </Project>

@@ -18,11 +18,15 @@ namespace Ubiquity.NET.InteropHelpers
     /// of a terminator even if the span provided to the constructor doesn't include one. (It has to copy the string anyway
     /// so why not be nice and robust at the cost of one byte of allocated space)</para>
     /// </remarks>
+#if NET7_0_OR_GREATER
     [NativeMarshalling( typeof( LazyEncodedStringMarshaller ) )]
+#endif
     public sealed class LazyEncodedString
         : IEquatable<LazyEncodedString?>
         , IEquatable<string?>
+#if NET7_0_OR_GREATER
         , IEqualityOperators<LazyEncodedString, LazyEncodedString, bool>
+#endif
     {
         /// <summary>Initializes a new instance of the <see cref="LazyEncodedString"/> class from an existing managed string</summary>
         /// <param name="managed">string to lazy encode for native code use</param>
@@ -32,7 +36,11 @@ namespace Ubiquity.NET.InteropHelpers
             EncodingCodePage = (encoding ?? Encoding.UTF8).CodePage;
 
             // Pre-Initialize with the provided string
+#if NETSTANDARD2_0  // pre-initialized Lazy<T> supported in .NET Standard 2.1 and all runtimes after that.
+            ManagedString = new Lazy<string>( ( ) => managed );
+#else
             ManagedString = new( managed );
+#endif
             NativeBytes = new( GetNativeArrayWithTerminator );
 
             unsafe byte[] GetNativeArrayWithTerminator( )
@@ -56,11 +64,17 @@ namespace Ubiquity.NET.InteropHelpers
         public LazyEncodedString( ReadOnlySpan<byte> span, Encoding? encoding = null )
         {
             EncodingCodePage = (encoding ?? Encoding.UTF8).CodePage;
+#if NETSTANDARD2_0 // pre-initialized Lazy<T> supported in .NET Standard 2.1 and all runtimes after that.
+            // can't capture span for a lambda, so make array locally.
+            byte[] tmp = GetNativeArrayWithTerminator( span );
+            NativeBytes = new( ( ) => tmp );
+#else
             NativeBytes = new( GetNativeArrayWithTerminator( span ) );
+#endif
             ManagedString = new( ConvertString, LazyThreadSafetyMode.ExecutionAndPublication );
 
             // drop the terminator for conversion to managed so it won't appear in the string
-            string ConvertString( ) => NativeBytes.Value.Length > 0 ? Encoding.GetString( NativeBytes.Value[ ..^1 ] ) : string.Empty;
+            string ConvertString( ) => NativeBytes.Value.Length > 0 ? Encoding.GetString( [] /*TEMP: COMMENT OUT USE OF RANGES. NativeBytes.Value[ ..^1 ]*/ ) : string.Empty;
 
             // This incurs the cost of a copy but the lifetime of the span is not known or
             // guaranteed beyond this call so it has to make a copy.
@@ -276,6 +290,16 @@ namespace Ubiquity.NET.InteropHelpers
             return span.IsEmpty ? Empty : new( span );
         }
 
+#if NETSTANDARD2_0
+        /// <inheritdoc cref="PolyFillStringExtensions.Join"/>
+        /// <returns><see cref="LazyEncodedString"/> with the joined result</returns>
+        /// <remarks>
+        /// This will join the managed form of any LazyEncodedString (Technically the results
+        /// of calling <see cref="object.ToString"/> on each value provided) to produce a final
+        /// joined string. The result will only have the managed form created but will lazily
+        /// provide the managed form if/when needed (conversion still only happens once).
+        /// </remarks>
+#else
         /// <inheritdoc cref="string.Join{T}(char, IEnumerable{T})"/>
         /// <returns><see cref="LazyEncodedString"/> with the joined result</returns>
         /// <remarks>
@@ -284,6 +308,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// joined string. The result will only have the managed form created but will lazily
         /// provide the managed form if/when needed (conversion still only happens once).
         /// </remarks>
+#endif
         public static LazyEncodedString Join<T>( char separator, params IEnumerable<T> values )
         {
             return new( string.Join( separator, values ) );
@@ -323,7 +348,7 @@ namespace Ubiquity.NET.InteropHelpers
 
         /// <summary>Implicit cast to a string via <see cref="ToString"/></summary>
         /// <param name="self">instance to cast</param>
-        [return: NotNullIfNotNull(nameof(self))]
+        [return: NotNullIfNotNull( nameof( self ) )]
         public static implicit operator string?( LazyEncodedString? self )
         {
             return self?.ToString();
@@ -352,14 +377,28 @@ namespace Ubiquity.NET.InteropHelpers
         [SuppressMessage( "Usage", "CA2225:Operator overloads have named alternates", Justification = "It's a convenience wrapper around an existing constructor" )]
         public static implicit operator LazyEncodedString( ReadOnlySpan<byte> utf8Data ) => new( utf8Data );
 
-        /// <inheritdoc/>
+#if NETSTANDARD2_0
+        /// <summary>Compares two values to determine equality.</summary>
+        /// <param name="left">The value to compare with <paramref name="right"/>.</param>
+        /// <param name="right">The value to compare with <paramref name="left"/>.</param>
+        /// <returns><see langword="true"/> if left is equal to right; otherwise, <see langword="false"/>.</returns>
+#else
+        /// <inheritdoc />
+#endif
         public static bool operator ==( LazyEncodedString? left, LazyEncodedString? right )
         {
             return ReferenceEquals( left, right )
                 || (left is not null && left.Equals( right ));
         }
 
-        /// <inheritdoc/>
+#if NETSTANDARD2_0
+        /// <summary>Compares two values to determine equality.</summary>
+        /// <param name="left">The value to compare with <paramref name="right"/>.</param>
+        /// <param name="right">The value to compare with <paramref name="left"/>.</param>
+        /// <returns><see langword="true"/> if left is not equal to right; otherwise, <see langword="false"/>.</returns>
+#else
+        /// <inheritdoc />
+#endif
         public static bool operator !=( LazyEncodedString? left, LazyEncodedString? right )
         {
             return !ReferenceEquals( left, right )

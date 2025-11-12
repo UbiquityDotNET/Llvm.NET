@@ -34,7 +34,14 @@ namespace Ubiquity.NET.Extensions
             get;
             init
             {
+#if NET7_0_OR_GREATER
                 ArgumentOutOfRangeException.ThrowIfLessThan(value, 0);
+#else
+                if(value.CompareTo(0) < 0)
+                {
+                    throw new ArgumentOutOfRangeException(SR.Format(nameof(Resources.ArgumentOutOfRange_Generic_MustBeGreaterOrEqual), nameof(value), value, 0));
+                }
+#endif
                 field = value;
             }
         }
@@ -45,7 +52,14 @@ namespace Ubiquity.NET.Extensions
             get;
             init
             {
+#if NET7_0_OR_GREATER
                 ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(value, 0);
+#else
+                if(value.CompareTo(0) <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(SR.Format(nameof(Resources.ArgumentOutOfRange_Generic_MustBeGreater), nameof(value), value, 0));
+                }
+#endif
                 field = value;
             }
         }

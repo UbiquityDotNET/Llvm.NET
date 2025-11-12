@@ -12,21 +12,25 @@ where it belongs. For a good explanation of this problem see: https://rehansaeed
 For an explanation of the benefits of the language feature see: https://www.hanselman.com/blog/implicit-usings-in-net-6
 */
 
+// BUG: False positive from IDE0005 - Using directive is unnecessary
+// Attempts to remove/sort are at least able to figure it out and do the right thing.
+// Bug seems to be related to multi-targetting.
+#pragma warning disable IDE0005
+
 global using System;
-global using System.Buffers;
+global using System.CodeDom.Compiler;
+global using System.Collections;
 global using System.Collections.Generic;
-global using System.Diagnostics;
+global using System.Collections.Immutable;
 global using System.Diagnostics.CodeAnalysis;
-global using System.Numerics;
+global using System.IO;
+global using System.Linq;
 global using System.Reflection;
-global using System.Resources;
 global using System.Runtime.CompilerServices;
-global using System.Runtime.InteropServices;
-
-#if !NETSTANDARD2_0
-global using System.Runtime.InteropServices.Marshalling;
-#endif
 global using System.Text;
-global using System.Threading;
 
-global using Ubiquity.NET.Extensions;
+global using Microsoft.CodeAnalysis;
+global using Microsoft.CodeAnalysis.CSharp;
+global using Microsoft.CodeAnalysis.CSharp.Syntax;
+global using Microsoft.CodeAnalysis.Diagnostics;
+global using Microsoft.CodeAnalysis.Text;

@@ -147,4 +147,11 @@
   <data name="Argument_EmptyOrWhiteSpaceString" xml:space="preserve">
     <value>The value cannot be an empty string or composed entirely of whitespace.</value>
   </data>
+  <data name="InvalidEnumArgument_NonInt" xml:space="preserve">
+    <value>The value of argument '{0}' ({1}) is invalid for Enum of type '{2}'</value>
+    <comment>Message used for enums with an underlying type that is not able to fit into an int. {0} - expression that generated the exception; {1} value of the expression that is invalid; {2} is the type of the enumeration.</comment>
+  </data>
+  <data name="Missing_Resource_Exception_Message_fmt" xml:space="preserve">
+    <value>Missing resource. Name='{0}'</value>
+  </data>
 </root>

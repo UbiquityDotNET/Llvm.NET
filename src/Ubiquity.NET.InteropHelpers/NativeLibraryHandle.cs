@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
+#if NET8_0_OR_GREATER // NativeLibrary only exists in later runtimes (.NET 8 is latest under support)
 namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Safe handle for a <see cref="NativeLibrary"/></summary>
@@ -66,3 +67,4 @@ namespace Ubiquity.NET.InteropHelpers
         }
     }
 }
+#endif
