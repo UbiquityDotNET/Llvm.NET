@@ -63,7 +63,7 @@ namespace Ubiquity.NET.Extensions.FluentValidation
         public static T ThrowIfOutOfRange<T>( this T self, T min, T max, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
             where T : struct, IComparable<T>
         {
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(self, min, exp);
+            ArgumentOutOfRangeException.ThrowIfLessThan(self, min, exp);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(self, max, exp);
             return self;
         }

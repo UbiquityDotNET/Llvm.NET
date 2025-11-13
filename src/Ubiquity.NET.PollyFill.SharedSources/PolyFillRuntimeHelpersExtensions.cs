@@ -4,6 +4,7 @@
 // Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
+#if COMPILER_LOOKS_FOR_EXTENSIONS
 // based on work from: https://github.com/Sergio0694/PolySharp/issues/104
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
@@ -60,3 +61,4 @@ namespace System.Runtime.CompilerServices
         }
     }
 }
+#endif

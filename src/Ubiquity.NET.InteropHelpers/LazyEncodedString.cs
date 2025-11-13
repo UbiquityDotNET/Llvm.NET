@@ -64,7 +64,7 @@ namespace Ubiquity.NET.InteropHelpers
         public LazyEncodedString( ReadOnlySpan<byte> span, Encoding? encoding = null )
         {
             EncodingCodePage = (encoding ?? Encoding.UTF8).CodePage;
-#if NETSTANDARD2_0 // pre-initialized Lazy<T> supported in .NET Standard 2.1 and all runtimes after that.
+#if NETSTANDARD2_0 // pre-initialized Lazy<T> only supported in .NET Standard 2.1 and all runtimes after that.
             // can't capture span for a lambda, so make array locally.
             byte[] tmp = GetNativeArrayWithTerminator( span );
             NativeBytes = new( ( ) => tmp );
@@ -74,7 +74,13 @@ namespace Ubiquity.NET.InteropHelpers
             ManagedString = new( ConvertString, LazyThreadSafetyMode.ExecutionAndPublication );
 
             // drop the terminator for conversion to managed so it won't appear in the string
-            string ConvertString( ) => NativeBytes.Value.Length > 0 ? Encoding.GetString( [] /*TEMP: COMMENT OUT USE OF RANGES. NativeBytes.Value[ ..^1 ]*/ ) : string.Empty;
+            string ConvertString( )
+            {
+                byte[] nativeArray = NativeBytes.Value;
+                return nativeArray.Length > 0
+                     ? Encoding.GetString( nativeArray, 0, nativeArray.Length - 1 )
+                     : string.Empty;
+            }
 
             // This incurs the cost of a copy but the lifetime of the span is not known or
             // guaranteed beyond this call so it has to make a copy.

@@ -49,6 +49,12 @@ namespace Ubiquity.NET.Llvm.Interop
             }
 
             // Verify the version of LibLLVM.
+            string verString = LibLLVMGetVersion()?.ToString() ?? string.Empty;
+            if(string.IsNullOrWhiteSpace(verString))
+            {
+                throw new InvalidOperationException("Internal error: LLVM reported an empty string for version!");
+            }
+
             var libVersion = SemVer.Parse(LibLLVMGetVersion()?.ToString() ?? string.Empty, SemVerFormatProvider.CaseInsensitive);
             if( libVersion is CSemVerCI semVerCI)
             {
