@@ -19,8 +19,9 @@ namespace Kaleidoscope.Grammar
         /// <summary>Handles successfully parsed function definitions</summary>
         /// <param name="context">Context parse node for the parsed function</param>
         /// <remarks>
-        /// Upon successful parse of a function definition this check if it is a user defined operator
-        /// and updates the RuntimeState accordingly, if it is.
+        /// Upon successful parse of a function definition this checks if it is a user defined operator
+        /// and updates the RuntimeState accordingly, if it is. This is used for support of user defined
+        /// operators providing user defined precedence.
         /// </remarks>
         public override void ExitFunctionDefinition( KaleidoscopeParser.FunctionDefinitionContext context )
         {
