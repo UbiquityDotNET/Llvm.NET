@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_InteropHelpers_LazyEncodedString_op_Implicit_" data-uid="Ubiquity.NET.InteropHelpers.LazyEncodedString.op_Implicit*" class="text-break">
-Operator implicit operator  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L326"><i class="bi bi-code-slash"></i></a>
+Operator implicit operator  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L357"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -116,7 +116,7 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 
 <h3 id="Ubiquity_NET_InteropHelpers_LazyEncodedString_op_Implicit_Ubiquity_NET_InteropHelpers_LazyEncodedString__System_String" data-uid="Ubiquity.NET.InteropHelpers.LazyEncodedString.op_Implicit(Ubiquity.NET.InteropHelpers.LazyEncodedString)~System.String">
   implicit operator string?(LazyEncodedString?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L326"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L357"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Implicit cast to a string via <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.ToString.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_ToString">ToString()</a></p>
@@ -154,7 +154,7 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 
 <h3 id="Ubiquity_NET_InteropHelpers_LazyEncodedString_op_Implicit_Ubiquity_NET_InteropHelpers_LazyEncodedString__System_ReadOnlySpan_System_Byte_" data-uid="Ubiquity.NET.InteropHelpers.LazyEncodedString.op_Implicit(Ubiquity.NET.InteropHelpers.LazyEncodedString)~System.ReadOnlySpan{System.Byte}">
   implicit operator ReadOnlySpan&lt;byte&gt;(LazyEncodedString)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L337"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L368"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Implicit cast to a span via <a class="xref" href="Ubiquity.NET.InteropHelpers.LazyEncodedString.ToReadOnlySpan.html#Ubiquity_NET_InteropHelpers_LazyEncodedString_ToReadOnlySpan_System_Boolean_">ToReadOnlySpan(bool)</a></p>
@@ -195,7 +195,7 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 
 <h3 id="Ubiquity_NET_InteropHelpers_LazyEncodedString_op_Implicit_System_String__Ubiquity_NET_InteropHelpers_LazyEncodedString" data-uid="Ubiquity.NET.InteropHelpers.LazyEncodedString.op_Implicit(System.String)~Ubiquity.NET.InteropHelpers.LazyEncodedString">
   implicit operator LazyEncodedString?(string?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L346"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L377"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Convenient implicit conversion of a managed string into a Lazily encoded string</p>
@@ -203,7 +203,8 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public static implicit operator LazyEncodedString?(string? managed)</code></pre>
+  <pre><code class="lang-csharp hljs">[SuppressMessage(&quot;Usage&quot;, &quot;CA2225:Operator overloads have named alternates&quot;, Justification = &quot;It has one, just not the dumb name analyzer wants&quot;)]
+public static implicit operator LazyEncodedString?(string? managed)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -233,7 +234,7 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 
 <h3 id="Ubiquity_NET_InteropHelpers_LazyEncodedString_op_Implicit_System_ReadOnlySpan_System_Byte___Ubiquity_NET_InteropHelpers_LazyEncodedString" data-uid="Ubiquity.NET.InteropHelpers.LazyEncodedString.op_Implicit(System.ReadOnlySpan{System.Byte})~Ubiquity.NET.InteropHelpers.LazyEncodedString">
   implicit operator LazyEncodedString(ReadOnlySpan&lt;byte&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L352"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L383"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Convenient implicit conversion of a managed string into a Lazily encoded string</p>
@@ -241,7 +242,8 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public static implicit operator LazyEncodedString(ReadOnlySpan&lt;byte&gt; utf8Data)</code></pre>
+  <pre><code class="lang-csharp hljs">[SuppressMessage(&quot;Usage&quot;, &quot;CA2225:Operator overloads have named alternates&quot;, Justification = &quot;It&#39;s a convenience wrapper around an existing constructor&quot;)]
+public static implicit operator LazyEncodedString(ReadOnlySpan&lt;byte&gt; utf8Data)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -270,7 +272,7 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L326" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.InteropHelpers/LazyEncodedString.cs/#L357" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -286,7 +288,7 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc
+          - Build: 20.1.8-rc.1
         </div>
       </div>
     </footer>

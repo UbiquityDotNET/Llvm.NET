@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Llvm_DebugInfo_DebugType_2_op_Implicit_" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugType`2.op_Implicit*" class="text-break">
-Operator implicit operator  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs/#L157"><i class="bi bi-code-slash"></i></a>
+Operator implicit operator  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs/#L157"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -116,7 +116,7 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 
 <h3 id="Ubiquity_NET_Llvm_DebugInfo_DebugType_2_op_Implicit_Ubiquity_NET_Llvm_DebugInfo_DebugType__0__1____1" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugType`2.op_Implicit(Ubiquity.NET.Llvm.DebugInfo.DebugType{`0,`1})~`1">
   implicit operator TDebug?(DebugType&lt;TNative, TDebug&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs/#L157"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs/#L157"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Converts a <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.html">DebugType&lt;TNative, TDebug&gt;</a> to <code class="typeparamref">TDebug</code> by accessing the <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DebugType-2.DebugInfoType.html#Ubiquity_NET_Llvm_DebugInfo_DebugType_2_DebugInfoType">DebugInfoType</a> property</p>
@@ -124,7 +124,8 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public static implicit operator TDebug?(DebugType&lt;TNative, TDebug&gt; self)</code></pre>
+  <pre><code class="lang-csharp hljs">[SuppressMessage(&quot;Microsoft.Usage&quot;, &quot;CA2225:OperatorOverloadsHaveNamedAlternates&quot;, Justification = &quot;DebugInfoType is available as a property, this is for convenience&quot;)]
+public static implicit operator TDebug?(DebugType&lt;TNative, TDebug&gt; self)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -153,7 +154,7 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs/#L157" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs/#L157" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -169,7 +170,7 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc
+          - Build: 20.1.8-rc.1
         </div>
       </div>
     </footer>

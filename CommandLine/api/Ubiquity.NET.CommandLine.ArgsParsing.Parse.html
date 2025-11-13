@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_CommandLine_ArgsParsing_Parse_" data-uid="Ubiquity.NET.CommandLine.ArgsParsing.Parse*" class="text-break">
-Method Parse  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L49"><i class="bi bi-code-slash"></i></a>
+Method Parse  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L43"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -116,7 +116,7 @@ Method Parse  <a class="header-action link-secondary" title="View source" href="
 
 <h3 id="Ubiquity_NET_CommandLine_ArgsParsing_Parse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings_" data-uid="Ubiquity.NET.CommandLine.ArgsParsing.Parse``1(System.String[],Ubiquity.NET.CommandLine.CmdLineSettings)">
   Parse&lt;T&gt;(string[], CmdLineSettings?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L43"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Parses the command line</p>
@@ -157,13 +157,14 @@ Method Parse  <a class="header-action link-secondary" title="View source" href="
 
 
 <h4 class="section" id="Ubiquity_NET_CommandLine_ArgsParsing_Parse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings__remarks">Remarks</h4>
-<div class="markdown level1 remarks"><p>Additional steps might include:</p>
-<p>
-<ol><li>App specific Validation/semantic analysis</li><li>Binding of results to an app specific type</li><li>
-    Act on the results as proper for the application
-    <ol><li>This might include actions parsed but generally isolating the various stages is an easier to understand/maintain model</li><li>Usually this is just app specific code that uses the bound results to adapt behavior</li></ol>
-    </li></ol>
-
+<div class="markdown level1 remarks"><p>Additional steps might include:<br></p>
+<ol>
+<li>App specific Validation/semantic analysis<br></li>
+<li>Binding of results to an app specific type<br></li>
+<li>Act on the results as proper for the application<br>
+a. This might include actions parsed but generally isolating the various stages is an easier to understand/maintain model<br>
+b. Usually this is just app specific code that uses the bound results to adapt behavior<br></li>
+</ol>
 <p>
 This isolation of stages fosters clean implementation AND allows for variances not considered or accounted for in the
 parsing library. (For instance mutual exclusion of options etc...) validation is an APP specific thing. There
@@ -171,7 +172,7 @@ may well be common validations available for re-use. But ultimately the relation
 on the app and sometimes the runtime environment. (i.e., Should an app maintain strict adherence to a command line options
 even when such options/patterns are NOT the norm on that environment/OS?)</p>
 <p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/system">System.CommandLine</a> system already confuses the help and version "options" as they are conceptually
-"commands" in terms of that library. (To be fair, the POSIX description it is based on confuses the point as well) This
+"commands" in terms of that library. To be fair, the POSIX description it is based on confuses the point as well. This
 ambiguity continues by attaching actions and validation to many symbols. While that might seem like it's a good thing,
 almost every app needs to customize the behavior. Some apps simply can't do so using the current models. Thus, this
 implementation simply removes the actions and validation to leave both stages to the calling application as it keeps
@@ -190,7 +191,7 @@ things clearer when stages are unique</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L49" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L43" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -206,7 +207,7 @@ things clearer when stages are unique</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc
+          - Build: 20.1.8-rc.1
         </div>
       </div>
     </footer>

@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Extensions_KvpArrayBuilder_2" data-uid="Ubiquity.NET.Extensions.KvpArrayBuilder`2" class="text-break">
-Struct KvpArrayBuilder&lt;TKey, TValue&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/KvpArrayBuilder.cs/#L23"><i class="bi bi-code-slash"></i></a>
+Struct KvpArrayBuilder&lt;TKey, TValue&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Extensions/KvpArrayBuilder.cs/#L23"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -97,7 +97,10 @@ Struct KvpArrayBuilder&lt;TKey, TValue&gt;  <a class="header-action link-seconda
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly struct KvpArrayBuilder&lt;TKey, TValue&gt; : IEnumerable where TKey : notnull</code></pre>
+    <pre><code class="lang-csharp hljs">[SuppressMessage(&quot;Design&quot;, &quot;CA1010:Generic interface should also be implemented&quot;, Justification = &quot;IEnumerable is unused but must exist to support collection initializers&quot;)]
+[SuppressMessage(&quot;Naming&quot;, &quot;CA1710:Identifiers should have correct suffix&quot;, Justification = &quot;It is the correct suffix; This is NOT a collection it&#39;s a builder&quot;)]
+[SuppressMessage(&quot;Performance&quot;, &quot;CA1815:Override equals and operator equals on value types&quot;, Justification = &quot;Equality not relevant for a builder&quot;)]
+public readonly struct KvpArrayBuilder&lt;TKey, TValue&gt; : IEnumerable where TKey : notnull</code></pre>
   </div>
 
 
@@ -148,7 +151,7 @@ Struct KvpArrayBuilder&lt;TKey, TValue&gt;  <a class="header-action link-seconda
     <dt>Extension Methods</dt>
     <dd>
   <div>
-      <a class="xref" href="Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull.html#Ubiquity_NET_Extensions_FluentValidationExtensions_ThrowIfNull__1___0_System_String_">FluentValidationExtensions.ThrowIfNull&lt;T&gt;(T?, string?)</a>
+      <a class="xref" href="Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNull.html#Ubiquity_NET_Extensions_FluentValidation_ExceptionValidationExtensions_ThrowIfNull__1___0_System_String_">ExceptionValidationExtensions.ThrowIfNull&lt;T&gt;(T?, string?)</a>
   </div>
   </dd></dl>
 
@@ -214,7 +217,7 @@ initialization support for a sequence of <a class="xref" href="https://learn.mic
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/KvpArrayBuilder.cs/#L23" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Extensions/KvpArrayBuilder.cs/#L23" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -230,7 +233,7 @@ initialization support for a sequence of <a class="xref" href="https://learn.mic
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc
+          - Build: 20.1.8-rc.1
         </div>
       </div>
     </footer>

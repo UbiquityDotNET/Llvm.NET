@@ -2382,57 +2382,63 @@ references:
   commentId: Overload:Ubiquity.NET.Extensions.DisposableAction.Dispose
   fullName: Ubiquity.NET.Extensions.DisposableAction.Dispose
   nameWithType: DisposableAction.Dispose
-- uid: Ubiquity.NET.Extensions.FluentValidationExtensions
-  name: FluentValidationExtensions
-  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.html
-  commentId: T:Ubiquity.NET.Extensions.FluentValidationExtensions
-  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions
-  nameWithType: FluentValidationExtensions
-- uid: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined*
+- uid: Ubiquity.NET.Extensions.FluentValidation
+  name: Ubiquity.NET.Extensions.FluentValidation
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidation.html
+  commentId: N:Ubiquity.NET.Extensions.FluentValidation
+  fullName: Ubiquity.NET.Extensions.FluentValidation
+  nameWithType: Ubiquity.NET.Extensions.FluentValidation
+- uid: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions
+  name: ExceptionValidationExtensions
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.html
+  commentId: T:Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions
+  fullName: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions
+  nameWithType: ExceptionValidationExtensions
+- uid: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNotDefined*
   name: ThrowIfNotDefined
-  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined.html
-  commentId: Overload:Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined
-  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined
-  nameWithType: FluentValidationExtensions.ThrowIfNotDefined
-- uid: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined``1(``0,System.String)
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNotDefined.html
+  commentId: Overload:Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNotDefined
+  fullName: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNotDefined
+  nameWithType: ExceptionValidationExtensions.ThrowIfNotDefined
+- uid: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNotDefined``1(``0,System.String)
   name: ThrowIfNotDefined<T>(T, string?)
-  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined.html#Ubiquity_NET_Extensions_FluentValidationExtensions_ThrowIfNotDefined__1___0_System_String_
-  commentId: M:Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined``1(``0,System.String)
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNotDefined.html#Ubiquity_NET_Extensions_FluentValidation_ExceptionValidationExtensions_ThrowIfNotDefined__1___0_System_String_
+  commentId: M:Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNotDefined``1(``0,System.String)
   name.vb: ThrowIfNotDefined(Of T)(T, String)
-  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined<T>(T, string?)
-  fullName.vb: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNotDefined(Of T)(T, String)
-  nameWithType: FluentValidationExtensions.ThrowIfNotDefined<T>(T, string?)
-  nameWithType.vb: FluentValidationExtensions.ThrowIfNotDefined(Of T)(T, String)
-- uid: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull*
+  fullName: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNotDefined<T>(T, string?)
+  fullName.vb: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNotDefined(Of T)(T, String)
+  nameWithType: ExceptionValidationExtensions.ThrowIfNotDefined<T>(T, string?)
+  nameWithType.vb: ExceptionValidationExtensions.ThrowIfNotDefined(Of T)(T, String)
+- uid: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNull*
   name: ThrowIfNull
-  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull.html
-  commentId: Overload:Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull
-  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull
-  nameWithType: FluentValidationExtensions.ThrowIfNull
-- uid: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull``1(``0,System.String)
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNull.html
+  commentId: Overload:Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNull
+  fullName: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNull
+  nameWithType: ExceptionValidationExtensions.ThrowIfNull
+- uid: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNull``1(``0,System.String)
   name: ThrowIfNull<T>(T?, string?)
-  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull.html#Ubiquity_NET_Extensions_FluentValidationExtensions_ThrowIfNull__1___0_System_String_
-  commentId: M:Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull``1(``0,System.String)
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNull.html#Ubiquity_NET_Extensions_FluentValidation_ExceptionValidationExtensions_ThrowIfNull__1___0_System_String_
+  commentId: M:Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNull``1(``0,System.String)
   name.vb: ThrowIfNull(Of T)(T, String)
-  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull<T>(T?, string?)
-  fullName.vb: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull(Of T)(T, String)
-  nameWithType: FluentValidationExtensions.ThrowIfNull<T>(T?, string?)
-  nameWithType.vb: FluentValidationExtensions.ThrowIfNull(Of T)(T, String)
-- uid: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange*
+  fullName: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNull<T>(T?, string?)
+  fullName.vb: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNull(Of T)(T, String)
+  nameWithType: ExceptionValidationExtensions.ThrowIfNull<T>(T?, string?)
+  nameWithType.vb: ExceptionValidationExtensions.ThrowIfNull(Of T)(T, String)
+- uid: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfOutOfRange*
   name: ThrowIfOutOfRange
-  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange.html
-  commentId: Overload:Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange
-  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange
-  nameWithType: FluentValidationExtensions.ThrowIfOutOfRange
-- uid: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange``1(``0,``0,``0,System.String)
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfOutOfRange.html
+  commentId: Overload:Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfOutOfRange
+  fullName: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfOutOfRange
+  nameWithType: ExceptionValidationExtensions.ThrowIfOutOfRange
+- uid: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfOutOfRange``1(``0,``0,``0,System.String)
   name: ThrowIfOutOfRange<T>(T, T, T, string?)
-  href: extensions/api/Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange.html#Ubiquity_NET_Extensions_FluentValidationExtensions_ThrowIfOutOfRange__1___0___0___0_System_String_
-  commentId: M:Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange``1(``0,``0,``0,System.String)
+  href: extensions/api/Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfOutOfRange.html#Ubiquity_NET_Extensions_FluentValidation_ExceptionValidationExtensions_ThrowIfOutOfRange__1___0___0___0_System_String_
+  commentId: M:Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfOutOfRange``1(``0,``0,``0,System.String)
   name.vb: ThrowIfOutOfRange(Of T)(T, T, T, String)
-  fullName: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange<T>(T, T, T, string?)
-  fullName.vb: Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfOutOfRange(Of T)(T, T, T, String)
-  nameWithType: FluentValidationExtensions.ThrowIfOutOfRange<T>(T, T, T, string?)
-  nameWithType.vb: FluentValidationExtensions.ThrowIfOutOfRange(Of T)(T, T, T, String)
+  fullName: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfOutOfRange<T>(T, T, T, string?)
+  fullName.vb: Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfOutOfRange(Of T)(T, T, T, String)
+  nameWithType: ExceptionValidationExtensions.ThrowIfOutOfRange<T>(T, T, T, string?)
+  nameWithType.vb: ExceptionValidationExtensions.ThrowIfOutOfRange(Of T)(T, T, T, String)
 - uid: Ubiquity.NET.Extensions.KvpArrayBuilder`2
   name: KvpArrayBuilder<TKey, TValue>
   href: extensions/api/Ubiquity.NET.Extensions.KvpArrayBuilder-2.html
@@ -2604,6 +2610,66 @@ references:
   commentId: Overload:Ubiquity.NET.Extensions.ProcessInfo.ExecutablePath
   fullName: Ubiquity.NET.Extensions.ProcessInfo.ExecutablePath
   nameWithType: ProcessInfo.ExecutablePath
+- uid: Ubiquity.NET.Extensions.Properties
+  name: Ubiquity.NET.Extensions.Properties
+  href: extensions/api/Ubiquity.NET.Extensions.Properties.html
+  commentId: N:Ubiquity.NET.Extensions.Properties
+  fullName: Ubiquity.NET.Extensions.Properties
+  nameWithType: Ubiquity.NET.Extensions.Properties
+- uid: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException
+  name: ResourceNotFoundException
+  href: extensions/api/Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.html
+  commentId: T:Ubiquity.NET.Extensions.Properties.ResourceNotFoundException
+  fullName: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException
+  nameWithType: ResourceNotFoundException
+- uid: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.#ctor
+  name: ResourceNotFoundException()
+  href: extensions/api/Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.-ctor.html#Ubiquity_NET_Extensions_Properties_ResourceNotFoundException__ctor
+  commentId: M:Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.#ctor
+  name.vb: New()
+  fullName: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.ResourceNotFoundException()
+  fullName.vb: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.New()
+  nameWithType: ResourceNotFoundException.ResourceNotFoundException()
+  nameWithType.vb: ResourceNotFoundException.New()
+- uid: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.#ctor(System.String)
+  name: ResourceNotFoundException(string)
+  href: extensions/api/Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.-ctor.html#Ubiquity_NET_Extensions_Properties_ResourceNotFoundException__ctor_System_String_
+  commentId: M:Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.#ctor(System.String)
+  name.vb: New(String)
+  fullName: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.ResourceNotFoundException(string)
+  fullName.vb: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.New(String)
+  nameWithType: ResourceNotFoundException.ResourceNotFoundException(string)
+  nameWithType.vb: ResourceNotFoundException.New(String)
+- uid: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.#ctor(System.String,System.Exception)
+  name: ResourceNotFoundException(string, Exception)
+  href: extensions/api/Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.-ctor.html#Ubiquity_NET_Extensions_Properties_ResourceNotFoundException__ctor_System_String_System_Exception_
+  commentId: M:Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.#ctor(System.String,System.Exception)
+  name.vb: New(String, Exception)
+  fullName: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.ResourceNotFoundException(string, System.Exception)
+  fullName.vb: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.New(String, System.Exception)
+  nameWithType: ResourceNotFoundException.ResourceNotFoundException(string, Exception)
+  nameWithType.vb: ResourceNotFoundException.New(String, Exception)
+- uid: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.#ctor*
+  name: ResourceNotFoundException
+  href: extensions/api/Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.-ctor.html
+  commentId: Overload:Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.#ctor
+  name.vb: New
+  fullName: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.ResourceNotFoundException
+  fullName.vb: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.New
+  nameWithType: ResourceNotFoundException.ResourceNotFoundException
+  nameWithType.vb: ResourceNotFoundException.New
+- uid: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.ResourceName
+  name: ResourceName
+  href: extensions/api/Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.ResourceName.html#Ubiquity_NET_Extensions_Properties_ResourceNotFoundException_ResourceName
+  commentId: P:Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.ResourceName
+  fullName: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.ResourceName
+  nameWithType: ResourceNotFoundException.ResourceName
+- uid: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.ResourceName*
+  name: ResourceName
+  href: extensions/api/Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.ResourceName.html
+  commentId: Overload:Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.ResourceName
+  fullName: Ubiquity.NET.Extensions.Properties.ResourceNotFoundException.ResourceName
+  nameWithType: ResourceNotFoundException.ResourceName
 - uid: Ubiquity.NET.Extensions.SourcePosition
   name: SourcePosition
   href: extensions/api/Ubiquity.NET.Extensions.SourcePosition.html
@@ -2856,6 +2922,30 @@ references:
   commentId: Overload:Ubiquity.NET.Extensions.StringNormalizer.SystemLineEndings
   fullName: Ubiquity.NET.Extensions.StringNormalizer.SystemLineEndings
   nameWithType: StringNormalizer.SystemLineEndings
+- uid: Ubiquity.NET.Extensions.StringSplitOptions2
+  name: StringSplitOptions2
+  href: extensions/api/Ubiquity.NET.Extensions.StringSplitOptions2.html
+  commentId: T:Ubiquity.NET.Extensions.StringSplitOptions2
+  fullName: Ubiquity.NET.Extensions.StringSplitOptions2
+  nameWithType: StringSplitOptions2
+- uid: Ubiquity.NET.Extensions.StringSplitOptions2.None
+  name: None
+  href: extensions/api/Ubiquity.NET.Extensions.StringSplitOptions2.html#Ubiquity_NET_Extensions_StringSplitOptions2_None
+  commentId: F:Ubiquity.NET.Extensions.StringSplitOptions2.None
+  fullName: Ubiquity.NET.Extensions.StringSplitOptions2.None
+  nameWithType: StringSplitOptions2.None
+- uid: Ubiquity.NET.Extensions.StringSplitOptions2.RemoveEmptyEntries
+  name: RemoveEmptyEntries
+  href: extensions/api/Ubiquity.NET.Extensions.StringSplitOptions2.html#Ubiquity_NET_Extensions_StringSplitOptions2_RemoveEmptyEntries
+  commentId: F:Ubiquity.NET.Extensions.StringSplitOptions2.RemoveEmptyEntries
+  fullName: Ubiquity.NET.Extensions.StringSplitOptions2.RemoveEmptyEntries
+  nameWithType: StringSplitOptions2.RemoveEmptyEntries
+- uid: Ubiquity.NET.Extensions.StringSplitOptions2.TrimEntries
+  name: TrimEntries
+  href: extensions/api/Ubiquity.NET.Extensions.StringSplitOptions2.html#Ubiquity_NET_Extensions_StringSplitOptions2_TrimEntries
+  commentId: F:Ubiquity.NET.Extensions.StringSplitOptions2.TrimEntries
+  fullName: Ubiquity.NET.Extensions.StringSplitOptions2.TrimEntries
+  nameWithType: StringSplitOptions2.TrimEntries
 - uid: Ubiquity.NET.InteropHelpers
   name: Ubiquity.NET.InteropHelpers
   href: interop-helpers/api/Ubiquity.NET.InteropHelpers.html
@@ -29106,6 +29196,438 @@ references:
   commentId: F:Ubiquity.NET.Runtime.Utils.VisualizationKind.Xml
   fullName: Ubiquity.NET.Runtime.Utils.VisualizationKind.Xml
   nameWithType: VisualizationKind.Xml
+- uid: Ubiquity.NET.SrcGeneration
+  name: Ubiquity.NET.SrcGeneration
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.html
+  commentId: N:Ubiquity.NET.SrcGeneration
+  fullName: Ubiquity.NET.SrcGeneration
+  nameWithType: Ubiquity.NET.SrcGeneration
+- uid: Ubiquity.NET.SrcGeneration.CSharp
+  name: Ubiquity.NET.SrcGeneration.CSharp
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.html
+  commentId: N:Ubiquity.NET.SrcGeneration.CSharp
+  fullName: Ubiquity.NET.SrcGeneration.CSharp
+  nameWithType: Ubiquity.NET.SrcGeneration.CSharp
+- uid: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage
+  name: CSharpLanguage
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.html
+  commentId: T:Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage
+  nameWithType: CSharpLanguage
+- uid: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.KeyWords
+  name: KeyWords
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.KeyWords.html#Ubiquity_NET_SrcGeneration_CSharp_CSharpLanguage_KeyWords
+  commentId: P:Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.KeyWords
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.KeyWords
+  nameWithType: CSharpLanguage.KeyWords
+- uid: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.KeyWords*
+  name: KeyWords
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.KeyWords.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.KeyWords
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.KeyWords
+  nameWithType: CSharpLanguage.KeyWords
+- uid: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.MakeIdentifier(System.String)
+  name: MakeIdentifier(string)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.MakeIdentifier.html#Ubiquity_NET_SrcGeneration_CSharp_CSharpLanguage_MakeIdentifier_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.MakeIdentifier(System.String)
+  name.vb: MakeIdentifier(String)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.MakeIdentifier(string)
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.MakeIdentifier(String)
+  nameWithType: CSharpLanguage.MakeIdentifier(string)
+  nameWithType.vb: CSharpLanguage.MakeIdentifier(String)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.MakeIdentifier*
+  name: MakeIdentifier
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.MakeIdentifier.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.MakeIdentifier
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.MakeIdentifier
+  nameWithType: CSharpLanguage.MakeIdentifier
+- uid: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.ScopeClose
+  name: ScopeClose
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.ScopeClose.html
+  commentId: F:Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.ScopeClose
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.ScopeClose
+  nameWithType: CSharpLanguage.ScopeClose
+- uid: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.ScopeOpen
+  name: ScopeOpen
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.ScopeOpen.html
+  commentId: F:Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.ScopeOpen
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.CSharpLanguage.ScopeOpen
+  nameWithType: CSharpLanguage.ScopeOpen
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions
+  name: IndentedTextWriterExtensions
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.html
+  commentId: T:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions
+  nameWithType: IndentedTextWriterExtensions
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Class(System.CodeDom.Compiler.IndentedTextWriter,System.String,System.String)
+  name: Class(IndentedTextWriter, string?, string)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Class.html#Ubiquity_NET_SrcGeneration_CSharp_IndentedTextWriterExtensions_Class_System_CodeDom_Compiler_IndentedTextWriter_System_String_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Class(System.CodeDom.Compiler.IndentedTextWriter,System.String,System.String)
+  name.vb: Class(IndentedTextWriter, String, String)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Class(System.CodeDom.Compiler.IndentedTextWriter, string?, string)
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Class(System.CodeDom.Compiler.IndentedTextWriter, String, String)
+  nameWithType: IndentedTextWriterExtensions.Class(IndentedTextWriter, string?, string)
+  nameWithType.vb: IndentedTextWriterExtensions.Class(IndentedTextWriter, String, String)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Class*
+  name: Class
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Class.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Class
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Class
+  nameWithType: IndentedTextWriterExtensions.Class
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.MultiLineComment(System.CodeDom.Compiler.IndentedTextWriter,System.String)
+  name: MultiLineComment(IndentedTextWriter, string?)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.MultiLineComment.html#Ubiquity_NET_SrcGeneration_CSharp_IndentedTextWriterExtensions_MultiLineComment_System_CodeDom_Compiler_IndentedTextWriter_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.MultiLineComment(System.CodeDom.Compiler.IndentedTextWriter,System.String)
+  name.vb: MultiLineComment(IndentedTextWriter, String)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.MultiLineComment(System.CodeDom.Compiler.IndentedTextWriter, string?)
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.MultiLineComment(System.CodeDom.Compiler.IndentedTextWriter, String)
+  nameWithType: IndentedTextWriterExtensions.MultiLineComment(IndentedTextWriter, string?)
+  nameWithType.vb: IndentedTextWriterExtensions.MultiLineComment(IndentedTextWriter, String)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.MultiLineComment*
+  name: MultiLineComment
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.MultiLineComment.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.MultiLineComment
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.MultiLineComment
+  nameWithType: IndentedTextWriterExtensions.MultiLineComment
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Namespace(System.CodeDom.Compiler.IndentedTextWriter,System.String)
+  name: Namespace(IndentedTextWriter, string)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Namespace.html#Ubiquity_NET_SrcGeneration_CSharp_IndentedTextWriterExtensions_Namespace_System_CodeDom_Compiler_IndentedTextWriter_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Namespace(System.CodeDom.Compiler.IndentedTextWriter,System.String)
+  name.vb: Namespace(IndentedTextWriter, String)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Namespace(System.CodeDom.Compiler.IndentedTextWriter, string)
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Namespace(System.CodeDom.Compiler.IndentedTextWriter, String)
+  nameWithType: IndentedTextWriterExtensions.Namespace(IndentedTextWriter, string)
+  nameWithType.vb: IndentedTextWriterExtensions.Namespace(IndentedTextWriter, String)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Namespace*
+  name: Namespace
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Namespace.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Namespace
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Namespace
+  nameWithType: IndentedTextWriterExtensions.Namespace
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Scope(System.CodeDom.Compiler.IndentedTextWriter,System.String)
+  name: Scope(IndentedTextWriter, string?)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Scope.html#Ubiquity_NET_SrcGeneration_CSharp_IndentedTextWriterExtensions_Scope_System_CodeDom_Compiler_IndentedTextWriter_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Scope(System.CodeDom.Compiler.IndentedTextWriter,System.String)
+  name.vb: Scope(IndentedTextWriter, String)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Scope(System.CodeDom.Compiler.IndentedTextWriter, string?)
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Scope(System.CodeDom.Compiler.IndentedTextWriter, String)
+  nameWithType: IndentedTextWriterExtensions.Scope(IndentedTextWriter, string?)
+  nameWithType.vb: IndentedTextWriterExtensions.Scope(IndentedTextWriter, String)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Scope*
+  name: Scope
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Scope.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Scope
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Scope
+  nameWithType: IndentedTextWriterExtensions.Scope
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Struct(System.CodeDom.Compiler.IndentedTextWriter,System.String,System.String)
+  name: Struct(IndentedTextWriter, string?, string)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Struct.html#Ubiquity_NET_SrcGeneration_CSharp_IndentedTextWriterExtensions_Struct_System_CodeDom_Compiler_IndentedTextWriter_System_String_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Struct(System.CodeDom.Compiler.IndentedTextWriter,System.String,System.String)
+  name.vb: Struct(IndentedTextWriter, String, String)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Struct(System.CodeDom.Compiler.IndentedTextWriter, string?, string)
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Struct(System.CodeDom.Compiler.IndentedTextWriter, String, String)
+  nameWithType: IndentedTextWriterExtensions.Struct(IndentedTextWriter, string?, string)
+  nameWithType.vb: IndentedTextWriterExtensions.Struct(IndentedTextWriter, String, String)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Struct*
+  name: Struct
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Struct.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Struct
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.Struct
+  nameWithType: IndentedTextWriterExtensions.Struct
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.UnsafeScope(System.CodeDom.Compiler.IndentedTextWriter)
+  name: UnsafeScope(IndentedTextWriter)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.UnsafeScope.html#Ubiquity_NET_SrcGeneration_CSharp_IndentedTextWriterExtensions_UnsafeScope_System_CodeDom_Compiler_IndentedTextWriter_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.UnsafeScope(System.CodeDom.Compiler.IndentedTextWriter)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.UnsafeScope(System.CodeDom.Compiler.IndentedTextWriter)
+  nameWithType: IndentedTextWriterExtensions.UnsafeScope(IndentedTextWriter)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.UnsafeScope*
+  name: UnsafeScope
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.UnsafeScope.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.UnsafeScope
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.UnsafeScope
+  nameWithType: IndentedTextWriterExtensions.UnsafeScope
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedComment(System.CodeDom.Compiler.IndentedTextWriter,System.String,System.String,System.String)
+  name: WriteAutoGeneratedComment(IndentedTextWriter, string, string, string?)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedComment.html#Ubiquity_NET_SrcGeneration_CSharp_IndentedTextWriterExtensions_WriteAutoGeneratedComment_System_CodeDom_Compiler_IndentedTextWriter_System_String_System_String_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedComment(System.CodeDom.Compiler.IndentedTextWriter,System.String,System.String,System.String)
+  name.vb: WriteAutoGeneratedComment(IndentedTextWriter, String, String, String)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedComment(System.CodeDom.Compiler.IndentedTextWriter, string, string, string?)
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedComment(System.CodeDom.Compiler.IndentedTextWriter, String, String, String)
+  nameWithType: IndentedTextWriterExtensions.WriteAutoGeneratedComment(IndentedTextWriter, string, string, string?)
+  nameWithType.vb: IndentedTextWriterExtensions.WriteAutoGeneratedComment(IndentedTextWriter, String, String, String)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedComment*
+  name: WriteAutoGeneratedComment
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedComment.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedComment
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedComment
+  nameWithType: IndentedTextWriterExtensions.WriteAutoGeneratedComment
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedCommentBlock(System.CodeDom.Compiler.IndentedTextWriter,System.String,System.String)
+  name: WriteAutoGeneratedCommentBlock(IndentedTextWriter, string, string)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedCommentBlock.html#Ubiquity_NET_SrcGeneration_CSharp_IndentedTextWriterExtensions_WriteAutoGeneratedCommentBlock_System_CodeDom_Compiler_IndentedTextWriter_System_String_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedCommentBlock(System.CodeDom.Compiler.IndentedTextWriter,System.String,System.String)
+  name.vb: WriteAutoGeneratedCommentBlock(IndentedTextWriter, String, String)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedCommentBlock(System.CodeDom.Compiler.IndentedTextWriter, string, string)
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedCommentBlock(System.CodeDom.Compiler.IndentedTextWriter, String, String)
+  nameWithType: IndentedTextWriterExtensions.WriteAutoGeneratedCommentBlock(IndentedTextWriter, string, string)
+  nameWithType.vb: IndentedTextWriterExtensions.WriteAutoGeneratedCommentBlock(IndentedTextWriter, String, String)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedCommentBlock*
+  name: WriteAutoGeneratedCommentBlock
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedCommentBlock.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedCommentBlock
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.IndentedTextWriterExtensions.WriteAutoGeneratedCommentBlock
+  nameWithType: IndentedTextWriterExtensions.WriteAutoGeneratedCommentBlock
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions
+  name: TextWriterExtensions
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.html
+  commentId: T:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions
+  nameWithType: TextWriterExtensions
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttribute(System.IO.TextWriter,System.String,System.String[])
+  name: WriteAttribute(TextWriter, string, params string[])
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttribute.html#Ubiquity_NET_SrcGeneration_CSharp_TextWriterExtensions_WriteAttribute_System_IO_TextWriter_System_String_System_String___
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttribute(System.IO.TextWriter,System.String,System.String[])
+  name.vb: WriteAttribute(TextWriter, String, ParamArray String())
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttribute(System.IO.TextWriter, string, params string[])
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttribute(System.IO.TextWriter, String, ParamArray String())
+  nameWithType: TextWriterExtensions.WriteAttribute(TextWriter, string, params string[])
+  nameWithType.vb: TextWriterExtensions.WriteAttribute(TextWriter, String, ParamArray String())
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttribute*
+  name: WriteAttribute
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttribute.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttribute
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttribute
+  nameWithType: TextWriterExtensions.WriteAttribute
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttributeLine(System.IO.TextWriter,System.String,System.String[])
+  name: WriteAttributeLine(TextWriter, string, params string[])
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttributeLine.html#Ubiquity_NET_SrcGeneration_CSharp_TextWriterExtensions_WriteAttributeLine_System_IO_TextWriter_System_String_System_String___
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttributeLine(System.IO.TextWriter,System.String,System.String[])
+  name.vb: WriteAttributeLine(TextWriter, String, ParamArray String())
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttributeLine(System.IO.TextWriter, string, params string[])
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttributeLine(System.IO.TextWriter, String, ParamArray String())
+  nameWithType: TextWriterExtensions.WriteAttributeLine(TextWriter, string, params string[])
+  nameWithType.vb: TextWriterExtensions.WriteAttributeLine(TextWriter, String, ParamArray String())
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttributeLine*
+  name: WriteAttributeLine
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttributeLine.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttributeLine
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteAttributeLine
+  nameWithType: TextWriterExtensions.WriteAttributeLine
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteRemarksComment(System.IO.TextWriter,System.String)
+  name: WriteRemarksComment(TextWriter, string?)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteRemarksComment.html#Ubiquity_NET_SrcGeneration_CSharp_TextWriterExtensions_WriteRemarksComment_System_IO_TextWriter_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteRemarksComment(System.IO.TextWriter,System.String)
+  name.vb: WriteRemarksComment(TextWriter, String)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteRemarksComment(System.IO.TextWriter, string?)
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteRemarksComment(System.IO.TextWriter, String)
+  nameWithType: TextWriterExtensions.WriteRemarksComment(TextWriter, string?)
+  nameWithType.vb: TextWriterExtensions.WriteRemarksComment(TextWriter, String)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteRemarksComment*
+  name: WriteRemarksComment
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteRemarksComment.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteRemarksComment
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteRemarksComment
+  nameWithType: TextWriterExtensions.WriteRemarksComment
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryAndRemarksComments(System.IO.TextWriter,System.String,System.String)
+  name: WriteSummaryAndRemarksComments(TextWriter, string?, string?)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryAndRemarksComments.html#Ubiquity_NET_SrcGeneration_CSharp_TextWriterExtensions_WriteSummaryAndRemarksComments_System_IO_TextWriter_System_String_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryAndRemarksComments(System.IO.TextWriter,System.String,System.String)
+  name.vb: WriteSummaryAndRemarksComments(TextWriter, String, String)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryAndRemarksComments(System.IO.TextWriter, string?, string?)
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryAndRemarksComments(System.IO.TextWriter, String, String)
+  nameWithType: TextWriterExtensions.WriteSummaryAndRemarksComments(TextWriter, string?, string?)
+  nameWithType.vb: TextWriterExtensions.WriteSummaryAndRemarksComments(TextWriter, String, String)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryAndRemarksComments*
+  name: WriteSummaryAndRemarksComments
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryAndRemarksComments.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryAndRemarksComments
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryAndRemarksComments
+  nameWithType: TextWriterExtensions.WriteSummaryAndRemarksComments
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryComment(System.IO.TextWriter,System.String)
+  name: WriteSummaryComment(TextWriter, string?)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryComment.html#Ubiquity_NET_SrcGeneration_CSharp_TextWriterExtensions_WriteSummaryComment_System_IO_TextWriter_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryComment(System.IO.TextWriter,System.String)
+  name.vb: WriteSummaryComment(TextWriter, String)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryComment(System.IO.TextWriter, string?)
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryComment(System.IO.TextWriter, String)
+  nameWithType: TextWriterExtensions.WriteSummaryComment(TextWriter, string?)
+  nameWithType.vb: TextWriterExtensions.WriteSummaryComment(TextWriter, String)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryComment*
+  name: WriteSummaryComment
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryComment.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryComment
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteSummaryComment
+  nameWithType: TextWriterExtensions.WriteSummaryComment
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteUsingDirective(System.IO.TextWriter,System.String)
+  name: WriteUsingDirective(TextWriter, string)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteUsingDirective.html#Ubiquity_NET_SrcGeneration_CSharp_TextWriterExtensions_WriteUsingDirective_System_IO_TextWriter_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteUsingDirective(System.IO.TextWriter,System.String)
+  name.vb: WriteUsingDirective(TextWriter, String)
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteUsingDirective(System.IO.TextWriter, string)
+  fullName.vb: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteUsingDirective(System.IO.TextWriter, String)
+  nameWithType: TextWriterExtensions.WriteUsingDirective(TextWriter, string)
+  nameWithType.vb: TextWriterExtensions.WriteUsingDirective(TextWriter, String)
+- uid: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteUsingDirective*
+  name: WriteUsingDirective
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteUsingDirective.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteUsingDirective
+  fullName: Ubiquity.NET.SrcGeneration.CSharp.TextWriterExtensions.WriteUsingDirective
+  nameWithType: TextWriterExtensions.WriteUsingDirective
+- uid: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions
+  name: IndentedTextWriterExtensions
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.html
+  commentId: T:Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions
+  fullName: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions
+  nameWithType: IndentedTextWriterExtensions
+- uid: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.Block(System.CodeDom.Compiler.IndentedTextWriter,System.String,System.String,System.String,System.Boolean)
+  name: Block(IndentedTextWriter, string, string, string?, bool)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.Block.html#Ubiquity_NET_SrcGeneration_IndentedTextWriterExtensions_Block_System_CodeDom_Compiler_IndentedTextWriter_System_String_System_String_System_String_System_Boolean_
+  commentId: M:Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.Block(System.CodeDom.Compiler.IndentedTextWriter,System.String,System.String,System.String,System.Boolean)
+  name.vb: Block(IndentedTextWriter, String, String, String, Boolean)
+  fullName: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.Block(System.CodeDom.Compiler.IndentedTextWriter, string, string, string?, bool)
+  fullName.vb: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.Block(System.CodeDom.Compiler.IndentedTextWriter, String, String, String, Boolean)
+  nameWithType: IndentedTextWriterExtensions.Block(IndentedTextWriter, string, string, string?, bool)
+  nameWithType.vb: IndentedTextWriterExtensions.Block(IndentedTextWriter, String, String, String, Boolean)
+- uid: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.Block*
+  name: Block
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.Block.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.Block
+  fullName: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.Block
+  nameWithType: IndentedTextWriterExtensions.Block
+- uid: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.PushIndent(System.CodeDom.Compiler.IndentedTextWriter)
+  name: PushIndent(IndentedTextWriter)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.PushIndent.html#Ubiquity_NET_SrcGeneration_IndentedTextWriterExtensions_PushIndent_System_CodeDom_Compiler_IndentedTextWriter_
+  commentId: M:Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.PushIndent(System.CodeDom.Compiler.IndentedTextWriter)
+  fullName: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.PushIndent(System.CodeDom.Compiler.IndentedTextWriter)
+  nameWithType: IndentedTextWriterExtensions.PushIndent(IndentedTextWriter)
+- uid: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.PushIndent*
+  name: PushIndent
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.PushIndent.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.PushIndent
+  fullName: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.PushIndent
+  nameWithType: IndentedTextWriterExtensions.PushIndent
+- uid: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.WriteEmptyLine(System.CodeDom.Compiler.IndentedTextWriter)
+  name: WriteEmptyLine(IndentedTextWriter)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.WriteEmptyLine.html#Ubiquity_NET_SrcGeneration_IndentedTextWriterExtensions_WriteEmptyLine_System_CodeDom_Compiler_IndentedTextWriter_
+  commentId: M:Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.WriteEmptyLine(System.CodeDom.Compiler.IndentedTextWriter)
+  fullName: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.WriteEmptyLine(System.CodeDom.Compiler.IndentedTextWriter)
+  nameWithType: IndentedTextWriterExtensions.WriteEmptyLine(IndentedTextWriter)
+- uid: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.WriteEmptyLine*
+  name: WriteEmptyLine
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.WriteEmptyLine.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.WriteEmptyLine
+  fullName: Ubiquity.NET.SrcGeneration.IndentedTextWriterExtensions.WriteEmptyLine
+  nameWithType: IndentedTextWriterExtensions.WriteEmptyLine
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions
+  name: StringExtensions
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.html
+  commentId: T:Ubiquity.NET.SrcGeneration.StringExtensions
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions
+  nameWithType: StringExtensions
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeComment(System.String)
+  name: EscapeComment(string)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.EscapeComment.html#Ubiquity_NET_SrcGeneration_StringExtensions_EscapeComment_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.StringExtensions.EscapeComment(System.String)
+  name.vb: EscapeComment(String)
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeComment(string)
+  fullName.vb: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeComment(String)
+  nameWithType: StringExtensions.EscapeComment(string)
+  nameWithType.vb: StringExtensions.EscapeComment(String)
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeComment*
+  name: EscapeComment
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.EscapeComment.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.StringExtensions.EscapeComment
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeComment
+  nameWithType: StringExtensions.EscapeComment
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForComment(System.Collections.Generic.IEnumerable{System.String})
+  name: EscapeForComment(IEnumerable<string>)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForComment.html#Ubiquity_NET_SrcGeneration_StringExtensions_EscapeForComment_System_Collections_Generic_IEnumerable_System_String__
+  commentId: M:Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForComment(System.Collections.Generic.IEnumerable{System.String})
+  name.vb: EscapeForComment(IEnumerable(Of String))
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForComment(System.Collections.Generic.IEnumerable<string>)
+  fullName.vb: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForComment(System.Collections.Generic.IEnumerable(Of String))
+  nameWithType: StringExtensions.EscapeForComment(IEnumerable<string>)
+  nameWithType.vb: StringExtensions.EscapeForComment(IEnumerable(Of String))
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForComment*
+  name: EscapeForComment
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForComment.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForComment
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForComment
+  nameWithType: StringExtensions.EscapeForComment
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForXML(System.Collections.Generic.IEnumerable{System.String})
+  name: EscapeForXML(IEnumerable<string>)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForXML.html#Ubiquity_NET_SrcGeneration_StringExtensions_EscapeForXML_System_Collections_Generic_IEnumerable_System_String__
+  commentId: M:Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForXML(System.Collections.Generic.IEnumerable{System.String})
+  name.vb: EscapeForXML(IEnumerable(Of String))
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForXML(System.Collections.Generic.IEnumerable<string>)
+  fullName.vb: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForXML(System.Collections.Generic.IEnumerable(Of String))
+  nameWithType: StringExtensions.EscapeForXML(IEnumerable<string>)
+  nameWithType.vb: StringExtensions.EscapeForXML(IEnumerable(Of String))
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForXML*
+  name: EscapeForXML
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForXML.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForXML
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.EscapeForXML
+  nameWithType: StringExtensions.EscapeForXML
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.GetCommentLines(System.String,Ubiquity.NET.Extensions.StringSplitOptions2)
+  name: GetCommentLines(string, StringSplitOptions2)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.GetCommentLines.html#Ubiquity_NET_SrcGeneration_StringExtensions_GetCommentLines_System_String_Ubiquity_NET_Extensions_StringSplitOptions2_
+  commentId: M:Ubiquity.NET.SrcGeneration.StringExtensions.GetCommentLines(System.String,Ubiquity.NET.Extensions.StringSplitOptions2)
+  name.vb: GetCommentLines(String, StringSplitOptions2)
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.GetCommentLines(string, Ubiquity.NET.Extensions.StringSplitOptions2)
+  fullName.vb: Ubiquity.NET.SrcGeneration.StringExtensions.GetCommentLines(String, Ubiquity.NET.Extensions.StringSplitOptions2)
+  nameWithType: StringExtensions.GetCommentLines(string, StringSplitOptions2)
+  nameWithType.vb: StringExtensions.GetCommentLines(String, StringSplitOptions2)
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.GetCommentLines*
+  name: GetCommentLines
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.GetCommentLines.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.StringExtensions.GetCommentLines
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.GetCommentLines
+  nameWithType: StringExtensions.GetCommentLines
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.MakeXmlSafe(System.String)
+  name: MakeXmlSafe(string)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.MakeXmlSafe.html#Ubiquity_NET_SrcGeneration_StringExtensions_MakeXmlSafe_System_String_
+  commentId: M:Ubiquity.NET.SrcGeneration.StringExtensions.MakeXmlSafe(System.String)
+  name.vb: MakeXmlSafe(String)
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.MakeXmlSafe(string)
+  fullName.vb: Ubiquity.NET.SrcGeneration.StringExtensions.MakeXmlSafe(String)
+  nameWithType: StringExtensions.MakeXmlSafe(string)
+  nameWithType.vb: StringExtensions.MakeXmlSafe(String)
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.MakeXmlSafe*
+  name: MakeXmlSafe
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.MakeXmlSafe.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.StringExtensions.MakeXmlSafe
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.MakeXmlSafe
+  nameWithType: StringExtensions.MakeXmlSafe
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.SkipDuplicates(System.Collections.Generic.IEnumerable{System.String})
+  name: SkipDuplicates(IEnumerable<string>)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.SkipDuplicates.html#Ubiquity_NET_SrcGeneration_StringExtensions_SkipDuplicates_System_Collections_Generic_IEnumerable_System_String__
+  commentId: M:Ubiquity.NET.SrcGeneration.StringExtensions.SkipDuplicates(System.Collections.Generic.IEnumerable{System.String})
+  name.vb: SkipDuplicates(IEnumerable(Of String))
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.SkipDuplicates(System.Collections.Generic.IEnumerable<string>)
+  fullName.vb: Ubiquity.NET.SrcGeneration.StringExtensions.SkipDuplicates(System.Collections.Generic.IEnumerable(Of String))
+  nameWithType: StringExtensions.SkipDuplicates(IEnumerable<string>)
+  nameWithType.vb: StringExtensions.SkipDuplicates(IEnumerable(Of String))
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.SkipDuplicates*
+  name: SkipDuplicates
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.SkipDuplicates.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.StringExtensions.SkipDuplicates
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.SkipDuplicates
+  nameWithType: StringExtensions.SkipDuplicates
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.SplitLines(System.String,Ubiquity.NET.Extensions.StringSplitOptions2)
+  name: SplitLines(string, StringSplitOptions2)
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.SplitLines.html#Ubiquity_NET_SrcGeneration_StringExtensions_SplitLines_System_String_Ubiquity_NET_Extensions_StringSplitOptions2_
+  commentId: M:Ubiquity.NET.SrcGeneration.StringExtensions.SplitLines(System.String,Ubiquity.NET.Extensions.StringSplitOptions2)
+  name.vb: SplitLines(String, StringSplitOptions2)
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.SplitLines(string, Ubiquity.NET.Extensions.StringSplitOptions2)
+  fullName.vb: Ubiquity.NET.SrcGeneration.StringExtensions.SplitLines(String, Ubiquity.NET.Extensions.StringSplitOptions2)
+  nameWithType: StringExtensions.SplitLines(string, StringSplitOptions2)
+  nameWithType.vb: StringExtensions.SplitLines(String, StringSplitOptions2)
+- uid: Ubiquity.NET.SrcGeneration.StringExtensions.SplitLines*
+  name: SplitLines
+  href: SrcGeneration/api/Ubiquity.NET.SrcGeneration.StringExtensions.SplitLines.html
+  commentId: Overload:Ubiquity.NET.SrcGeneration.StringExtensions.SplitLines
+  fullName: Ubiquity.NET.SrcGeneration.StringExtensions.SplitLines
+  nameWithType: StringExtensions.SplitLines
 - uid: code-generation-with-debug-info
   name: CodeGenWithDebugInfo
   href: llvm/articles/Samples/CodeGenWithDebugInfo/codegeneration.html

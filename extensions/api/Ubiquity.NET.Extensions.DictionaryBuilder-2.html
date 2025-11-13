@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Extensions_DictionaryBuilder_2" data-uid="Ubiquity.NET.Extensions.DictionaryBuilder`2" class="text-break">
-Struct DictionaryBuilder&lt;TKey, TValue&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/DictionaryBuilder.cs/#L24"><i class="bi bi-code-slash"></i></a>
+Struct DictionaryBuilder&lt;TKey, TValue&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Extensions/DictionaryBuilder.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -97,7 +97,10 @@ Struct DictionaryBuilder&lt;TKey, TValue&gt;  <a class="header-action link-secon
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly struct DictionaryBuilder&lt;TKey, TValue&gt; : IEnumerable where TKey : notnull</code></pre>
+    <pre><code class="lang-csharp hljs">[SuppressMessage(&quot;Design&quot;, &quot;CA1010:Generic interface should also be implemented&quot;, Justification = &quot;IEnumerable is unused but must exist to support collection initializers&quot;)]
+[SuppressMessage(&quot;Naming&quot;, &quot;CA1710:Identifiers should have correct suffix&quot;, Justification = &quot;It is the correct suffix&quot;)]
+[SuppressMessage(&quot;Performance&quot;, &quot;CA1815:Override equals and operator equals on value types&quot;, Justification = &quot;Equality not relevant for a builder&quot;)]
+public readonly struct DictionaryBuilder&lt;TKey, TValue&gt; : IEnumerable where TKey : notnull</code></pre>
   </div>
 
 
@@ -148,7 +151,7 @@ Struct DictionaryBuilder&lt;TKey, TValue&gt;  <a class="header-action link-secon
     <dt>Extension Methods</dt>
     <dd>
   <div>
-      <a class="xref" href="Ubiquity.NET.Extensions.FluentValidationExtensions.ThrowIfNull.html#Ubiquity_NET_Extensions_FluentValidationExtensions_ThrowIfNull__1___0_System_String_">FluentValidationExtensions.ThrowIfNull&lt;T&gt;(T?, string?)</a>
+      <a class="xref" href="Ubiquity.NET.Extensions.FluentValidation.ExceptionValidationExtensions.ThrowIfNull.html#Ubiquity_NET_Extensions_FluentValidation_ExceptionValidationExtensions_ThrowIfNull__1___0_System_String_">ExceptionValidationExtensions.ThrowIfNull&lt;T&gt;(T?, string?)</a>
   </div>
   </dd></dl>
 
@@ -215,7 +218,7 @@ and runtime version functionality). It provides collection initialization suppor
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/DictionaryBuilder.cs/#L24" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Extensions/DictionaryBuilder.cs/#L24" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -231,7 +234,7 @@ and runtime version functionality). It provides collection initialization suppor
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc
+          - Build: 20.1.8-rc.1
         </div>
       </div>
     </footer>

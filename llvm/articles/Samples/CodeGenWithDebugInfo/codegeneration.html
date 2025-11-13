@@ -343,13 +343,35 @@ var barValue = module.Context.CreateNamedConstantStruct( fooType
                                                        , constArray
                                                        );
 
-var bar = module.AddGlobal( fooType, false, 0, barValue, &quot;bar&quot; );
+var bar = module.AddGlobal( fooType, false, 0, barValue, &quot;bar&quot;u8 );
 bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
-bar.AddDebugInfo( diBuilder.CreateGlobalVariableExpression( compilationUnit, &quot;bar&quot;, string.Empty, diFile, 8, fooType.DebugInfoType, false, null ) );
+bar.AddDebugInfo(
+    diBuilder.CreateGlobalVariableExpression(
+        compilationUnit,
+        &quot;bar&quot;u8,
+        linkageName: string.Empty,
+        diFile,
+        lineNo: 8,
+        fooType.DebugInfoType,
+        isLocalToUnit: false,
+        value: null
+    )
+);
 
-var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), &quot;baz&quot; );
+var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), &quot;baz&quot;u8 );
 baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
-baz.AddDebugInfo( diBuilder.CreateGlobalVariableExpression( compilationUnit, &quot;baz&quot;, string.Empty, diFile, 9, fooType.DebugInfoType, false, null ) );
+baz.AddDebugInfo(
+    diBuilder.CreateGlobalVariableExpression(
+        compilationUnit,
+        &quot;baz&quot;u8,
+        linkageName: string.Empty,
+        diFile,
+        lineNo: 9,
+        fooType.DebugInfoType,
+        isLocalToUnit: false,
+        value: null
+    )
+);
 
 // add module flags and compiler identifiers...
 // this can technically occur at any point, though placing it here makes
@@ -384,13 +406,35 @@ var barValue = module.Context.CreateNamedConstantStruct( fooType
                                                        , constArray
                                                        );
 
-var bar = module.AddGlobal( fooType, false, 0, barValue, &quot;bar&quot; );
+var bar = module.AddGlobal( fooType, false, 0, barValue, &quot;bar&quot;u8 );
 bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
-bar.AddDebugInfo( diBuilder.CreateGlobalVariableExpression( compilationUnit, &quot;bar&quot;, string.Empty, diFile, 8, fooType.DebugInfoType, false, null ) );
+bar.AddDebugInfo(
+    diBuilder.CreateGlobalVariableExpression(
+        compilationUnit,
+        &quot;bar&quot;u8,
+        linkageName: string.Empty,
+        diFile,
+        lineNo: 8,
+        fooType.DebugInfoType,
+        isLocalToUnit: false,
+        value: null
+    )
+);
 
-var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), &quot;baz&quot; );
+var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), &quot;baz&quot;u8 );
 baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
-baz.AddDebugInfo( diBuilder.CreateGlobalVariableExpression( compilationUnit, &quot;baz&quot;, string.Empty, diFile, 9, fooType.DebugInfoType, false, null ) );
+baz.AddDebugInfo(
+    diBuilder.CreateGlobalVariableExpression(
+        compilationUnit,
+        &quot;baz&quot;u8,
+        linkageName: string.Empty,
+        diFile,
+        lineNo: 9,
+        fooType.DebugInfoType,
+        isLocalToUnit: false,
+        value: null
+    )
+);
 
 // add module flags and compiler identifiers...
 // this can technically occur at any point, though placing it here makes
@@ -647,7 +691,7 @@ attributes #2 = { argmemonly nounwind }
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc
+          - Build: 20.1.8-rc.1
         </div>
       </div>
     </footer>

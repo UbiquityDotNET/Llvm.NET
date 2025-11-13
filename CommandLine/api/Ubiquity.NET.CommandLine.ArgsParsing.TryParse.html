@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_CommandLine_ArgsParsing_TryParse_" data-uid="Ubiquity.NET.CommandLine.ArgsParsing.TryParse*" class="text-break">
-Method TryParse  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L151"><i class="bi bi-code-slash"></i></a>
+Method TryParse  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L145"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -116,7 +116,7 @@ Method TryParse  <a class="header-action link-secondary" title="View source" hre
 
 <h3 id="Ubiquity_NET_CommandLine_ArgsParsing_TryParse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_CommandLine_IDiagnosticReporter___0__System_Int32__" data-uid="Ubiquity.NET.CommandLine.ArgsParsing.TryParse``1(System.String[],Ubiquity.NET.CommandLine.CmdLineSettings,Ubiquity.NET.CommandLine.IDiagnosticReporter,``0@,System.Int32@)">
   TryParse&lt;T&gt;(string[], CmdLineSettings?, IDiagnosticReporter, out T, out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L151"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L145"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Tries to parse a command line, and binds the results to a value</p>
@@ -166,24 +166,28 @@ Method TryParse  <a class="header-action link-secondary" title="View source" hre
 
 
 <h4 class="section" id="Ubiquity_NET_CommandLine_ArgsParsing_TryParse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_CommandLine_IDiagnosticReporter___0__System_Int32___remarks">Remarks</h4>
-<div class="markdown level1 remarks"><p>
-Since this wraps several common operations, some of which may require exiting the app the return value
+<div class="markdown level1 remarks"><p>Since this wraps several common operations, some of which may require exiting the app, the return value
 has the semantics of "App should continue". In the event of parse errors or failures in invocation of
 the default options the result is a <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> with an <code class="paramref">exitCode</code> set to
 a proper exit code value. (non-zero for errors and zero for success even though the app should still
-exit)
-</p>
+exit)</p>
 <p>This wraps the common pattern of parsing a command line, invoking default options, and binding the results of a parse
 using a standard .NET "try pattern". The invocation of default options may return <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> with
-<code class="paramref">exitCode</code> set to <code>0</code>. this indicates the parse was successful AND that the default option was
+<code class="paramref">exitCode</code> set to <code>0</code>. This indicates the parse was successful AND that the default option was
 run successfully and the app should exit.</p>
-<p>In short this wraps the following sequence of common operations and exiting on completion of
-any operation with errors or successful invocation of default options:
-<ol><li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.Parse.html#Ubiquity_NET_CommandLine_ArgsParsing_Parse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings_">Parse&lt;T&gt;(string[], CmdLineSettings?)</a></li><li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.ReportErrors.html#Ubiquity_NET_CommandLine_ArgsParsing_ReportErrors_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_IDiagnosticReporter_">ReportErrors(ParseResult, IDiagnosticReporter)</a></li><li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.InvokeDefaultOptions.html#Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_CommandLine_IDiagnosticReporter_">InvokeDefaultOptions(ParseResult, CmdLineSettings, IDiagnosticReporter)</a></li><li><a class="xref" href="Ubiquity.NET.CommandLine.ICommandLineOptions-1.Bind.html#Ubiquity_NET_CommandLine_ICommandLineOptions_1_Bind_System_CommandLine_ParseResult_">Bind(ParseResult)</a></li></ol>
-
-<p>
-The <code class="paramref">exitCode</code> is set to the exit code of the app on failures
-</p>
+<p>In short, this wraps the following sequence of common operations and exiting on completion of
+any operation with errors or successful invocation of default options:<br></p>
+<ol>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.Parse.html#Ubiquity_NET_CommandLine_ArgsParsing_Parse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings_">Parse&lt;T&gt;(string[], CmdLineSettings?)</a><br></li>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.ReportErrors.html#Ubiquity_NET_CommandLine_ArgsParsing_ReportErrors_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_IDiagnosticReporter_">ReportErrors(ParseResult, IDiagnosticReporter)</a><br></li>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.InvokeDefaultOptions.html#Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_CommandLine_IDiagnosticReporter_">InvokeDefaultOptions(ParseResult, CmdLineSettings, IDiagnosticReporter)</a><br></li>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ICommandLineOptions-1.Bind.html#Ubiquity_NET_CommandLine_ICommandLineOptions_1_Bind_System_CommandLine_ParseResult_">Bind(ParseResult)</a><br></li>
+</ol>
+<p>The <code class="paramref">exitCode</code> is set to the exit code for the app on failures. This code indicates the
+parse errors and is the result of invoking <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.commandline.invocation.parseerroraction">ParseErrorAction</a> which, as of the current release,
+is always 1, though this behavior is not documented and therefore subject to change. Thus, calling applications
+should ***NOT*** rely on this value and instead use their own value to indicate a parse error that is documented
+and stable.</p>
 </div>
 
 
@@ -193,7 +197,7 @@ The <code class="paramref">exitCode</code> is set to the exit code of the app on
 
 <h3 id="Ubiquity_NET_CommandLine_ArgsParsing_TryParse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings___0__System_Int32__" data-uid="Ubiquity.NET.CommandLine.ArgsParsing.TryParse``1(System.String[],Ubiquity.NET.CommandLine.CmdLineSettings,``0@,System.Int32@)">
   TryParse&lt;T&gt;(string[], CmdLineSettings, out T, out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L183"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Tries to parse a command line, and binds the results to a value</p>
@@ -240,24 +244,28 @@ The <code class="paramref">exitCode</code> is set to the exit code of the app on
 
 
 <h4 class="section" id="Ubiquity_NET_CommandLine_ArgsParsing_TryParse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings___0__System_Int32___remarks">Remarks</h4>
-<div class="markdown level1 remarks"><p>
-Since this wraps several common operations, some of which may require exiting the app the return value
+<div class="markdown level1 remarks"><p>Since this wraps several common operations, some of which may require exiting the app, the return value
 has the semantics of "App should continue". In the event of parse errors or failures in invocation of
 the default options the result is a <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> with an <code class="paramref">exitCode</code> set to
 a proper exit code value. (non-zero for errors and zero for success even though the app should still
-exit)
-</p>
+exit)</p>
 <p>This wraps the common pattern of parsing a command line, invoking default options, and binding the results of a parse
 using a standard .NET "try pattern". The invocation of default options may return <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> with
-<code class="paramref">exitCode</code> set to <code>0</code>. this indicates the parse was successful AND that the default option was
+<code class="paramref">exitCode</code> set to <code>0</code>. This indicates the parse was successful AND that the default option was
 run successfully and the app should exit.</p>
-<p>In short this wraps the following sequence of common operations and exiting on completion of
-any operation with errors or successful invocation of default options:
-<ol><li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.Parse.html#Ubiquity_NET_CommandLine_ArgsParsing_Parse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings_">Parse&lt;T&gt;(string[], CmdLineSettings?)</a></li><li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.ReportErrors.html#Ubiquity_NET_CommandLine_ArgsParsing_ReportErrors_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_IDiagnosticReporter_">ReportErrors(ParseResult, IDiagnosticReporter)</a></li><li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.InvokeDefaultOptions.html#Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_CommandLine_IDiagnosticReporter_">InvokeDefaultOptions(ParseResult, CmdLineSettings, IDiagnosticReporter)</a></li><li><a class="xref" href="Ubiquity.NET.CommandLine.ICommandLineOptions-1.Bind.html#Ubiquity_NET_CommandLine_ICommandLineOptions_1_Bind_System_CommandLine_ParseResult_">Bind(ParseResult)</a></li></ol>
-
-<p>
-The <code class="paramref">exitCode</code> is set to the exit code of the app on failures
-</p>
+<p>In short, this wraps the following sequence of common operations and exiting on completion of
+any operation with errors or successful invocation of default options:<br></p>
+<ol>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.Parse.html#Ubiquity_NET_CommandLine_ArgsParsing_Parse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings_">Parse&lt;T&gt;(string[], CmdLineSettings?)</a><br></li>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.ReportErrors.html#Ubiquity_NET_CommandLine_ArgsParsing_ReportErrors_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_IDiagnosticReporter_">ReportErrors(ParseResult, IDiagnosticReporter)</a><br></li>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.InvokeDefaultOptions.html#Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_CommandLine_IDiagnosticReporter_">InvokeDefaultOptions(ParseResult, CmdLineSettings, IDiagnosticReporter)</a><br></li>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ICommandLineOptions-1.Bind.html#Ubiquity_NET_CommandLine_ICommandLineOptions_1_Bind_System_CommandLine_ParseResult_">Bind(ParseResult)</a><br></li>
+</ol>
+<p>The <code class="paramref">exitCode</code> is set to the exit code for the app on failures. This code indicates the
+parse errors and is the result of invoking <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.commandline.invocation.parseerroraction">ParseErrorAction</a> which, as of the current release,
+is always 1, though this behavior is not documented and therefore subject to change. Thus, calling applications
+should ***NOT*** rely on this value and instead use their own value to indicate a parse error that is documented
+and stable.</p>
 </div>
 
 
@@ -267,7 +275,7 @@ The <code class="paramref">exitCode</code> is set to the exit code of the app on
 
 <h3 id="Ubiquity_NET_CommandLine_ArgsParsing_TryParse__1_System_String_____0__System_Int32__" data-uid="Ubiquity.NET.CommandLine.ArgsParsing.TryParse``1(System.String[],``0@,System.Int32@)">
   TryParse&lt;T&gt;(string[], out T, out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L196"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L190"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Tries to parse a command line, and binds the results to a value</p>
@@ -311,24 +319,28 @@ The <code class="paramref">exitCode</code> is set to the exit code of the app on
 
 
 <h4 class="section" id="Ubiquity_NET_CommandLine_ArgsParsing_TryParse__1_System_String_____0__System_Int32___remarks">Remarks</h4>
-<div class="markdown level1 remarks"><p>
-Since this wraps several common operations, some of which may require exiting the app the return value
+<div class="markdown level1 remarks"><p>Since this wraps several common operations, some of which may require exiting the app, the return value
 has the semantics of "App should continue". In the event of parse errors or failures in invocation of
 the default options the result is a <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> with an <code class="paramref">exitCode</code> set to
 a proper exit code value. (non-zero for errors and zero for success even though the app should still
-exit)
-</p>
+exit)</p>
 <p>This wraps the common pattern of parsing a command line, invoking default options, and binding the results of a parse
 using a standard .NET "try pattern". The invocation of default options may return <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> with
-<code class="paramref">exitCode</code> set to <code>0</code>. this indicates the parse was successful AND that the default option was
+<code class="paramref">exitCode</code> set to <code>0</code>. This indicates the parse was successful AND that the default option was
 run successfully and the app should exit.</p>
-<p>In short this wraps the following sequence of common operations and exiting on completion of
-any operation with errors or successful invocation of default options:
-<ol><li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.Parse.html#Ubiquity_NET_CommandLine_ArgsParsing_Parse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings_">Parse&lt;T&gt;(string[], CmdLineSettings?)</a></li><li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.ReportErrors.html#Ubiquity_NET_CommandLine_ArgsParsing_ReportErrors_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_IDiagnosticReporter_">ReportErrors(ParseResult, IDiagnosticReporter)</a></li><li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.InvokeDefaultOptions.html#Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_CommandLine_IDiagnosticReporter_">InvokeDefaultOptions(ParseResult, CmdLineSettings, IDiagnosticReporter)</a></li><li><a class="xref" href="Ubiquity.NET.CommandLine.ICommandLineOptions-1.Bind.html#Ubiquity_NET_CommandLine_ICommandLineOptions_1_Bind_System_CommandLine_ParseResult_">Bind(ParseResult)</a></li></ol>
-
-<p>
-The <code class="paramref">exitCode</code> is set to the exit code of the app on failures
-</p>
+<p>In short, this wraps the following sequence of common operations and exiting on completion of
+any operation with errors or successful invocation of default options:<br></p>
+<ol>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.Parse.html#Ubiquity_NET_CommandLine_ArgsParsing_Parse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings_">Parse&lt;T&gt;(string[], CmdLineSettings?)</a><br></li>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.ReportErrors.html#Ubiquity_NET_CommandLine_ArgsParsing_ReportErrors_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_IDiagnosticReporter_">ReportErrors(ParseResult, IDiagnosticReporter)</a><br></li>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.InvokeDefaultOptions.html#Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_CommandLine_IDiagnosticReporter_">InvokeDefaultOptions(ParseResult, CmdLineSettings, IDiagnosticReporter)</a><br></li>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ICommandLineOptions-1.Bind.html#Ubiquity_NET_CommandLine_ICommandLineOptions_1_Bind_System_CommandLine_ParseResult_">Bind(ParseResult)</a><br></li>
+</ol>
+<p>The <code class="paramref">exitCode</code> is set to the exit code for the app on failures. This code indicates the
+parse errors and is the result of invoking <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.commandline.invocation.parseerroraction">ParseErrorAction</a> which, as of the current release,
+is always 1, though this behavior is not documented and therefore subject to change. Thus, calling applications
+should ***NOT*** rely on this value and instead use their own value to indicate a parse error that is documented
+and stable.</p>
 </div>
 
 
@@ -338,7 +350,7 @@ The <code class="paramref">exitCode</code> is set to the exit code of the app on
 
 <h3 id="Ubiquity_NET_CommandLine_ArgsParsing_TryParse__1_System_String___Ubiquity_NET_CommandLine_IDiagnosticReporter___0__System_Int32__" data-uid="Ubiquity.NET.CommandLine.ArgsParsing.TryParse``1(System.String[],Ubiquity.NET.CommandLine.IDiagnosticReporter,``0@,System.Int32@)">
   TryParse&lt;T&gt;(string[], IDiagnosticReporter, out T, out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L203"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L197"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Tries to parse a command line, and binds the results to a value</p>
@@ -385,24 +397,28 @@ The <code class="paramref">exitCode</code> is set to the exit code of the app on
 
 
 <h4 class="section" id="Ubiquity_NET_CommandLine_ArgsParsing_TryParse__1_System_String___Ubiquity_NET_CommandLine_IDiagnosticReporter___0__System_Int32___remarks">Remarks</h4>
-<div class="markdown level1 remarks"><p>
-Since this wraps several common operations, some of which may require exiting the app the return value
+<div class="markdown level1 remarks"><p>Since this wraps several common operations, some of which may require exiting the app, the return value
 has the semantics of "App should continue". In the event of parse errors or failures in invocation of
 the default options the result is a <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> with an <code class="paramref">exitCode</code> set to
 a proper exit code value. (non-zero for errors and zero for success even though the app should still
-exit)
-</p>
+exit)</p>
 <p>This wraps the common pattern of parsing a command line, invoking default options, and binding the results of a parse
 using a standard .NET "try pattern". The invocation of default options may return <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> with
-<code class="paramref">exitCode</code> set to <code>0</code>. this indicates the parse was successful AND that the default option was
+<code class="paramref">exitCode</code> set to <code>0</code>. This indicates the parse was successful AND that the default option was
 run successfully and the app should exit.</p>
-<p>In short this wraps the following sequence of common operations and exiting on completion of
-any operation with errors or successful invocation of default options:
-<ol><li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.Parse.html#Ubiquity_NET_CommandLine_ArgsParsing_Parse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings_">Parse&lt;T&gt;(string[], CmdLineSettings?)</a></li><li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.ReportErrors.html#Ubiquity_NET_CommandLine_ArgsParsing_ReportErrors_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_IDiagnosticReporter_">ReportErrors(ParseResult, IDiagnosticReporter)</a></li><li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.InvokeDefaultOptions.html#Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_CommandLine_IDiagnosticReporter_">InvokeDefaultOptions(ParseResult, CmdLineSettings, IDiagnosticReporter)</a></li><li><a class="xref" href="Ubiquity.NET.CommandLine.ICommandLineOptions-1.Bind.html#Ubiquity_NET_CommandLine_ICommandLineOptions_1_Bind_System_CommandLine_ParseResult_">Bind(ParseResult)</a></li></ol>
-
-<p>
-The <code class="paramref">exitCode</code> is set to the exit code of the app on failures
-</p>
+<p>In short, this wraps the following sequence of common operations and exiting on completion of
+any operation with errors or successful invocation of default options:<br></p>
+<ol>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.Parse.html#Ubiquity_NET_CommandLine_ArgsParsing_Parse__1_System_String___Ubiquity_NET_CommandLine_CmdLineSettings_">Parse&lt;T&gt;(string[], CmdLineSettings?)</a><br></li>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.ReportErrors.html#Ubiquity_NET_CommandLine_ArgsParsing_ReportErrors_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_IDiagnosticReporter_">ReportErrors(ParseResult, IDiagnosticReporter)</a><br></li>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ArgsParsing.InvokeDefaultOptions.html#Ubiquity_NET_CommandLine_ArgsParsing_InvokeDefaultOptions_System_CommandLine_ParseResult_Ubiquity_NET_CommandLine_CmdLineSettings_Ubiquity_NET_CommandLine_IDiagnosticReporter_">InvokeDefaultOptions(ParseResult, CmdLineSettings, IDiagnosticReporter)</a><br></li>
+<li><a class="xref" href="Ubiquity.NET.CommandLine.ICommandLineOptions-1.Bind.html#Ubiquity_NET_CommandLine_ICommandLineOptions_1_Bind_System_CommandLine_ParseResult_">Bind(ParseResult)</a><br></li>
+</ol>
+<p>The <code class="paramref">exitCode</code> is set to the exit code for the app on failures. This code indicates the
+parse errors and is the result of invoking <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.commandline.invocation.parseerroraction">ParseErrorAction</a> which, as of the current release,
+is always 1, though this behavior is not documented and therefore subject to change. Thus, calling applications
+should ***NOT*** rely on this value and instead use their own value to indicate a parse error that is documented
+and stable.</p>
 </div>
 
 
@@ -411,7 +427,7 @@ The <code class="paramref">exitCode</code> is set to the exit code of the app on
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L151" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.CommandLine/ArgsParsing.cs/#L145" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -427,7 +443,7 @@ The <code class="paramref">exitCode</code> is set to the exit code of the app on
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc
+          - Build: 20.1.8-rc.1
         </div>
       </div>
     </footer>

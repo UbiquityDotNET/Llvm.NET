@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Llvm_DebugInfo_DebugType_2" data-uid="Ubiquity.NET.Llvm.DebugInfo.DebugType`2" class="text-break">
-Class DebugType&lt;TNative, TDebug&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs/#L28"><i class="bi bi-code-slash"></i></a>
+Class DebugType&lt;TNative, TDebug&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs/#L28"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -97,7 +97,8 @@ Class DebugType&lt;TNative, TDebug&gt;  <a class="header-action link-secondary" 
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class DebugType&lt;TNative, TDebug&gt; : IDebugType&lt;TNative, TDebug&gt;, ITypeRef, IEquatable&lt;ITypeRef&gt;, IEquatable&lt;ITypeHandleOwner&gt; where TNative : class, ITypeRef where TDebug : DIType</code></pre>
+    <pre><code class="lang-csharp hljs">[SuppressMessage(&quot;StyleCop.CSharp.MaintainabilityRules&quot;, &quot;SA1402:File may only contain a single class&quot;, Justification = &quot;Interface, Generic type and static extension methods form a common API surface&quot;)]
+public class DebugType&lt;TNative, TDebug&gt; : IDebugType&lt;TNative, TDebug&gt;, ITypeRef, IEquatable&lt;ITypeRef&gt;, IEquatable&lt;ITypeHandleOwner&gt; where TNative : class, ITypeRef where TDebug : DIType</code></pre>
   </div>
 
 
@@ -318,7 +319,7 @@ mappings to choose from.
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs/#L28" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Llvm/DebugInfo/DebugType.cs/#L28" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -334,7 +335,7 @@ mappings to choose from.
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc
+          - Build: 20.1.8-rc.1
         </div>
       </div>
     </footer>

@@ -253,8 +253,9 @@ namespace Kaleidoscope.Grammar
         /// &lt;summary&gt;Handles successfully parsed function definitions&lt;/summary&gt;
         /// &lt;param name=&quot;context&quot;&gt;Context parse node for the parsed function&lt;/param&gt;
         /// &lt;remarks&gt;
-        /// Upon successful parse of a function definition this check if it is a user defined operator
-        /// and updates the RuntimeState accordingly, if it is.
+        /// Upon successful parse of a function definition this checks if it is a user defined operator
+        /// and updates the RuntimeState accordingly, if it is. This is used for support of user defined
+        /// operators providing user defined precedence.
         /// &lt;/remarks&gt;
         public override void ExitFunctionDefinition( KaleidoscopeParser.FunctionDefinitionContext context )
         {
@@ -515,7 +516,7 @@ unimplemented feature - truly lazy compilation, which is covered in
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc
+          - Build: 20.1.8-rc.1
         </div>
       </div>
     </footer>

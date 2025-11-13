@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Extensions_AssemblyExtensions_GetInformationalVersion_" data-uid="Ubiquity.NET.Extensions.AssemblyExtensions.GetInformationalVersion*" class="text-break">
-Method GetInformationalVersion  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/AssemblyExtensions.cs/#L23"><i class="bi bi-code-slash"></i></a>
+Method GetInformationalVersion  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Extensions/AssemblyExtensions.cs/#L39"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -116,10 +116,10 @@ Method GetInformationalVersion  <a class="header-action link-secondary" title="V
 
 <h3 id="Ubiquity_NET_Extensions_AssemblyExtensions_GetInformationalVersion_System_Reflection_Assembly_System_String_" data-uid="Ubiquity.NET.Extensions.AssemblyExtensions.GetInformationalVersion(System.Reflection.Assembly,System.String)">
   GetInformationalVersion(Assembly, string?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/AssemblyExtensions.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Extensions/AssemblyExtensions.cs/#L39"><i class="bi bi-code-slash"></i></a>
 </h3>
 
-<div class="markdown level1 summary"><p>Gets the value of the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.reflection.assemblyinformationalversionattribute">AssemblyInformationalVersionAttribute</a> from an assembly</p>
+<div class="markdown level1 summary"><p>Gets the informational version from an assembly</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 
@@ -130,17 +130,17 @@ Method GetInformationalVersion  <a class="header-action link-secondary" title="V
 <h4 class="section">Parameters</h4>
 <dl class="parameters">
   <dt><code>self</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.reflection.assembly">Assembly</a></dt>
-  <dd><p>Assembly to get informational version from</p>
+  <dd><p>Assembly to extract the version from</p>
 </dd>
   <dt><code>exp</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-  <dd><p>Expression for <code class="paramref">self</code>; Normally set by compiler.</p>
+  <dd><p>Expresssion for the assembly to retrieve the attribute data from; normally provided by compiler</p>
 </dd>
 </dl>
 
 <h4 class="section">Returns</h4>
 <dl class="parameters">
   <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-  <dd><p>Information version of the assembly or an empty string if not available</p>
+  <dd><p>String contents from the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.reflection.assemblyinformationalversionattribute">AssemblyInformationalVersionAttribute</a> in the assembly or <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string.empty">Empty</a></p>
 </dd>
 </dl>
 
@@ -157,7 +157,7 @@ Method GetInformationalVersion  <a class="header-action link-secondary" title="V
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/AssemblyExtensions.cs/#L23" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Extensions/AssemblyExtensions.cs/#L39" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -173,7 +173,7 @@ Method GetInformationalVersion  <a class="header-action link-secondary" title="V
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc
+          - Build: 20.1.8-rc.1
         </div>
       </div>
     </footer>

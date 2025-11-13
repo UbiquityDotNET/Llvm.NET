@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Extensions_SourceRange_op_Implicit_" data-uid="Ubiquity.NET.Extensions.SourceRange.op_Implicit*" class="text-break">
-Operator implicit operator  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/SourceRange.cs/#L85"><i class="bi bi-code-slash"></i></a>
+Operator implicit operator  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Extensions/SourceRange.cs/#L85"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -116,7 +116,7 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 
 <h3 id="Ubiquity_NET_Extensions_SourceRange_op_Implicit_Ubiquity_NET_Extensions_SourcePosition__Ubiquity_NET_Extensions_SourceRange" data-uid="Ubiquity.NET.Extensions.SourceRange.op_Implicit(Ubiquity.NET.Extensions.SourcePosition)~Ubiquity.NET.Extensions.SourceRange">
   implicit operator SourceRange(SourcePosition)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/SourceRange.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Extensions/SourceRange.cs/#L85"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Implicitly Converts a position to a single point range</p>
@@ -124,7 +124,8 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public static implicit operator SourceRange(SourcePosition p)</code></pre>
+  <pre><code class="lang-csharp hljs">[SuppressMessage(&quot;Usage&quot;, &quot;CA2225:Operator overloads have named alternates&quot;, Justification = &quot;Implicit operator for public constructor&quot;)]
+public static implicit operator SourceRange(SourcePosition p)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -153,7 +154,7 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc/src/Ubiquity.NET.Extensions/SourceRange.cs/#L85" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Extensions/SourceRange.cs/#L85" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -169,7 +170,7 @@ Operator implicit operator  <a class="header-action link-secondary" title="View 
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc
+          - Build: 20.1.8-rc.1
         </div>
       </div>
     </footer>
