@@ -18,7 +18,7 @@ namespace Ubiquity.NET.InteropHelpers
         , IEquatable<CStringHandle>
     {
         /// <inheritdoc/>
-        public override bool IsInvalid => handle == nint.Zero;
+        public override bool IsInvalid => handle == IntPtr.Zero;
 
         /// <summary>Gets a readonly span for the data in this string</summary>
         /// <returns>Span of the ANSI characters in this string (as byte)</returns>
@@ -53,7 +53,8 @@ namespace Ubiquity.NET.InteropHelpers
         /// <inheritdoc/>
         public override bool Equals( object? obj )
         {
-            return ((IEquatable<CStringHandle>)this).Equals( obj as CStringHandle );
+            return obj is CStringHandle other
+                   && ((IEquatable<CStringHandle>)this).Equals( other );
         }
 
         /// <inheritdoc/>
@@ -64,6 +65,7 @@ namespace Ubiquity.NET.InteropHelpers
             return ToString()?.GetHashCode() ?? 0;
         }
 
+#if !NETSTANDARD2_0
         /// <summary>Returns the hash code for this string using the specified rules.</summary>
         /// <param name="comparisonType">One of the enumeration values that specifies the rules to use in the comparison.</param>
         /// <returns>A 32-bit signed integer hash code.</returns>
@@ -72,6 +74,7 @@ namespace Ubiquity.NET.InteropHelpers
             ObjectDisposedException.ThrowIf( IsClosed, this );
             return ToString()?.GetHashCode( comparisonType ) ?? 0;
         }
+#endif
 
         /// <inheritdoc/>
         public bool Equals( CStringHandle? other )
@@ -91,7 +94,7 @@ namespace Ubiquity.NET.InteropHelpers
 
         /// <summary>Initializes a new instance of the <see cref="CStringHandle"/> class.</summary>
         protected CStringHandle( )
-            : base( nint.Zero, ownsHandle: true )
+            : base( IntPtr.Zero, ownsHandle: true )
         {
             unsafe
             {

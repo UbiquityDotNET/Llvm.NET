@@ -39,7 +39,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
     /// </remarks>
     /// <seealso href="xref:llvm_sourceleveldebugging">LLVM Source Level Debugging</seealso>
     public interface IDIBuilder
-            : IEquatable<IDIBuilder>
+        : IEquatable<IDIBuilder>
     {
         /// <summary>Gets the module associated with this builder</summary>
         /// <remarks>

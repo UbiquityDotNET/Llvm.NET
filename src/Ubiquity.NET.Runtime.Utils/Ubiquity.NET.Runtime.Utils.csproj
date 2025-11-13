@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <!--Until C#14 and the "field" and "extension" keywords are available use the preview language -->
         <LangVersion>preview</LangVersion>
@@ -28,6 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.Common" />
         <PackageReference Include="System.Linq.Async" />
     </ItemGroup>
 

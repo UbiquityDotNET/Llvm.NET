@@ -22,7 +22,10 @@ global using System.Reflection;
 global using System.Resources;
 global using System.Runtime.CompilerServices;
 global using System.Runtime.InteropServices;
+
+#if !NETSTANDARD2_0
 global using System.Runtime.InteropServices.Marshalling;
+#endif
 global using System.Text;
 global using System.Threading;
 

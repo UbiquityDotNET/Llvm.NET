@@ -46,9 +46,9 @@ namespace Ubiquity.NET.Extensions.FluentValidation
         [DebuggerStepThrough]
         public static T ThrowIfNull<T>( [NotNull] this T? self, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
         {
-            ArgumentNullException.ThrowIfNull( self, exp );
-
-            return self;
+            return self is null
+                 ? throw new ArgumentNullException(exp)
+                 : self;
         }
 
         /// <summary>Throws an exception if an argument is outside of a given (Inclusive) range</summary>
@@ -59,13 +59,12 @@ namespace Ubiquity.NET.Extensions.FluentValidation
         /// <param name="exp">Name or expression of the value in <paramref name="self"/> [Default: provided by compiler]</param>
         /// <returns><paramref name="self"/></returns>
         [DebuggerStepThrough]
+        [SuppressMessage( "Style", "IDE0046:Convert to conditional expression", Justification = "Not simpler, more readable this way" )]
         public static T ThrowIfOutOfRange<T>( this T self, T min, T max, [CallerArgumentExpression( nameof( self ) )] string? exp = null )
             where T : struct, IComparable<T>
         {
-            ArgumentNullException.ThrowIfNull(self, exp);
-            ArgumentOutOfRangeException.ThrowIfLessThan( self, min, exp );
-            ArgumentOutOfRangeException.ThrowIfGreaterThan( self, max, exp );
-
+            ArgumentOutOfRangeException.ThrowIfLessThan(self, min, exp);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(self, max, exp);
             return self;
         }
 
@@ -104,9 +103,8 @@ namespace Ubiquity.NET.Extensions.FluentValidation
                 // least includes the original value in question. (Normally an enum does fit an int, but for
                 // interop might not) the resulting exception will have "ParamName" as the default of "null"!
                 //
-                // TODO: Move the exception message to a resource for globalization
                 // This matches the overloaded constructor version but allows for reporting enums with non-int underlying type.
-                throw new InvalidEnumArgumentException( $"The value of argument '{exp}' ({self}) is invalid for Enum of type '{typeof( T )}'" );
+                throw new InvalidEnumArgumentException( SR.Format( nameof( Resources.InvalidEnumArgument_NonInt ), exp, self, typeof( T ) ) );
             }
         }
     }

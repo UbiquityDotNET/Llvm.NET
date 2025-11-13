@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
-
 namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Represents a marshaller for native strings using <see cref="Encoding"/>.</summary>
@@ -9,8 +8,10 @@ namespace Ubiquity.NET.InteropHelpers
     /// to the default string marshalling support except that it does all conversion to/from native code via
     /// a static <see cref="Encoding"/> property, [defaults to UTF8] so that applications can have control of that.
     /// </remarks>
+#if !NETSTANDARD2_0
     [CustomMarshaller( typeof( string ), MarshalMode.Default, typeof( ExecutionEncodingStringMarshaller ) )]
     [CustomMarshaller( typeof( string ), MarshalMode.ManagedToUnmanagedIn, typeof( ManagedToUnmanagedIn ) )]
+#endif
     public static unsafe class ExecutionEncodingStringMarshaller
     {
         /// <summary>Gets or sets the ExecutionEncoding for the native code</summary>
@@ -34,6 +35,7 @@ namespace Ubiquity.NET.InteropHelpers
         /// </remarks>
         public static Encoding Encoding { get; set; } = Encoding.UTF8;
 
+#if !NETSTANDARD2_0
         /// <summary>Creates a ReadOnlySpan from a null terminated native string</summary>
         /// <param name="nativePtr">The null terminated string</param>
         /// <returns>ReadOnlySpan for the string</returns>
@@ -66,6 +68,14 @@ namespace Ubiquity.NET.InteropHelpers
             return mem;
         }
 
+        /// <summary>Frees the memory for the unmanaged string representation allocated by <see cref="ConvertToUnmanaged"/></summary>
+        /// <param name="unmanaged">The memory allocated for the unmanaged string.</param>
+        public static void Free( byte* unmanaged )
+        {
+            NativeMemory.Free( unmanaged );
+        }
+#endif
+
         /// <summary>Converts an unmanaged string to a managed version.</summary>
         /// <param name="unmanaged">The unmanaged string to convert.</param>
         /// <returns>A managed string.</returns>
@@ -74,13 +84,7 @@ namespace Ubiquity.NET.InteropHelpers
             return Encoding.MarshalString( unmanaged );
         }
 
-        /// <summary>Frees the memory for the unmanaged string representation allocated by <see cref="ConvertToUnmanaged"/></summary>
-        /// <param name="unmanaged">The memory allocated for the unmanaged string.</param>
-        public static void Free( byte* unmanaged )
-        {
-            NativeMemory.Free( unmanaged );
-        }
-
+#if !NETSTANDARD2_0
         /// <summary>Custom marshaller to marshal a managed string as an unmanaged string using the <see cref="Encoding"/> property for encoding the native string.</summary>
         [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "Standard pattern for custom marshalers" )]
         public ref struct ManagedToUnmanagedIn
@@ -140,5 +144,6 @@ namespace Ubiquity.NET.InteropHelpers
             private byte* NativePointer;
             private bool AllocatedByThisMarshaller;
         }
+#endif
     }
 }

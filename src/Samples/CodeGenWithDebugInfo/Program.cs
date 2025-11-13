@@ -113,13 +113,35 @@ namespace CodeGenWithDebugInfo
                                                                    , constArray
                                                                    );
 
-            var bar = module.AddGlobal( fooType, false, 0, barValue, "bar" );
+            var bar = module.AddGlobal( fooType, false, 0, barValue, "bar"u8 );
             bar.Alignment = module.Layout.AbiAlignmentOf( fooType );
-            bar.AddDebugInfo( diBuilder.CreateGlobalVariableExpression( compilationUnit, "bar", string.Empty, diFile, 8, fooType.DebugInfoType, false, null ) );
+            bar.AddDebugInfo(
+                diBuilder.CreateGlobalVariableExpression(
+                    compilationUnit,
+                    "bar"u8,
+                    linkageName: string.Empty,
+                    diFile,
+                    lineNo: 8,
+                    fooType.DebugInfoType,
+                    isLocalToUnit: false,
+                    value: null
+                )
+            );
 
-            var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), "baz" );
+            var baz = module.AddGlobal( fooType, false, Linkage.Common, Constant.NullValueFor( fooType ), "baz"u8 );
             baz.Alignment = module.Layout.AbiAlignmentOf( fooType );
-            baz.AddDebugInfo( diBuilder.CreateGlobalVariableExpression( compilationUnit, "baz", string.Empty, diFile, 9, fooType.DebugInfoType, false, null ) );
+            baz.AddDebugInfo(
+                diBuilder.CreateGlobalVariableExpression(
+                    compilationUnit,
+                    "baz"u8,
+                    linkageName: string.Empty,
+                    diFile,
+                    lineNo: 9,
+                    fooType.DebugInfoType,
+                    isLocalToUnit: false,
+                    value: null
+                )
+            );
 
             // add module flags and compiler identifiers...
             // this can technically occur at any point, though placing it here makes

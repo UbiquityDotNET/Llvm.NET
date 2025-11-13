@@ -26,13 +26,10 @@ global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
 global using System.Globalization;
 global using System.IO;
+global using System.Linq;
 global using System.Reflection;
 global using System.Runtime.CompilerServices;
 global using System.Text;
 global using System.Threading;
 
-global using Ubiquity.NET.Extensions;
 global using Ubiquity.NET.Extensions.Properties;
-
-// alias allows simpler porting of polyfill from .NET sources
-global using SR = Ubiquity.NET.Extensions.Properties.Resources;

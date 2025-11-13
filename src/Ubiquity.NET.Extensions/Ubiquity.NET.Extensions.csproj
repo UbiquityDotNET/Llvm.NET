@@ -31,17 +31,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="PolySharp" Condition="$(TargetFramework)=='netstandard2.0'">
+      <PackageReference Condition="$(TargetFramework)=='netstandard2.0'" Include="PolySharp">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
 
       <PackageReference Include="System.Collections.Immutable" Condition="$(TargetFramework)=='netstandard2.0'" />
-
-      <PackageReference Update="Ubiquity.NET.Versioning.Build.Tasks">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
@@ -54,16 +49,19 @@
 
     <ItemGroup>
       <Compile Update="Properties\Resources.Designer.cs">
+        <DependentUpon>Resources.resx</DependentUpon>
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
-        <DependentUpon>Resources.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Update="Properties\Resources.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        <Generator>ResXFileCodeGenerator</Generator>
       </EmbeddedResource>
     </ItemGroup>
+
+    <Import Condition="$(TargetFramework)=='netstandard2.0'" Project="..\Ubiquity.NET.PollyFill.SharedSources\Ubiquity.NET.PollyFill.SharedSources.projitems" Label="Shared" />
+
 </Project>

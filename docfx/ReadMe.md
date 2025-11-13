@@ -78,11 +78,12 @@ Since this is generated it is listed in the [.gitignore](#gitignore) file.
 These folders (named after the `*` portion of the [api-*](#api-*) folder names contains
 manually written additional files, articles, samples etc... related to a given library.
 
-## Guid to wrting XML DOC comments
-When dealing with doc comments the XML can get in the way of general readability of the
-source code. There is an inherent tension beween how a particular editor renders the docs
-for a symbol/method (VS calls this "Quick Info") and how it is rendered in the final
-documentation by docfx. This guides general use to simplify things as much as possible.
+## Guide to wrting XML DOC comments
+When dealing with doc comments the XML can sometimes get in the way of general readability
+of the source code. There is an inherent tension beween how a particular editor renders the
+docs for a symbol/method (VS calls this "Quick Info") and how it is rendered in the final
+documentation by a tool like docfx. This guides general use to simplify things as much as
+possible.
 
 ### Lists
 The largest intrusion of the XML into the source is that of lists. The XML doc comments
@@ -115,7 +116,6 @@ versus:
 /// 3) Act on the results as proper for the application<br/>
 ///     a. This might include actions parsed but generally isolating the various stages is an easier to understand/maintain model<br/>
 ///     b. Usually this is just app specific code that uses the bound results to adapt behavior<br/>
-///
 ```
 
 Which one would ***YOU*** rather encounter in code? Which one is easier to understand when
@@ -126,7 +126,7 @@ should reconsider... :grinning:)
 There is little that can be done to alter the rendering of any editor support, at most an
 editor might allow specification of a CSS file, but that is the lowest priority of doc
 comments. Readability by maintainers of the docs AND the rendering for final docs used by
-consumers of of VASTLY higher importance. Still, the editor rendering ***is*** of value to
+consumers is of VASTLY higher importance. Still, the editor rendering ***is*** of value to
 maintainers so should not be forgotten as it can make a "right mess of things" even if they
 render properly in final docs.
 
@@ -135,8 +135,8 @@ render properly in final docs.
     a) Doing so will break the docfx rendering that allows for markdown lists
 2) Use `</br>' tags to indicate a line break. This is used by the editor rendering to mark
    the end of a line and start a new one. (Stops auto reflow)
-3) Accept that the in edotr rendering might "trim" the lines it shows, eliminating any
-   indentation.
+3) Accept that the in editor rendering might "trim" the lines it shows, eliminating any
+   indentation. [Grrr... Looking at you VS!]
     a) Sadly, there is no avoiding this. Addition of any sort of "markup" to control that
        will interfere with the readability AND the final docs rendering.
 4) Always use a different numbering style for sub lists/items
@@ -147,6 +147,6 @@ render properly in final docs.
         API signaure and parameter info. Different editors may allow control of that.
         i) In VS [2019|2022] for C# it is controlled by
             `Text Editor > C# > Advanced > Editor Help: "Show remarks in Quick Info."`
-        ii) Turning this off can greatly reduce the noise AND reduce the problems of
-            different rende
+            1) Turning this off can greatly reduce the noise AND reduce the problems of
+               different rendering as lists are generally not used in the other elements.
 

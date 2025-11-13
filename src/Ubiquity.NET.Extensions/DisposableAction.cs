@@ -21,11 +21,9 @@ namespace Ubiquity.NET.Extensions
         }
 
         /// <summary>Runs the action provided in the constructor (<see cref="DisposableAction(Action, string?)"/>)</summary>
-        /// <exception cref="ObjectDisposedException">This instance is already disposed</exception>
         public void Dispose( )
         {
             var disposeOp = Interlocked.Exchange(ref OnDispose, null);
-            ObjectDisposedException.ThrowIf(disposeOp is null, this);
             disposeOp!();
         }
 

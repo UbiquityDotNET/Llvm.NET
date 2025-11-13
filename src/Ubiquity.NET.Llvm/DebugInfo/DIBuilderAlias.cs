@@ -771,7 +771,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                                         , uint lineNo
                                                                         , DIType? type
                                                                         , bool isLocalToUnit
-                                                                        , DIExpression? value
+                                                                        , DIExpression? expression
                                                                         , DINode? declaration = null
                                                                         , UInt32 bitAlign = 0
                                                                         )
@@ -791,7 +791,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                                     , lineNo
                                                                     , type?.Handle ?? default
                                                                     , isLocalToUnit
-                                                                    , value?.Handle ?? default
+                                                                    , expression?.Handle ?? CreateExpression( ).Handle
                                                                     , declaration?.Handle ?? default
                                                                     , bitAlign
                                                                     );

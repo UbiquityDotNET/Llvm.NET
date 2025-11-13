@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <!--
+    Stupid anylyzer triggers when this is NOT a test, it's just a library of utilities
+    that supports writing tests for Source Generators.
+    -->
+    <!--<NoWarn>$(NoWarn);MSTEST0001</NoWarn>-->
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="MSTest.TestFramework" />
+    <PackageReference Include="Microsoft.CodeAnalysis" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" />
+
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing" />
+
+    <!-- Security vulnerability overrides -->
+    <!-- https://github.com/dotnet/roslyn-sdk/issues/1191 -->
+    <!-- https://github.com/advisories/GHSA-7jgj-8wvc-jh57 -->
+    <!-- https://github.com/advisories/GHSA-cmhx-cq75-c4mj -->
+
+  </ItemGroup>
+</Project>

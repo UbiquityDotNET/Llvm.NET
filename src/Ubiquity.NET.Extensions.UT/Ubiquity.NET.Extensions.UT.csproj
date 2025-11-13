@@ -14,7 +14,18 @@
         <PackageReference Include="MSTest.TestAdapter" />
     </ItemGroup>
 
+    <ItemGroup Condition="$(TargetFramework)=='net481'">
+        <PackageReference Include="PolySharp">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="System.Collections.Immutable" />
+    </ItemGroup>
+
     <ItemGroup>
         <ProjectReference Include="..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
     </ItemGroup>
+
+    <Import Condition="'$(TargetFramework)'=='net481'" Project="..\Ubiquity.NET.PollyFill.SharedSources\Ubiquity.NET.PollyFill.SharedSources.projitems" Label="Shared" />
 </Project>

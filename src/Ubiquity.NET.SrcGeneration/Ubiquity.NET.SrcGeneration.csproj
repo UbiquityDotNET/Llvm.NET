@@ -7,6 +7,7 @@
         <LangVersion>preview</LangVersion>
         <IsAotCompatible>True</IsAotCompatible>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 
         <!--NuGet packaging support -->
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -36,5 +37,16 @@
             <OutputItemType>Analyzer</OutputItemType>
         </ProjectReference>
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Condition="$(TargetFramework)=='netstandard2.0'" Include="PolySharp">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+
+      <PackageReference Include="System.Collections.Immutable" Condition="$(TargetFramework)=='netstandard2.0'" />
+    </ItemGroup>
+
+    <Import Condition="'$(TargetFramework)'=='netstandard2.0'" Project="..\Ubiquity.NET.PollyFill.SharedSources\Ubiquity.NET.PollyFill.SharedSources.projitems" Label="Shared" />
 
 </Project>

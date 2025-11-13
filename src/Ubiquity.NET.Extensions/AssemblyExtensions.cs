@@ -7,12 +7,12 @@ namespace Ubiquity.NET.Extensions
     [SuppressMessage( "Design", "CA1034:Nested types should not be visible", Justification = "Extension" )]
     public static class AssemblyExtensions
     {
-        // VS2026 builds of this are OK, however command line/PR/CI builds will generate an error
-        // No idea why there's a difference the $(NETCoreSdkVersion) is the same in both so it's
-        // unclear why the two things behave differently. This is just another example of why the
-        // `extension` keyword is "not yet ready for prime time". Too many things don't support it
-        // properly yet. [Hopefully, that works itself out in short order as it's useless unless
-        // fully supported]
+        // VS2026 builds of this are OK, however VS2019, command line/PR/CI builds will generate an error.
+        // The VS builds use the VS provided MSBuild, while the command line uses the .NET Core build.
+        // This is just another example of why the `extension` keyword is "not yet ready for prime time".
+        // Too many things don't support it properly yet so use needs justification as the ONLY option and
+        // HEAVY testing to ensure all the issues are accounted for.
+        // [Hopefully, that works itself out in short order as it's a mostly useless feature unless fully supported]
 #if COMPILER_SUPPORTS_CALLER_ATTRIBUES_ON_EXTENSION
         extension(Assembly self)
         {

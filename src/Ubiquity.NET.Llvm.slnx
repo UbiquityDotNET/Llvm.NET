@@ -80,15 +80,18 @@
     <Project Path="Ubiquity.NET.InteropHelpers.UT/Ubiquity.NET.InteropHelpers.UT.csproj" />
     <Project Path="Ubiquity.NET.Llvm.JIT.Tests/Ubiquity.NET.Llvm.JIT.Tests.csproj" />
     <Project Path="Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.UT.csproj" />
+    <Project Path="Ubiquity.NET.SourceGenerator.Test.Utils/Ubiquity.NET.SourceGenerator.Test.Utils.csproj" Id="d147612e-b247-49cc-8fda-800e1e69879c" />
     <Project Path="Ubiquity.NET.SrcGeneration.UT/Ubiquity.NET.SrcGeneration.UT.csproj" Id="eaf06b2e-fb6c-450c-9fb2-774b043acf4d" />
   </Folder>
   <Project Path="../docfx/documentation.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
   <Project Path="../PsModules/CommonBuild/CommonBuild.pssproj" Type="f5034706-568f-408a-b7b3-4d38c6db8a32" Id="6cafc0c6-a428-4d30-a9f9-700e829fea51" />
   <Project Path="../PsModules/RepoBuild/RepoBuild.pssproj" Type="f5034706-568f-408a-b7b3-4d38c6db8a32" Id="118e4d2b-5adb-4f7c-9395-b4ceeee3d2e1" />
   <Project Path="Ubiquity.NET.ANTLR.Utils/Ubiquity.NET.ANTLR.Utils.csproj" />
+  <Project Path="Ubiquity.NET.CodeAnalysis.Utils/Ubiquity.NET.CodeAnalysis.Utils.csproj" />
   <Project Path="Ubiquity.NET.CommandLine/Ubiquity.NET.CommandLine.csproj" Id="3dae7afd-0d33-4805-855b-c1283237b58a" />
   <Project Path="Ubiquity.NET.Extensions/Ubiquity.NET.Extensions.csproj" />
   <Project Path="Ubiquity.NET.Llvm/Ubiquity.NET.Llvm.csproj" />
+  <Project Path="Ubiquity.NET.PollyFill.SharedSources/Ubiquity.NET.PollyFill.SharedSources.shproj" Id="9fb998e5-6d78-4129-8022-9bb39fea81f2" />
   <Project Path="Ubiquity.NET.Runtime.Utils/Ubiquity.NET.Runtime.Utils.csproj" />
   <Project Path="Ubiquity.NET.SrcGeneration/Ubiquity.NET.SrcGeneration.csproj" />
 </Solution>

@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
-
+#if NET7_0_OR_GREATER
 namespace Ubiquity.NET.InteropHelpers
 {
     /// <summary>Represents a marshaller for <see cref="LazyEncodedString"/>.</summary>
@@ -84,3 +84,4 @@ namespace Ubiquity.NET.InteropHelpers
         }
     }
 }
+#endif
