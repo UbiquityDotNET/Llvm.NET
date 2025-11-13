@@ -52,74 +52,85 @@ function Initialize-CommonBuildEnvironment
         [string]$repoRoot,
         [switch]$FullInit
     )
-
-    # Script code should ALWAYS use the global CurrentBuildKind
-    $currentBuildKind = Get-CurrentBuildKind
-
-    # set/reset legacy environment vars for non-script tools (i.e. msbuild.exe)
-    $env:IsAutomatedBuild = $currentBuildKind -ne [BuildKind]::LocalBuild
-    $env:IsPullRequestBuild = $currentBuildKind -eq [BuildKind]::PullRequestBuild
-    $env:IsReleaseBuild = $currentBuildKind -eq [BuildKind]::ReleaseBuild
-
-    switch($currentBuildKind)
+    try
     {
-        ([BuildKind]::LocalBuild) { $env:CiBuildName = 'ZZZ' }
-        ([BuildKind]::PullRequestBuild) { $env:CiBuildName = 'PRQ' }
-        ([BuildKind]::CiBuild) { $env:CiBuildName = 'BLD' }
-        ([BuildKind]::ReleaseBuild) { $env:CiBuildName = '' }
-        default { throw "Invalid build kind" }
-    }
+        # Script code should ALWAYS use the global CurrentBuildKind
+        $currentBuildKind = Get-CurrentBuildKind
 
-    # get the ISO-8601 formatted time stamp of the HEAD commit or the current UTC time for local builds
-    # for FullInit force a re-capture of the time stamp.
-    if(!$env:BuildTime -or $FullInit)
+        # set/reset legacy environment vars for non-script tools (i.e. msbuild.exe)
+        $env:IsAutomatedBuild = $currentBuildKind -ne [BuildKind]::LocalBuild
+        $env:IsPullRequestBuild = $currentBuildKind -eq [BuildKind]::PullRequestBuild
+        $env:IsReleaseBuild = $currentBuildKind -eq [BuildKind]::ReleaseBuild
+
+        switch($currentBuildKind)
+        {
+            ([BuildKind]::LocalBuild) { $env:CiBuildName = 'ZZZ' }
+            ([BuildKind]::PullRequestBuild) { $env:CiBuildName = 'PRQ' }
+            ([BuildKind]::CiBuild) { $env:CiBuildName = 'BLD' }
+            ([BuildKind]::ReleaseBuild) { $env:CiBuildName = '' }
+            default { throw "Invalid build kind" }
+        }
+
+        # get the ISO-8601 formatted time stamp of the HEAD commit or the current UTC time for local builds
+        # for FullInit force a re-capture of the time stamp.
+        if(!$env:BuildTime -or $FullInit)
+        {
+            # for any automated builds use the ISO-8601 time stamp of the current commit
+            if($currentBuildKind -ne [BuildKind]::LocalBuild)
+            {
+                $env:BuildTime = (git show -s --format=%cI)
+            }
+            else
+            {
+                $env:BuildTime = ([System.DateTime]::UtcNow.ToString("o"))
+            }
+        }
+
+        # On Windows setup the equivalent of a Developer prompt.
+        #
+        # Other platform runners may have different defaulted paths etc...
+        # to account for here.
+        if ($IsWindows)
+        {
+            Write-Verbose "Configuring VS tools support"
+
+            # For windows force a common VS tools prompt;
+            # Sadly most of this is undocumented and found from various sites
+            # spelunking the process. This isn't as bad as it might seem as the
+            # installer will create persistent use of this as a Windows Terminal
+            # "profile" and the actual command is exposed.
+            if($null -eq (Find-OnPath vswhere))
+            {
+                # NOTE: automated builds in Github do NOT include WinGet (for reasons unknown)
+                # However, they do contain VSWHERE so should not hit this.
+                winget install Microsoft.VisualStudio.Locator | Out-Null
+            }
+
+            $vsShellModulePath = vswhere -latest -find **\Microsoft.VisualStudio.DevShell.dll
+            $vsToolsArch = Get-VsArchitecture
+            if(!$vsShellModulePath)
+            {
+                throw "VS shell module not found!"
+            }
+
+            Import-Module $vsShellModulePath | Out-Null
+            $vsInstanceId = vswhere -latest -format value -property InstanceId
+            Enter-VsDevShell $vsInstanceId -SkipAutomaticLocation -DevCmdArguments "-arch=$vsToolsArch -host_arch=$vsToolsArch" | Out-Null
+        }
+
+        #Start with standard build paths then add additional values to the hashtable
+        $buildInfo = Get-DefaultBuildPaths $repoRoot
+        $buildInfo['CurrentBuildKind'] = $currentBuildKind
+        $buildInfo['VersionTag'] = Get-BuildVersionTag $buildInfo
+        return $buildInfo
+    }
+    catch
     {
-        # for any automated builds use the ISO-8601 time stamp of the current commit
-        if($currentBuildKind -ne [BuildKind]::LocalBuild)
-        {
-            $env:BuildTime = (git show -s --format=%cI)
-        }
-        else
-        {
-            $env:BuildTime = ([System.DateTime]::UtcNow.ToString("o"))
-        }
+        # everything from the official docs to the various articles in the blog-sphere says this isn't needed
+        # and in fact it is redundant - They're all WRONG! By re-throwing the exception the original location
+        # information is retained and the error reported will include the correct source file and line number
+        # data for the error. Without this, only the error message is retained and the location information is
+        # Line 1, Column 1, of the outer most script file, or the calling location neither of which is useful.
+        throw
     }
-
-    # On Windows setup the equivalent of a Developer prompt.
-    #
-    # Other platform runners may have different defaulted paths etc...
-    # to account for here.
-    if ($IsWindows)
-    {
-        Write-Verbose "Configuring VS tools support"
-
-        # For windows force a common VS tools prompt;
-        # Sadly most of this is undocumented and found from various sites
-        # spelunking the process. This isn't as bad as it might seem as the
-        # installer will create persistent use of this as a Windows Terminal
-        # "profile" and the actual command is exposed.
-        if($null -eq (Find-OnPath vswhere))
-        {
-            # NOTE: automated builds in Github do NOT include WinGet (for reasons unknown)
-            # However, they do contain VSWHERE so should not hit this.
-            winget install Microsoft.VisualStudio.Locator | Out-Null
-        }
-
-        $vsShellModulePath = vswhere -find **\Microsoft.VisualStudio.DevShell.dll
-        $vsToolsArch = Get-VsArchitecture
-        if(!$vsShellModulePath)
-        {
-            throw "VS shell module not found!"
-        }
-
-        Import-Module $vsShellModulePath | Out-Null
-        $vsInstanceId = vswhere -format value -property InstanceId
-        Enter-VsDevShell $vsInstanceId -SkipAutomaticLocation -DevCmdArguments "-arch=$vsToolsArch -host_arch=$vsToolsArch" | Out-Null
-    }
-
-    #Start with standard build paths then add additional values to the hashtable
-    $buildInfo = Get-DefaultBuildPaths $repoRoot
-    $buildInfo['CurrentBuildKind'] = $currentBuildKind
-    $buildInfo['VersionTag'] = Get-BuildVersionTag $buildInfo
-    return $buildInfo
 }
