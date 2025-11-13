@@ -4,7 +4,7 @@ vsspell_section_id = 1566b770c5af48b08aa5b43b10ffef28
 vsspell_ignored_words_1566b770c5af48b08aa5b43b10ffef28 = File:IgnoredWords.dic|def
 
 [*.kls]
-# VSSPELL: DIsable everything for the sample languages
+# VSSPELL: Disable everything for the sample languages
 vsspell_section_id = 257c51e4a39d462090397bebd5922176
 vsspell_spell_check_as_you_type = false
 vsspell_include_in_project_spell_check = false

@@ -1,15 +1,19 @@
+# unary operator to perform a logical NOT
 def unary!(v)
   if v then
     0
   else
     1;
 
+# unary operator to perform a mathematical negation
 def unary-(v)
   0-v;
 
+# Comparison operator
 def binary> 10 (LHS RHS)
   RHS < LHS;
 
+# Logical OR operator
 def binary| 5 (LHS RHS)
   if LHS then
     1
@@ -18,17 +22,21 @@ def binary| 5 (LHS RHS)
   else
     0;
 
+# Logical AND operator
 def binary& 6 (LHS RHS)
   if !LHS then
     0
   else
     !!RHS;
 
+# arithmatic equality test
 def binary== 9 (LHS RHS)
   !(LHS < RHS | LHS > RHS);
 
+# selector operator
 def binary : 1 (x y) y;
 
+# declare access to built-in function
 extern putchard(char);
 
 def printdensity(d)
