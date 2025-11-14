@@ -20,11 +20,8 @@
         <PackageReference Include="Antlr4BuildTasks" PrivateAssets="all" IncludeAssets="build" />
         <PackageReference Include="Antlr4.Runtime.Standard" />
         <PackageReference Include="OpenSoftware.DgmlBuilder" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\..\..\Ubiquity.NET.ANTLR.Utils\Ubiquity.NET.ANTLR.Utils.csproj" />
-        <ProjectReference Include="..\..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
-        <ProjectReference Include="..\..\..\Ubiquity.NET.Runtime.Utils\Ubiquity.NET.Runtime.Utils.csproj" />
+        <PackageReference Include="Ubiquity.NET.ANTLR.Utils" />
+        <PackageReference Include="Ubiquity.NET.InteropHelpers" />
+        <PackageReference Include="Ubiquity.NET.Runtime.Utils" />
     </ItemGroup>
 </Project>

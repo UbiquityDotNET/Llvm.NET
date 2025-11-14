@@ -11,64 +11,9 @@
         // warnings and returns a non-success value which stops the build.
         // Each project is listed in the order they appear in the VS solution explorer so they are easier
         // to find and check etc...
-        {
-            // Interop helpers library
-            "memberLayout": "separatePages",
-            "namespaceLayout": "nested",
-            "src": [
-                {
-                    "src": "../src/Ubiquity.NET.InteropHelpers",
-                    "files": [ "**.csproj" ]
-                }
-            ],
-            "dest": "interop-helpers/api"
-        },
+        //
         // NOTE: Ubiquity.NET.Llvm.Interop is intentionally NOT documented (It's considered an implementation detail)
         // NOTE: Sample projects are not generating docs, they are... samples 8^)
-        {
-            // ANTLR Utilities library
-            "memberLayout": "separatePages",
-            "namespaceLayout": "nested",
-            "src": [
-                {
-                    "src": "../src/Ubiquity.NET.ANTLR.Utils",
-                    "files": [ "**.csproj" ]
-                }
-            ],
-            "dest": "antlr-utils/api"
-        },
-        {
-            // ANTLR Utilities library
-            "memberLayout": "separatePages",
-            "namespaceLayout": "nested",
-            "src": [
-                {
-                    "src": "../src/Ubiquity.NET.CommandLine",
-                    "files": [ "**.csproj" ]
-                }
-            ],
-            "dest": "CommandLine/api"
-        },
-        {
-            // Extensions library
-            "memberLayout": "separatePages",
-            "namespaceLayout": "nested",
-            "src": [
-                {
-                    "src": "../src/Ubiquity.NET.Extensions",
-                    "files": [ "**.csproj" ]
-                }
-            ],
-            "dest": "extensions/api",
-            "properties": {
-                // use .NET 8.0 for the TFM as it is multi-targeting
-                // Sadly, DocFX can't find the dependent project builds if this is .NET 9.0
-                // and then generates warnings as a result. (DocFX metadata generation is
-                // pretty well borked and needs replacement as there are a LOT of workarounds
-                // in this project let alone all the ones found on-line.)
-                "TargetFramework": "net8.0"
-            }
-        },
         {
             // LLVM OO Wrappers library
             "memberLayout": "separatePages",
@@ -80,38 +25,6 @@
                 }
             ],
             "dest": "llvm/api"
-        },
-        {
-            // Runtime utilities library
-            "memberLayout": "separatePages",
-            "namespaceLayout": "nested",
-            "src": [
-                {
-                    "src": "../src/Ubiquity.NET.Runtime.Utils",
-                    "files": [ "**.csproj" ]
-                }
-            ],
-            "dest": "runtime-utils/api",
-        },
-        {
-            // SrcGeneration library
-            "memberLayout": "separatePages",
-            "namespaceLayout": "nested",
-            "src": [
-                {
-                    "src": "../src/Ubiquity.NET.SrcGeneration",
-                    "files": [ "**.csproj" ]
-                }
-            ],
-            "dest": "SrcGeneration/api",
-            "properties": {
-                // use .NET 8.0 for the TFM as it is multi-targeting
-                // Sadly, DocFX can't find the dependent project builds if this is .NET 9.0
-                // and then generates warnings as a result. (DocFX metadata generation is
-                // pretty well borked and needs replacement as there are a LOT of workarounds
-                // in this project let alone all the ones found on-line.)
-                "TargetFramework": "net8.0"
-            }
         }
     ],
     "build": {
@@ -127,17 +40,6 @@
                 "files": [
                     "index.md",
                     "toc.yml"
-                ]
-            },
-            {
-                // InteropHelpers project additional content, Includes the generated metadata API folder
-                "files": [
-                    "interop-helpers/**.{md,yml}"
-                ],
-                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
-                "exclude": [
-                    "**/namespaces/**.md",
-                    "**/*-xref.yml"
                 ]
             },
             {
@@ -160,66 +62,9 @@
                 ]
             },
             {
-                // ANTLR Utils project additional content, Includes the generated metadata API folder
-                "files": [
-                    "antlr-utils/**.{md,yml}"
-                ],
-                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
-                "exclude": [
-                    "**/namespaces/**.md",
-                    "**/*-xref.yml"
-                ]
-            },
-            {
-                // CommandLine Utils project additional content, Includes the generated metadata API folder
-                "files": [
-                    "CommandLine/**.{md,yml}"
-                ],
-                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
-                "exclude": [
-                    "**/namespaces/**.md",
-                    "**/*-xref.yml"
-                ]
-            },
-            {
-                // extensions project additional content, Includes the generated metadata API folder
-                "files": [
-                    "extensions/**.{md,yml}"
-                ],
-                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
-                "exclude": [
-                    "**/namespaces/**.md",
-                    "**/*-xref.yml"
-                ]
-            },
-            {
                 // LLVM project additional content, Includes the generated metadata API folder
                 "files": [
                     "llvm/**.{md,yml}"
-                ],
-                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
-                "exclude": [
-                    "**/namespaces/**.md",
-                    "**/*-xref.yml"
-                ]
-            },
-            {
-                // Runtime Utils project additional content, Includes the generated metadata API folder
-                // NOTE: File paths are relative to the location of this file
-                "files": [
-                    "runtime-utils/**.{md,yml}"
-                ],
-                // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
-                "exclude": [
-                    "**/namespaces/**.md",
-                    "**/*-xref.yml"
-                ]
-            },
-            {
-                // SrcGenerations project additional content, Includes the generated metadata API folder
-                // NOTE: File paths are relative to the location of this file
-                "files": [
-                    "SrcGeneration/**.{md,yml}"
                 ],
                 // Exclude the namespace overwrites and XREF maps as they are listed explicitly elsewhere
                 "exclude": [

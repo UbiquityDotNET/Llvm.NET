@@ -81,11 +81,8 @@
     <ItemGroup>
         <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here-->
         <PackageReference Include="Ubiquity.NET.LibLLVM" VersionOverride="20.1.*-*" GeneratePathProperty="true" />
+        <PackageReference Include="Ubiquity.NET.InteropHelpers" />
+        <PackageReference Include="Ubiquity.NET.Extensions" />
         <PackageReference Include="Ubiquity.NET.Versioning" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\..\Ubiquity.NET.Extensions\Ubiquity.NET.Extensions.csproj" />
-        <ProjectReference Include="..\..\Ubiquity.NET.InteropHelpers\Ubiquity.NET.InteropHelpers.csproj" />
     </ItemGroup>
 </Project>

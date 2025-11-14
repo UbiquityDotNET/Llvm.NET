@@ -33,25 +33,21 @@
     <!--Everything in the runtime-utils sub-folders except the API folder as that contains generated files -->
     <None Include="runtime-utils/**" Exclude="runtime-utils/api/**" />
     <!-- Explicitly call out the non-generated files in the API folder-->
-    <None Include="runtime-utils/api/index.md" />
   </ItemGroup>
   <ItemGroup>
     <!--Everything in the extensions sub-folders except the API folder as that contains generated files -->
     <None Include="extensions/**" Exclude="extensions/api/**" />
     <!-- Explicitly call out the non-generated files in the API folder-->
-    <None Include="extensions/api/index.md" />
   </ItemGroup>
   <ItemGroup>
     <!--Everything in the antlr-utils sub-folders except the API folder as that contains generated files -->
     <None Include="antlr-utils/**" Exclude="antlr-utils/api/**" />
     <!-- Explicitly call out the non-generated files in the API folder-->
-    <None Include="antlr-utils/api/index.md" />
   </ItemGroup>
   <ItemGroup>
     <!--Everything in the interop-helpers sub-folders except the API folder as that contains generated files -->
     <None Include="interop-helpers/**" Exclude="interop-helpers/api/**" />
     <!-- Explicitly call out the non-generated files in the API folder-->
-    <None Include="interop-helpers/api/index.md" />
   </ItemGroup>
   <ItemGroup>
     <!--Everything in the TextUX sub-folders except the API folder as that contains generated files -->
@@ -62,16 +58,12 @@
     <!--Everything in the CommandLine sub-folders except the API folder as that contains generated files -->
     <None Include="CommandLine/**" Exclude="CommandLine/api/**" />
     <!-- Explicitly call out the non-generated files in the API folder-->
-    <None Include="CommandLine/api/index.md" />
   </ItemGroup>
-
   <ItemGroup>
     <!--Everything in the SrcGeneration sub-folders except the API folder as that contains generated files -->
     <None Include="SrcGeneration/**" Exclude="SrcGeneration/api/**" />
     <!-- Explicitly call out the non-generated files in the API folder-->
-    <None Include="SrcGeneration/api/index.md" />
   </ItemGroup>
-
   <Target Name="AlwaysRun" BeforeTargets="AfterBuild">
     <Message Importance="High" Text="NOTE: Building $(MSBuildProjectFile) does NOTHING, docs are built using the docfx tool. This project is simply a convenient placeholder for organizing/editing files" />
   </Target>
