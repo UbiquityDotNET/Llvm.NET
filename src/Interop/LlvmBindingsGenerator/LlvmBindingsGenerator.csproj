@@ -19,17 +19,13 @@
     <ItemGroup>
         <PackageReference Include="CppSharp" PrivateAssets="all" />
         <PackageReference Include="System.CodeDom" PrivateAssets="all" />
-
+        <PackageReference Include="Ubiquity.NET.CommandLine"/>
         <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here -->
         <!--
         NOTE: This isn't directly used by this project. However, it allows for scripts to restore this project, which
         guarantees the package is available, so that running it can use the contained headers as input.
         -->
         <PackageReference Include="Ubiquity.NET.LibLLVM" VersionOverride="20.1.*-*" GeneratePathProperty="true" PrivateAssets="all" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\Ubiquity.NET.CommandLine\Ubiquity.NET.CommandLine.csproj" />
     </ItemGroup>
 
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->
@@ -73,7 +69,7 @@
             <__RspContent Include="-e $(PkgUbiquity_NET_LibLLVM)\Content\native" />
             <__RspContent Include="-o $(__GeneratedSourcePath)" />
         </ItemGroup>
-        <Message Importance="high" Text="Generating Response file for headers in v$(__LibLLVM_VERSION)"/>
+        <Message Importance="high" Text="Generating Response file for headers in v$(__LibLLVM_VERSION)" />
         <WriteLinesToFile File="$(HandleGeneratorResponeFilePath)" Lines="@(__RspContent)" Overwrite="true" />
     </Target>
 </Project>

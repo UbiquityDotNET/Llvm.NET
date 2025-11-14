@@ -11,8 +11,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Ubiquity.NET.Runtime.Utils" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\..\Ubiquity.NET.Llvm\Ubiquity.NET.Llvm.csproj" />
-        <ProjectReference Include="..\..\Ubiquity.NET.Runtime.Utils\Ubiquity.NET.Runtime.Utils.csproj" />
     </ItemGroup>
 
 </Project>

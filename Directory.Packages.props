@@ -49,8 +49,14 @@
     <!-- https://github.com/advisories/GHSA-cmhx-cq75-c4mj -->
     <PackageVersion Include="System.Text.RegularExpressions" Version="4.3.1" />
 
-      <!-- Common packages for solution -->
+    <!-- Common packages for solution -->
     <PackageVersion Include="System.Linq.Async" Version="6.0.3" />
+    <PackageVersion Include="Ubiquity.NET.InteropHelpers" Version="20.1.8-rc.2" />
+    <PackageVersion Include="Ubiquity.NET.Extensions" Version="20.1.8-rc.2" />
+    <PackageVersion Include="Ubiquity.NET.Runtime.Utils" Version="20.1.8-rc.2" />
+    <PackageVersion Include="Ubiquity.NET.CommandLine" Version="20.1.8-rc.2" />
+    <PackageVersion Include="Ubiquity.NET.ANTLR.Utils" Version="20.1.8-rc.2" />
+
     <PackageVersion Include="Ubiquity.NET.LibLLVM" Version="20.1.8" />
     <PackageVersion Include="Ubiquity.NET.Versioning" Version="6.0.2-beta" />
     <PackageVersion Include="Antlr4BuildTasks" Version="12.11.0" />

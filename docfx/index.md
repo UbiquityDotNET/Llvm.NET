@@ -5,15 +5,14 @@ are rather close. In the mean time this set of libraries provides the building b
 for creating a Domain Specific Language (DSL) implementation or custom language compiler,
 including JIT execution. Several useful generalized libraries are also included.
 
-## The Libraries in this repository
-(At least the ones generating docs at this point anyway! :grin:)
+## The Libraries[<sup>1</sup>](#footnote_1) in this repository
 
 | Library | Description |
 |---------|-------------|
-| [Ubiquity.NET.Antlr.Utils](antlr-utils/index.md) | This library contains extensions and helpers for using ANTLR with .NET |
-| [Ubiquity.NET.CommandLine](CommandLine/index.md) | This library contains extensions and helpers for command line parsing via `System.CommandLine` |
-| [Ubiquity.NET.Extensions](extensions/index.md) | This library contains general extensions and helpers for many scenarios using .NET |
 | [Ubiquity.NET.Llvm](llvm/index.md) | This library contains The core of the LLVM projection to .NET |
-| [Ubiquity.NET.Runtime.Utils](runtime-utils/index.md) | This library contains common support for DSL runtime and language implementors |
-| [Ubiquity.NET.InteropHelpers](interop-helpers/index.md) | This library contains extensions and helpers for implementing interop support for native libraries |
-| [Ubiquity.NET.SrcGeneration](SrcGeneration/index.md) | This library contains extensions and helpers for implementing source generators |
+
+---
+<a id="footnote_1"/><sup>1</sup> The Ubiquity.NET.Llvm.Interop is intentionally NOT documented. It is an internal
+implementation detail subject to change in the future. There are plans to merge it with the
+OO wrapper library. Therefore, applications should NOT depend on it as it is likely to cease
+existing in the future.
