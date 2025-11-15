@@ -30,6 +30,12 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      # ensure .NET 10 SDK is present
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v5
+        with:
+           dotnet-version: '10.0.x'
+
       - name: Build Source
         run: .\Build-Source.ps1 -FullInit -ForceClean
 
@@ -81,4 +87,3 @@ jobs:
         with:
           draft: true
           files: BuildOutput/NuGet/*.nupkg
-

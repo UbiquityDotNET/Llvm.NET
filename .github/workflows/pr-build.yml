@@ -49,7 +49,7 @@ jobs:
            persist-credentials: false
            fetch-depth: 0
 
-     # ensure .NET 10 SDK is present
+      # ensure .NET 10 SDK is present
       - name: Setup dotnet
         uses: actions/setup-dotnet@v5
         with:
@@ -83,12 +83,11 @@ jobs:
         with:
            persist-credentials: false
 
-     # ensure .NET 10 SDK is present
-     - name: Setup dotnet
+      # ensure .NET 10 SDK is present
+      - name: Setup dotnet
         uses: actions/setup-dotnet@v5
         with:
-            dotnet-version: '10.0.x'
-
+           dotnet-version: '10.0.x'
 
       - name: Build Docs
         run: ./Build-Docs.ps1 -FullInit -Configuration Release
