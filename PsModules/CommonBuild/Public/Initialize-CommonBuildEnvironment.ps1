@@ -113,6 +113,7 @@ function Initialize-CommonBuildEnvironment
                 throw "VS shell module not found!"
             }
 
+            Write-Information "Importing VS Shell module: '$vsShellModulePath'"
             Import-Module $vsShellModulePath | Out-Null
             $vsInstanceId = vswhere -latest -format value -property InstanceId
             Enter-VsDevShell $vsInstanceId -SkipAutomaticLocation -DevCmdArguments "-arch=$vsToolsArch -host_arch=$vsToolsArch" | Out-Null
