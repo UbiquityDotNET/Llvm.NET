@@ -3,7 +3,6 @@
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

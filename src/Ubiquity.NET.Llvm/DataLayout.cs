@@ -163,7 +163,11 @@ namespace Ubiquity.NET.Llvm
 
             // Implementation is an alias handle, which is a value type that is
             // essentially a "typedef" for the opaque handle [nint, (void*)]
+#if NET10_0_OR_GREATER
             Impl = new( Handle );
+#else
+            ImplBackingField = new( Handle );
+#endif
         }
 
         internal LLVMTargetDataRef Handle { get; private set; }
@@ -174,6 +178,7 @@ namespace Ubiquity.NET.Llvm
             Handle = default;
         }
 
+#if NET10_0_OR_GREATER
         private DataLayoutAlias Impl
         {
             get
@@ -184,5 +189,17 @@ namespace Ubiquity.NET.Llvm
 
             set;
         }
+#else
+        private DataLayoutAlias Impl
+        {
+            get
+            {
+                ObjectDisposedException.ThrowIf( IsDisposed, this );
+                return ImplBackingField;
+            }
+        }
+
+        private readonly DataLayoutAlias ImplBackingField;
+#endif
     }
 }

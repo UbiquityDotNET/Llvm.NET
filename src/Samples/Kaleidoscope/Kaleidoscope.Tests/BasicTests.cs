@@ -37,7 +37,7 @@ namespace Kaleidoscope.Tests
             var parser = new Parser( LanguageLevel.MutableVariables );
 
             // Create sequence of parsed AST nodes to feed the loop
-            var nodes = from stmt in rdr.ToStatements( _=>{ }, RuntimeContext.CancellationTokenSource.Token )
+            var nodes = from stmt in rdr.ToStatements( _=>{ }, RuntimeContext.CancellationToken )
                         select parser.Parse( stmt );
 
             // Read, Parse, Print loop

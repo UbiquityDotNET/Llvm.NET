@@ -32,12 +32,7 @@ namespace Ubiquity.NET.Llvm
     /// Comdats it owns are invalidated. Using a Comdat instance after the module is disposed results in
     /// an effective NOP.
     /// </remarks>
-    [SuppressMessage( "Style", "IDE0250:Make struct 'readonly'", Justification = "NO, it can't be, the Kind setter is NOT readonly" )]
-#if NET9_0_OR_GREATER
-    public readonly ref struct Comdat // IEquatabe<T> only supports ref struct in .NET 9.0 or greater
-#else
-    public readonly struct Comdat
-#endif
+    public class Comdat
         : IEquatable<Comdat>
     {
         /// <summary>Gets the name of the <see cref="Comdat"/></summary>
@@ -46,7 +41,7 @@ namespace Ubiquity.NET.Llvm
         #region IEquatable<Comdat>
 
         /// <inheritdoc/>
-        public bool Equals( Comdat other ) => Handle.Equals( other.Handle );
+        public bool Equals( Comdat? other ) => other is not null && Handle.Equals( other.Handle );
 
         /// <inheritdoc/>
         public override int GetHashCode( ) => Handle.GetHashCode();
@@ -67,7 +62,7 @@ namespace Ubiquity.NET.Llvm
         /// <param name="left">Left side of comparison</param>
         /// <param name="right">Right side of comparison</param>
         /// <returns><see langword="true"/> if <paramref name="left"/> is not equal to <paramref name="right"/></returns>
-        public static bool operator !=( Comdat left, Comdat right ) => !(left == right);
+        public static bool operator !=( Comdat left, Comdat right ) => !left.Equals( right );
         #endregion
 
         /// <summary>Gets a value indicating whether this instance represents a NULL/Invalid <see cref="Comdat"/></summary>

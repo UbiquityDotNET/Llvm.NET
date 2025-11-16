@@ -7,14 +7,15 @@ namespace Ubiquity.NET.Llvm
 {
     /// <summary>Collection of Comdats in a module</summary>
     /// <remarks>
-    /// This is a 'ref struct' to ensure that ownership of the collection
-    /// remains with the module itself and this is only used to iterate
-    /// over the individual items. It is not allowed to store this as it
-    /// references the owning module and ultimately the Comdat values themselves
-    /// are owned in the native code layer and only "projected" to managed
-    /// here.
+    /// This is would ideally be a 'ref struct' to ensure that ownership of the
+    /// collection remains with the module itself and this is only used to iterate
+    /// over the individual items. Unfortunately the support for that is not available
+    /// in all runtimes and not supported fully in the ecosystem of tools yet. It is
+    /// not allowed to store this as it references the owning module and ultimately the
+    /// Comdat values themselves are owned in the native code layer and only "projected"
+    /// to managed here.
     /// </remarks>
-    public readonly ref struct ComdatCollection
+    public sealed class ComdatCollection
         : IEnumerable<Comdat>
     {
         /// <summary>Gets a count of comdats in the associated module</summary>
@@ -80,7 +81,7 @@ namespace Ubiquity.NET.Llvm
 
             WithGlobalObjects( go =>
             {
-                if(!go.Comdat.IsNull && go.Comdat.Name == key)
+                if(!(go.Comdat is null || go.Comdat.IsNull) && go.Comdat.Name == key)
                 {
                     go.Comdat = default;
                 }

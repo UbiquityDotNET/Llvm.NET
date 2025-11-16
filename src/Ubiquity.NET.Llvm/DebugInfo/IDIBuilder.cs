@@ -543,10 +543,17 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// </remarks>
         DINodeArray GetOrCreateArray( IEnumerable<DINode> elements );
 
+#if NET9_0_OR_GREATER
         /// <summary>Gets or creates a Type array with the specified types</summary>
         /// <param name="types">Types</param>
         /// <returns><see cref="DITypeArray"/></returns>
         DITypeArray GetOrCreateTypeArray( params IEnumerable<DIType> types );
+#else
+        /// <summary>Gets or creates a Type array with the specified types</summary>
+        /// <param name="types">Types</param>
+        /// <returns><see cref="DITypeArray"/></returns>
+        DITypeArray GetOrCreateTypeArray( IEnumerable<DIType> types );
+#endif
 
         /// <summary>Creates a value for an enumeration</summary>
         /// <param name="name">Name of the value</param>
@@ -788,10 +795,17 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                , BasicBlock insertAtEnd
                                );
 
+#if NET9_0_OR_GREATER
         /// <summary>Creates a <see cref="DIExpression"/> from the provided <see cref="ExpressionOp"/>s</summary>
         /// <param name="operations">Operation sequence for the expression</param>
         /// <returns><see cref="DIExpression"/></returns>
         DIExpression CreateExpression( params IEnumerable<ExpressionOp> operations );
+#else
+        /// <summary>Creates a <see cref="DIExpression"/> from the provided <see cref="ExpressionOp"/>s</summary>
+        /// <param name="operations">Operation sequence for the expression</param>
+        /// <returns><see cref="DIExpression"/></returns>
+        DIExpression CreateExpression( IEnumerable<ExpressionOp> operations );
+#endif
 
         /// <summary>Creates a <see cref="DIExpression"/> for a constant value</summary>
         /// <param name="value">Value of the expression</param>
@@ -824,8 +838,35 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                       );
     }
 
-    internal static class IDIBuilderExtensions
+    /// <summary>Utility class to provide extensions to <see cref="IDIBuilder"/></summary>
+    /// <remarks>
+    /// This is used mostly to provide support for legacy runtimes that don't have the `params IEnumerable` language feature.
+    /// In such a case, this provides extensions that allow use of a parmas array and then re-directs to the enumerable
+    /// form of the function. This allows source compat of consumers while not trying to leverage support beyond what
+    /// is supported by the runtime.
+    /// </remarks>
+    public static class IDIBuilderExtensions
     {
+#if !NET9_0_OR_GREATER
+        /// <summary>Creates a <see cref="DIExpression"/> from the provided <see cref="ExpressionOp"/>s</summary>
+        /// <param name="self">Builder to use to create the expression from</param>
+        /// <param name="operations">Operation sequence for the expression</param>
+        /// <returns><see cref="DIExpression"/></returns>
+        public static DIExpression CreateExpression(this IDIBuilder self, params ExpressionOp[] operations )
+        {
+            return self.CreateExpression( operations );
+        }
+
+        /// <summary>Gets or creates a Type array with the specified types</summary>
+        /// <param name="self">Builder to use to create the expression from</param>
+        /// <param name="types">Types</param>
+        /// <returns><see cref="DITypeArray"/></returns>
+        public static DITypeArray GetOrCreateTypeArray( this IDIBuilder self, params DIType[] types )
+        {
+            return self.GetOrCreateTypeArray( types );
+        }
+#endif
+
         // TODO: Is this needed? Owned handles are implicitly castable to the unowned forms
         internal static LLVMDIBuilderRefAlias GetUnownedHandle( this IDIBuilder self )
         {

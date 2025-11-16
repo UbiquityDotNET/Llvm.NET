@@ -292,9 +292,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             return Impl.GetOrCreateArray( elements );
         }
-
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public DITypeArray GetOrCreateTypeArray( params IEnumerable<DIType> types )
+#else
+        /// <inheritdoc/>
+        public DITypeArray GetOrCreateTypeArray( IEnumerable<DIType> types )
+#endif
         {
             return Impl.GetOrCreateTypeArray( types );
         }
@@ -377,8 +381,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             return Impl.InsertValue( value, varInfo, expression, location, insertAtEnd );
         }
 
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public DIExpression CreateExpression( params IEnumerable<ExpressionOp> operations )
+#else
+        /// <inheritdoc/>
+        public DIExpression CreateExpression( IEnumerable<ExpressionOp> operations )
+#endif
         {
             return Impl.CreateExpression( operations );
         }
@@ -394,7 +403,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             return Impl.CreateReplaceableCompositeType( tag, name, scope, file, line, lang, sizeInBits, alignBits, flags, uniqueId );
         }
-        #endregion
+#endregion
 
         /// <summary>Gets a value indicating whether this instance is already disposed</summary>
         public bool IsDisposed => Handle.IsNull;
@@ -409,8 +418,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             Handle = allowUnresolved
                    ? LLVMCreateDIBuilder( unownedModuleHandle )
                    : LLVMCreateDIBuilderDisallowUnresolved( unownedModuleHandle );
-
+#if NET10_0_OR_GREATER
             Impl = new(Handle, owningModule);
+#else
+            ImplBackingField = new( Handle, owningModule );
+#endif
         }
 
         #region IGlobalHandleOwner<LLVMDIBuilderRef> (Pattern)
@@ -424,6 +436,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             Handle = default;
         }
 
+#if NET10_0_OR_GREATER
         private DIBuilderAlias Impl
         {
             get
@@ -432,6 +445,18 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                 return field;
             }
         }
-        #endregion
+#else
+        private DIBuilderAlias Impl
+        {
+            get
+            {
+                ObjectDisposedException.ThrowIf( IsDisposed, this );
+                return ImplBackingField;
+            }
+        }
+
+        private readonly DIBuilderAlias ImplBackingField;
+#endif
+#endregion
     }
 }

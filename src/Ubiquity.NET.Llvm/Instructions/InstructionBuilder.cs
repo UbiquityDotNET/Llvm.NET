@@ -332,12 +332,21 @@ namespace Ubiquity.NET.Llvm.Instructions
             return Value.FromHandle<ReturnInstruction>( handle )!;
         }
 
+#if NET9_0_OR_GREATER
         /// <summary>Creates a call function</summary>
         /// <param name="func">Function to call</param>
         /// <param name="args">Arguments to pass to the function</param>
         /// <returns><see cref="CallInstruction"/></returns>
         /// <exception cref="ArgumentException">One of the parameters to this function is invalid</exception>
         public CallInstruction Call( Function func, params IEnumerable<Value> args ) => Call( func, args.ToList().AsReadOnly() );
+#else
+        /// <summary>Creates a call function</summary>
+        /// <param name="func">Function to call</param>
+        /// <param name="args">Arguments to pass to the function</param>
+        /// <returns><see cref="CallInstruction"/></returns>
+        /// <exception cref="ArgumentException">One of the parameters to this function is invalid</exception>
+        public CallInstruction Call( Function func, params Value[] args ) => Call( func, args.ToList().AsReadOnly() );
+#endif
 
         /// <summary>Creates a call function</summary>
         /// <param name="func">Function to call</param>
@@ -349,6 +358,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             return Call(func.Signature, func, args);
         }
 
+#if NET9_0_OR_GREATER
         /// <summary>Creates a call instruction</summary>
         /// <param name="signature">Function signature of the target</param>
         /// <param name="target">Target of the function call (Must be invocable as <paramref name="signature"/>)</param>
@@ -357,6 +367,16 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <exception cref="ArgumentException">One of the parameters to this function is invalid</exception>
         public CallInstruction Call( IFunctionType signature, Value target, params IEnumerable<Value> args )
             => Call(signature, target, args.ToList().AsReadOnly() );
+#else
+        /// <summary>Creates a call instruction</summary>
+        /// <param name="signature">Function signature of the target</param>
+        /// <param name="target">Target of the function call (Must be invocable as <paramref name="signature"/>)</param>
+        /// <param name="args">Arguments to the function call (Must match types and number of <paramref name="signature"/>)</param>
+        /// <returns>Instruction created</returns>
+        /// <exception cref="ArgumentException">One of the parameters to this function is invalid</exception>
+        public CallInstruction Call( IFunctionType signature, Value target, params Value[] args )
+            => Call( signature, target, (IReadOnlyList<Value>)args );
+#endif
 
         /// <summary>Creates a call instruction</summary>
         /// <param name="signature">Function signature of the target</param>
@@ -1663,7 +1683,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 : llvmArgs;
         }
 
-        #pragma warning disable IDE0060
+#pragma warning disable IDE0060
         // TODO: Either validate parameter 'index' or remove it...
         private static void ValidateStructGepArgs( Value pointer, uint index )
         {
@@ -1674,7 +1694,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Pointer_value_expected, nameof( pointer ) );
             }
         }
-        #pragma warning restore IDE0060
+#pragma warning restore IDE0060
 
         private IModule GetModuleOrThrow( )
         {

@@ -2,6 +2,7 @@
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -28,6 +29,7 @@ namespace Ubiquity.NET.Llvm.UT
         private const string TestObjFileName = "TestObjectFile.o";
         private const string TestSrcFileName = "test.c";
 
+        [SuppressMessage("Maintainability", "CA1506: Avoid excessive class coupling", Justification = "test class")]
         [ClassInitialize]
         public static void Initialize( TestContext ctx )
         {
@@ -150,7 +152,7 @@ namespace Ubiquity.NET.Llvm.UT
         }
 
         private static InstructionBuilder CreateFunctionAndGetBuilder(
-            IDIBuilder diBuilder,
+            DIBuilder diBuilder,
             Module module,
             DebugBasicType doubleType,
             LazyEncodedString name,

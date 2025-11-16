@@ -14,12 +14,27 @@ namespace Kaleidoscope.Grammar.AST
         : AstNode
         , IExpression
     {
+#if !NET9_0_OR_GREATER
         /// <summary>Initializes a new instance of the <see cref="FunctionCallExpression"/> class.</summary>
         /// <param name="location">Location of the node in the source input</param>
         /// <param name="functionPrototype">Prototype of the function to call</param>
         /// <param name="args">Arguments to provide to the function</param>
+        public FunctionCallExpression( SourceRange location, Prototype functionPrototype, params IExpression[] args )
+            : this(location, functionPrototype, (IEnumerable<IExpression>)args)
+        {
+        }
+#endif
+
+        /// <summary>Initializes a new instance of the <see cref="FunctionCallExpression"/> class.</summary>
+        /// <param name="location">Location of the node in the source input</param>
+        /// <param name="functionPrototype">Prototype of the function to call</param>
+        /// <param name="args">Arguments to provide to the function</param>
+#if NET9_0_OR_GREATER
         public FunctionCallExpression( SourceRange location, Prototype functionPrototype, params IEnumerable<IExpression> args )
-            : base( location )
+#else
+        public FunctionCallExpression( SourceRange location, Prototype functionPrototype, IEnumerable<IExpression> args )
+#endif
+    : base( location )
         {
             FunctionPrototype = functionPrototype;
             Arguments = [ .. args ];

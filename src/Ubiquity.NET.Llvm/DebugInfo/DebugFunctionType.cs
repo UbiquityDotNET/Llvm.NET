@@ -32,6 +32,25 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         : DebugType<IFunctionType, DISubroutineType>
         , IFunctionType
     {
+#if !NET9_0_OR_GREATER
+        /// <summary>Initializes a new instance of the <see cref="DebugFunctionType"/> class.</summary>
+        /// <param name="llvmType">Native LLVM function signature</param>
+        /// <param name="diBuilder">Debug information builder to use in creating this instance</param>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this signature</param>
+        /// <param name="retType">Return type for the function</param>
+        /// <param name="argTypes">Potentially empty set of argument types for the signature</param>
+        public DebugFunctionType( IFunctionType llvmType
+                                , IDIBuilder diBuilder
+                                , DebugInfoFlags debugFlags
+                                , IDebugType<ITypeRef, DIType> retType
+                                , params IDebugType<ITypeRef, DIType>[] argTypes
+                                )
+            : this(llvmType, diBuilder, debugFlags, retType, (IEnumerable<IDebugType<ITypeRef, DIType>>)argTypes )
+        {
+        }
+#endif
+
+#if NET9_0_OR_GREATER
         /// <summary>Initializes a new instance of the <see cref="DebugFunctionType"/> class.</summary>
         /// <param name="llvmType">Native LLVM function signature</param>
         /// <param name="diBuilder">Debug information builder to use in creating this instance</param>
@@ -44,6 +63,20 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                 , IDebugType<ITypeRef, DIType> retType
                                 , params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
                                 )
+#else
+        /// <summary>Initializes a new instance of the <see cref="DebugFunctionType"/> class.</summary>
+        /// <param name="llvmType">Native LLVM function signature</param>
+        /// <param name="diBuilder">Debug information builder to use in creating this instance</param>
+        /// <param name="debugFlags"><see cref="DebugInfoFlags"/> for this signature</param>
+        /// <param name="retType">Return type for the function</param>
+        /// <param name="argTypes">Potentially empty set of argument types for the signature</param>
+        public DebugFunctionType( IFunctionType llvmType
+                                , IDIBuilder diBuilder
+                                , DebugInfoFlags debugFlags
+                                , IDebugType<ITypeRef, DIType> retType
+                                , IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
+                                )
+#endif
             : base( llvmType.ThrowIfNull()
                   , diBuilder.CreateSubroutineType( debugFlags
                                                   , retType.ThrowIfNull().DebugInfoType

@@ -30,7 +30,7 @@ namespace Ubiquity.NET.Llvm.Values
         /// empty string will remove any comdat setting for the
         /// global object.
         /// </remarks>
-        public Comdat Comdat
+        public Comdat? Comdat
         {
             get
             {
@@ -38,7 +38,7 @@ namespace Ubiquity.NET.Llvm.Values
                 return comdatRef == default ? default : new Comdat( comdatRef );
             }
 
-            set => LLVMSetComdat( Handle, value.Handle );
+            set => LLVMSetComdat( Handle, value?.Handle ?? default);
         }
 
         /// <summary>Sets metadata for this value</summary>

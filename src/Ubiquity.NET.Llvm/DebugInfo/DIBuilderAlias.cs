@@ -716,9 +716,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             var tuple = (MDTuple) handle.CreateMetadata()!;
             return new DINodeArray( tuple );
         }
-
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public DITypeArray GetOrCreateTypeArray( params IEnumerable<DIType> types )
+#else
+        /// <inheritdoc/>
+        public DITypeArray GetOrCreateTypeArray( IEnumerable<DIType> types )
+#endif
         {
             var buf = types.Select( t => t?.Handle ?? default ).ToArray( );
             var handle = LLVMDIBuilderGetOrCreateTypeArray( Handle.ThrowIfInvalid(), buf );
@@ -791,7 +795,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                                                                     , lineNo
                                                                     , type?.Handle ?? default
                                                                     , isLocalToUnit
-                                                                    , expression?.Handle ?? CreateExpression( ).Handle
+                                                                    , expression?.Handle ?? this.CreateExpression( ).Handle
                                                                     , declaration?.Handle ?? default
                                                                     , bitAlign
                                                                     );
@@ -842,7 +846,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <inheritdoc/>
         public DebugRecord InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, Instruction insertBefore )
         {
-            return InsertDeclare( storage, varInfo, CreateExpression(), location, insertBefore );
+            return InsertDeclare( storage, varInfo, this.CreateExpression(), location, insertBefore );
         }
 
         /// <inheritdoc/>
@@ -873,7 +877,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <inheritdoc/>
         public DebugRecord InsertDeclare( Value storage, DILocalVariable varInfo, DILocation location, BasicBlock insertAtEnd )
         {
-            return InsertDeclare( storage, varInfo, CreateExpression(), location, insertAtEnd );
+            return InsertDeclare( storage, varInfo, this.CreateExpression(), location, insertAtEnd );
         }
 
         /// <inheritdoc/>
@@ -929,7 +933,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             var handle = LLVMDIBuilderInsertDbgValueRecordBefore( Handle.ThrowIfInvalid()
                                                                 , value.Handle
                                                                 , varInfo.Handle
-                                                                , expression?.Handle ?? CreateExpression( ).Handle
+                                                                , expression?.Handle ?? this.CreateExpression( ).Handle
                                                                 , location.Handle
                                                                 , insertBefore.Handle
                                                                 );
@@ -974,7 +978,7 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             var handle = LLVMDIBuilderInsertDeclareRecordAtEnd( Handle.ThrowIfInvalid()
                                                               , value.Handle
                                                               , varInfo.Handle
-                                                              , expression?.Handle ?? CreateExpression( ).Handle
+                                                              , expression?.Handle ?? this.CreateExpression( ).Handle
                                                               , location.Handle
                                                               , insertAtEnd.BlockHandle
                                                               );
@@ -982,8 +986,13 @@ namespace Ubiquity.NET.Llvm.DebugInfo
             return new( handle.ThrowIfInvalid() )!;
         }
 
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public DIExpression CreateExpression( params IEnumerable<ExpressionOp> operations )
+#else
+        /// <inheritdoc/>
+        public DIExpression CreateExpression( IEnumerable<ExpressionOp> operations )
+#endif
         {
             UInt64[ ] args = [ .. operations.Cast<UInt64>( ) ];
             var handle = LLVMDIBuilderCreateExpression( Handle.ThrowIfInvalid(), args );

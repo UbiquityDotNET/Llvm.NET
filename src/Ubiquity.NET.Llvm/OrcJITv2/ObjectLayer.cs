@@ -85,6 +85,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
         }
 
+#if NET10_0
         internal LLVMOrcObjectLayerRef Handle
         {
             get;
@@ -101,5 +102,25 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
                 field = value;
             }
         }
+#else
+        internal LLVMOrcObjectLayerRef Handle
+        {
+            get => HandleBackingField;
+
+            // Only accessible from derived types, since the modifier of this property is `internal` that
+            // means `internal` AND `protected`
+            private protected set
+            {
+                if(!HandleBackingField.IsNull)
+                {
+                    throw new InvalidOperationException( "INTERNAL: Setting handle multiple times is not allowed!" );
+                }
+
+                HandleBackingField = value;
+            }
+        }
+
+        private LLVMOrcObjectLayerRef HandleBackingField;
+#endif
     }
 }

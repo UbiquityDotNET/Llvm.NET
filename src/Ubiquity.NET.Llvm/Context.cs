@@ -80,34 +80,77 @@ namespace Ubiquity.NET.Llvm
         /// <inheritdoc/>
         public ITypeRef GetIntType( uint bitWidth ) => Impl.GetIntType( bitWidth );
 
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public IFunctionType GetFunctionType( ITypeRef returnType, params IEnumerable<ITypeRef> args ) => Impl.GetFunctionType( returnType, args );
+#else
 
         /// <inheritdoc/>
-        public IFunctionType GetFunctionType( bool isVarArgs, ITypeRef returnType, params IEnumerable<ITypeRef> args ) => Impl.GetFunctionType( isVarArgs, returnType, args );
+        public IFunctionType GetFunctionType( ITypeRef returnType, IEnumerable<ITypeRef> args ) => Impl.GetFunctionType( returnType, args );
+#endif
 
+#if NET9_0_OR_GREATER
+        /// <inheritdoc/>
+        public IFunctionType GetFunctionType( bool isVarArgs, ITypeRef returnType, params IEnumerable<ITypeRef> args ) => Impl.GetFunctionType( isVarArgs, returnType, args );
+#else
+        /// <inheritdoc/>
+        public IFunctionType GetFunctionType( bool isVarArgs, ITypeRef returnType, IEnumerable<ITypeRef> args ) => Impl.GetFunctionType( isVarArgs, returnType, args );
+#endif
+
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder, IDebugType<ITypeRef, DIType> retType, params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes )
             => Impl.CreateFunctionType( diBuilder, retType, argTypes );
+#else
+        /// <inheritdoc/>
+        public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder, IDebugType<ITypeRef, DIType> retType, IEnumerable<IDebugType<ITypeRef, DIType>> argTypes )
+            => Impl.CreateFunctionType( diBuilder, retType, argTypes );
+#endif
 
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder, bool isVarArg, IDebugType<ITypeRef, DIType> retType, params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes )
             => Impl.CreateFunctionType( diBuilder, isVarArg, retType, argTypes );
+#else
+        /// <inheritdoc/>
+        public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder, bool isVarArg, IDebugType<ITypeRef, DIType> retType, IEnumerable<IDebugType<ITypeRef, DIType>> argTypes )
+            => Impl.CreateFunctionType( diBuilder, isVarArg, retType, argTypes );
+#endif
 
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public Constant CreateConstantStruct( bool packed, params IEnumerable<Constant> values ) => Impl.CreateConstantStruct( packed, values );
+#else
+        /// <inheritdoc/>
+        public Constant CreateConstantStruct( bool packed, IEnumerable<Constant> values ) => Impl.CreateConstantStruct( packed, values );
+#endif
 
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public Constant CreateNamedConstantStruct( IStructType type, params IEnumerable<Constant> values ) => Impl.CreateNamedConstantStruct( type, values );
+#else
+        /// <inheritdoc/>
+        public Constant CreateNamedConstantStruct( IStructType type, IEnumerable<Constant> values ) => Impl.CreateNamedConstantStruct( type, values );
+#endif
 
         /// <inheritdoc/>
         public IStructType CreateStructType( LazyEncodedString name ) => Impl.CreateStructType( name );
 
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public IStructType CreateStructType( bool packed, params IEnumerable<ITypeRef> elements ) => Impl.CreateStructType( packed, elements );
+#else
+        /// <inheritdoc/>
+        public IStructType CreateStructType( bool packed, params ITypeRef[] elements ) => Impl.CreateStructType( packed, elements );
+#endif
 
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public IStructType CreateStructType( LazyEncodedString name, bool packed, params IEnumerable<ITypeRef> elements ) => Impl.CreateStructType( name, packed, elements );
+#else
+        /// <inheritdoc/>
+        public IStructType CreateStructType( LazyEncodedString name, bool packed, params ITypeRef[] elements ) => Impl.CreateStructType( name, packed, elements );
+#endif
 
         /// <inheritdoc/>
         public MDString CreateMetadataString( LazyEncodedString? value ) => Impl.CreateMetadataString( value );
@@ -252,7 +295,7 @@ namespace Ubiquity.NET.Llvm
             get => Impl.DiscardValueNames;
             set => Impl.DiscardValueNames = value;
         }
-        #endregion
+#endregion
 
         /// <summary>Gets a value indicating whether this instance is already disposed</summary>
         public bool IsDisposed => Handle.IsNull;
@@ -284,7 +327,11 @@ namespace Ubiquity.NET.Llvm
             Handle = h;
 
             // Create the implementation from this handle
+#if NET10_0_OR_GREATER
             Impl = new( LLVMContextRef.FromABI(Handle ) );
+#else
+            ImplBackingField = new( LLVMContextRef.FromABI( Handle ) );
+#endif
         }
 
         [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP008:Don't assign member with injected and created disposables", Justification = "Constructor uses move semantics")]
@@ -296,6 +343,7 @@ namespace Ubiquity.NET.Llvm
             Handle = default;
         }
 
+#if NET10_0_OR_GREATER
         private ContextAlias Impl
         {
             get
@@ -304,5 +352,17 @@ namespace Ubiquity.NET.Llvm
                 return field;
             }
         }
+#else
+        private ContextAlias Impl
+        {
+            get
+            {
+                ObjectDisposedException.ThrowIf( IsDisposed, this );
+                return ImplBackingField;
+            }
+        }
+
+        private readonly ContextAlias ImplBackingField;
+#endif
     }
 }

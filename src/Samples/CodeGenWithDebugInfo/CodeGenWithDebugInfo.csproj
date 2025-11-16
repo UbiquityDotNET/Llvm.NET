@@ -2,7 +2,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <LangVersion>13</LangVersion>
         <OutputType>exe</OutputType>
         <OutputTypeEx>exe</OutputTypeEx>
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>

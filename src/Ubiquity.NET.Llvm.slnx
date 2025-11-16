@@ -72,6 +72,7 @@
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="Analyzers/RepositoryVerifier.UT/RepositoryVerifier.UT.csproj" />
+    <Project Path="Interop/InteropTests/Ubiquity.NET.Llvm.Interop.UT.csproj" />
     <Project Path="Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj" />
     <Project Path="Ubiquity.NET.Llvm.JIT.Tests/Ubiquity.NET.Llvm.JIT.Tests.csproj" />
     <Project Path="Ubiquity.NET.Llvm.Tests/Ubiquity.NET.Llvm.UT.csproj" />
