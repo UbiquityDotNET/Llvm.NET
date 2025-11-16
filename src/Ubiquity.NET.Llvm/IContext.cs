@@ -151,19 +151,37 @@ namespace Ubiquity.NET.Llvm
         /// <returns>Integer <see cref="ITypeRef"/> for the specified width</returns>
         ITypeRef GetIntType( uint bitWidth );
 
+#if NET9_0_OR_GREATER
         /// <summary>Get an LLVM Function type (e.g. signature)</summary>
         /// <param name="returnType">Return type of the function</param>
         /// <param name="args">Potentially empty set of function argument types</param>
         /// <returns>Signature type for the specified signature</returns>
         IFunctionType GetFunctionType( ITypeRef returnType, params IEnumerable<ITypeRef> args );
+#else
+        /// <summary>Get an LLVM Function type (e.g. signature)</summary>
+        /// <param name="returnType">Return type of the function</param>
+        /// <param name="args">Potentially empty set of function argument types</param>
+        /// <returns>Signature type for the specified signature</returns>
+        IFunctionType GetFunctionType( ITypeRef returnType, IEnumerable<ITypeRef> args );
+#endif
 
+#if NET9_0_OR_GREATER
         /// <summary>Get an LLVM Function type (e.g. signature)</summary>
         /// <param name="isVarArgs">Flag to indicate if the method supports C/C++ style VarArgs</param>
         /// <param name="returnType">Return type of the function</param>
         /// <param name="args">Potentially empty set of function argument types</param>
         /// <returns>Signature type for the specified signature</returns>
         IFunctionType GetFunctionType( bool isVarArgs, ITypeRef returnType, params IEnumerable<ITypeRef> args );
+#else
+        /// <summary>Get an LLVM Function type (e.g. signature)</summary>
+        /// <param name="isVarArgs">Flag to indicate if the method supports C/C++ style VarArgs</param>
+        /// <param name="returnType">Return type of the function</param>
+        /// <param name="args">Potentially empty set of function argument types</param>
+        /// <returns>Signature type for the specified signature</returns>
+        IFunctionType GetFunctionType( bool isVarArgs, ITypeRef returnType, IEnumerable<ITypeRef> args );
+#endif
 
+#if NET9_0_OR_GREATER
         /// <summary>Creates a FunctionType with Debug information</summary>
         /// <param name="diBuilder"><see cref="DIBuilder"/>to use to create the debug information</param>
         /// <param name="retType">Return type of the function</param>
@@ -173,7 +191,19 @@ namespace Ubiquity.NET.Llvm
                                             , IDebugType<ITypeRef, DIType> retType
                                             , params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
                                             );
+#else
+        /// <summary>Creates a FunctionType with Debug information</summary>
+        /// <param name="diBuilder"><see cref="DIBuilder"/>to use to create the debug information</param>
+        /// <param name="retType">Return type of the function</param>
+        /// <param name="argTypes">Argument types of the function</param>
+        /// <returns>Function signature</returns>
+        DebugFunctionType CreateFunctionType( IDIBuilder diBuilder
+                                            , IDebugType<ITypeRef, DIType> retType
+                                            , IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
+                                            );
+#endif
 
+#if NET9_0_OR_GREATER
         /// <summary>Creates a FunctionType with Debug information</summary>
         /// <param name="diBuilder"><see cref="DIBuilder"/>to use to create the debug information</param>
         /// <param name="isVarArg">Flag to indicate if this function is variadic</param>
@@ -185,7 +215,21 @@ namespace Ubiquity.NET.Llvm
                                             , IDebugType<ITypeRef, DIType> retType
                                             , params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
                                             );
+#else
+        /// <summary>Creates a FunctionType with Debug information</summary>
+        /// <param name="diBuilder"><see cref="DIBuilder"/>to use to create the debug information</param>
+        /// <param name="isVarArg">Flag to indicate if this function is variadic</param>
+        /// <param name="retType">Return type of the function</param>
+        /// <param name="argTypes">Argument types of the function</param>
+        /// <returns>Function signature</returns>
+        DebugFunctionType CreateFunctionType( IDIBuilder diBuilder
+                                            , bool isVarArg
+                                            , IDebugType<ITypeRef, DIType> retType
+                                            , IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
+                                            );
+#endif
 
+#if NET9_0_OR_GREATER
         /// <summary>Creates a constant structure from a set of values</summary>
         /// <param name="packed">Flag to indicate if the structure is packed and no alignment should be applied to the members</param>
         /// <param name="values">Set of values to use in forming the structure</param>
@@ -203,7 +247,27 @@ namespace Ubiquity.NET.Llvm
         /// </note>
         /// </remarks>
         Constant CreateConstantStruct( bool packed, params IEnumerable<Constant> values );
+#else
+        /// <summary>Creates a constant structure from a set of values</summary>
+        /// <param name="packed">Flag to indicate if the structure is packed and no alignment should be applied to the members</param>
+        /// <param name="values">Set of values to use in forming the structure</param>
+        /// <returns>Newly created <see cref="Constant"/></returns>
+        /// <remarks>
+        /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
+        /// <list type="table">
+        /// <listheader>
+        /// <term><see cref="Constant"/> derived type</term><description>Description</description>
+        /// </listheader>
+        /// <item><term>ConstantAggregateZero</term><description>If all the member values are zero constants</description></item>
+        /// <item><term>UndefValue</term><description>If all the member values are UndefValue</description></item>
+        /// <item><term>ConstantStruct</term><description>All other cases</description></item>
+        /// </list>
+        /// </note>
+        /// </remarks>
+        Constant CreateConstantStruct( bool packed, IEnumerable<Constant> values );
+#endif
 
+#if NET9_0_OR_GREATER
         /// <summary>Creates a constant instance of a specified structure type from a set of values</summary>
         /// <param name="type">Type of the structure to create</param>
         /// <param name="values">Set of values to use in forming the structure</param>
@@ -221,6 +285,25 @@ namespace Ubiquity.NET.Llvm
         /// </note>
         /// </remarks>
         Constant CreateNamedConstantStruct( IStructType type, params IEnumerable<Constant> values );
+#else
+        /// <summary>Creates a constant instance of a specified structure type from a set of values</summary>
+        /// <param name="type">Type of the structure to create</param>
+        /// <param name="values">Set of values to use in forming the structure</param>
+        /// <returns>Newly created <see cref="Constant"/></returns>
+        /// <remarks>
+        /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
+        /// <list type="table">
+        /// <listheader>
+        /// <term><see cref="Constant"/> derived type</term><description>Description</description>
+        /// </listheader>
+        /// <item><term>ConstantAggregateZero</term><description>If all the member values are zero constants</description></item>
+        /// <item><term>UndefValue</term><description>If all the member values are UndefValue</description></item>
+        /// <item><term>ConstantStruct</term><description>All other cases</description></item>
+        /// </list>
+        /// </note>
+        /// </remarks>
+        Constant CreateNamedConstantStruct( IStructType type, IEnumerable<Constant> values );
+#endif
 
         /// <summary>Create an opaque structure type (e.g. a forward reference)</summary>
         /// <param name="name">Name of the type (use <see cref="LazyEncodedString.Empty"/> for anonymous types)</param>
@@ -233,6 +316,7 @@ namespace Ubiquity.NET.Llvm
         /// <returns>New type</returns>
         IStructType CreateStructType( LazyEncodedString name );
 
+#if NET9_0_OR_GREATER
         /// <summary>Create an anonymous structure type (e.g. Tuple)</summary>
         /// <param name="packed">Flag to indicate if the structure is "packed"</param>
         /// <param name="elements">Types of the fields of the structure</param>
@@ -240,7 +324,17 @@ namespace Ubiquity.NET.Llvm
         /// <see cref="IStructType"/> with the specified body defined.
         /// </returns>
         IStructType CreateStructType( bool packed, params IEnumerable<ITypeRef> elements );
+#else
+        /// <summary>Create an anonymous structure type (e.g. Tuple)</summary>
+        /// <param name="packed">Flag to indicate if the structure is "packed"</param>
+        /// <param name="elements">Types of the fields of the structure</param>
+        /// <returns>
+        /// <see cref="IStructType"/> with the specified body defined.
+        /// </returns>
+        IStructType CreateStructType( bool packed, params ITypeRef[] elements );
+#endif
 
+#if NET9_0_OR_GREATER
         /// <summary>Creates a new structure type in this <see cref="ContextAlias"/></summary>
         /// <param name="name">Name of the structure (use <see cref="LazyEncodedString.Empty"/> for anonymous types)</param>
         /// <param name="packed">Flag indicating if the structure is packed</param>
@@ -252,6 +346,19 @@ namespace Ubiquity.NET.Llvm
         /// If the elements argument list is empty then a complete 0 sized struct is created
         /// </remarks>
         IStructType CreateStructType( LazyEncodedString name, bool packed, params IEnumerable<ITypeRef> elements );
+#else
+        /// <summary>Creates a new structure type in this <see cref="ContextAlias"/></summary>
+        /// <param name="name">Name of the structure (use <see cref="LazyEncodedString.Empty"/> for anonymous types)</param>
+        /// <param name="packed">Flag indicating if the structure is packed</param>
+        /// <param name="elements">Types for the structures elements in layout order</param>
+        /// <returns>
+        /// <see cref="IStructType"/> with the specified body defined.
+        /// </returns>
+        /// <remarks>
+        /// If the elements argument list is empty then a complete 0 sized struct is created
+        /// </remarks>
+        IStructType CreateStructType( LazyEncodedString name, bool packed, params ITypeRef[] elements );
+#endif
 
         /// <summary>Creates a metadata string from the given string</summary>
         /// <param name="value">string to create as metadata</param>
@@ -393,8 +500,99 @@ namespace Ubiquity.NET.Llvm
         TargetBinary OpenBinary( LazyEncodedString path );
     }
 
-    internal static class ContextExtensions
+    /// <summary>Utility class to provide extensions to <see cref="IContext"/></summary>
+    /// <remarks>
+    /// This is used mostly to provide support for legacy runtimes that don't have the `params IEnumerable` language feature.
+    /// In such a case, this provides extensions that allow use of a parmas array and then re-directs to the enumerable
+    /// form of the function. This allows source compat of consumers while not trying to leverage support beyond what
+    /// is supported by the runtime.
+    /// </remarks>
+    public static class ContextExtensions
     {
+#if !NET9_0_OR_GREATER
+        /// <summary>Get an LLVM Function type (e.g. signature)</summary>
+        /// <param name="self">Instance of context to get a function type</param>
+        /// <param name="returnType">Return type of the function</param>
+        /// <param name="args">Potentially empty set of function argument types</param>
+        /// <returns>Signature type for the specified signature</returns>
+        public static IFunctionType GetFunctionType(this IContext self, ITypeRef returnType, params ITypeRef[] args )
+        {
+            // this seems redundant but for older runtimes it does an implict cast to IEnumerable
+            return self.GetFunctionType( returnType, args );
+        }
+
+        /// <summary>Get an LLVM Function type (e.g. signature)</summary>
+        /// <param name="self">Context instance to get the function from</param>
+        /// <param name="isVarArgs">Flag to indicate if the method supports C/C++ style VarArgs</param>
+        /// <param name="returnType">Return type of the function</param>
+        /// <param name="args">Potentially empty set of function argument types</param>
+        /// <returns>Signature type for the specified signature</returns>
+        public static IFunctionType GetFunctionType( this IContext self, bool isVarArgs, ITypeRef returnType, params ITypeRef[] args )
+        {
+            // this seems redundant but for older runtimes it does an implict cast to IEnumerable
+            return self.GetFunctionType( isVarArgs, returnType, args );
+        }
+
+        /// <summary>Creates a FunctionType with Debug information</summary>
+        /// <param name="self">Context instance to get the function from</param>
+        /// <param name="diBuilder"><see cref="DIBuilder"/>to use to create the debug information</param>
+        /// <param name="retType">Return type of the function</param>
+        /// <param name="argTypes">Argument types of the function</param>
+        /// <returns>Function signature</returns>
+        public static DebugFunctionType CreateFunctionType( this IContext self
+                                                          , IDIBuilder diBuilder
+                                                          , IDebugType<ITypeRef, DIType> retType
+                                                          , params IDebugType<ITypeRef, DIType>[] argTypes
+                                                          )
+        {
+            return self.CreateFunctionType(diBuilder, retType, argTypes);
+        }
+
+        /// <summary>Creates a constant structure from a set of values</summary>
+        /// <param name="self">Context instance to get the function from</param>
+        /// <param name="packed">Flag to indicate if the structure is packed and no alignment should be applied to the members</param>
+        /// <param name="values">Set of values to use in forming the structure</param>
+        /// <returns>Newly created <see cref="Constant"/></returns>
+        /// <remarks>
+        /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
+        /// <list type="table">
+        /// <listheader>
+        /// <term><see cref="Constant"/> derived type</term><description>Description</description>
+        /// </listheader>
+        /// <item><term>ConstantAggregateZero</term><description>If all the member values are zero constants</description></item>
+        /// <item><term>UndefValue</term><description>If all the member values are UndefValue</description></item>
+        /// <item><term>ConstantStruct</term><description>All other cases</description></item>
+        /// </list>
+        /// </note>
+        /// </remarks>
+        public static Constant CreateConstantStruct(this IContext self, bool packed, params Constant[] values )
+        {
+            return self.CreateConstantStruct(packed, values);
+        }
+
+        /// <summary>Creates a constant instance of a specified structure type from a set of values</summary>
+        /// <param name="self">Context instance to get the function from</param>
+        /// <param name="type">Type of the structure to create</param>
+        /// <param name="values">Set of values to use in forming the structure</param>
+        /// <returns>Newly created <see cref="Constant"/></returns>
+        /// <remarks>
+        /// <note type="note">The actual concrete return type depends on the parameters provided and will be one of the following:
+        /// <list type="table">
+        /// <listheader>
+        /// <term><see cref="Constant"/> derived type</term><description>Description</description>
+        /// </listheader>
+        /// <item><term>ConstantAggregateZero</term><description>If all the member values are zero constants</description></item>
+        /// <item><term>UndefValue</term><description>If all the member values are UndefValue</description></item>
+        /// <item><term>ConstantStruct</term><description>All other cases</description></item>
+        /// </list>
+        /// </note>
+        /// </remarks>
+        public static Constant CreateNamedConstantStruct( this IContext self, IStructType type, params Constant[] values )
+        {
+            return self.CreateNamedConstantStruct(type, values);
+        }
+#endif
+
         // TODO: Is this needed? Owned handles are implicitly castable to the unowned forms
         internal static LLVMContextRefAlias GetUnownedHandle( this IContext self )
         {

@@ -24,6 +24,7 @@ namespace LlvmBindingsGenerator.Configuration
         /// <summary>Gets the name of the disposer for the handle (if any)</summary>
         public string? Disposer { get; init; }
 
+#if NET9_0_OR_GREATER
         /// <summary>Gets a value indicating whether this handle has an alias type</summary>
         /// <remarks>
         /// If <see cref="Disposer"/> is <see langword="null"/> or all whitespace then the return is always <see langword="false"/> [Ignoring
@@ -34,5 +35,19 @@ namespace LlvmBindingsGenerator.Configuration
             get => !string.IsNullOrWhiteSpace(Disposer) && (field);
             init;
         }
+#else
+        /// <summary>Gets a value indicating whether this handle has an alias type</summary>
+        /// <remarks>
+        /// If <see cref="Disposer"/> is <see langword="null"/> or all whitespace then the return is always <see langword="false"/> [Ignoring
+        /// any value it is initialized with]
+        /// </remarks>
+        public bool Alias
+        {
+            get => !string.IsNullOrWhiteSpace( Disposer ) && (AliasBackingField);
+            init => AliasBackingField = value;
+        }
+
+        private readonly bool AliasBackingField;
+#endif
     }
 }

@@ -143,6 +143,7 @@ namespace Ubiquity.NET.Llvm
                                       );
          }
 
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public Function CreateFunction( IDIBuilder diBuilder
                                       , LazyEncodedString name
@@ -150,6 +151,15 @@ namespace Ubiquity.NET.Llvm
                                       , IDebugType<ITypeRef, DIType> returnType
                                       , params IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
                                       )
+#else
+        /// <inheritdoc/>
+        public Function CreateFunction( IDIBuilder diBuilder
+                                      , LazyEncodedString name
+                                      , bool isVarArg
+                                      , IDebugType<ITypeRef, DIType> returnType
+                                      , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
+                                      )
+#endif
         {
             return Impl.CreateFunction( diBuilder, name, isVarArg, returnType, argumentTypes );
         }
@@ -271,7 +281,7 @@ namespace Ubiquity.NET.Llvm
 
         /// <inheritdoc/>
         public uint DebugMetadataVersion => Impl.DebugMetadataVersion;
-        #endregion
+#endregion
 
         /// <summary>Load a bit-code module from a given file</summary>
         /// <param name="path">path of the file to load</param>
@@ -316,7 +326,11 @@ namespace Ubiquity.NET.Llvm
         internal Module( LLVMModuleRef h )
         {
             Handle = h;
-            Impl = new(LLVMModuleRefAlias.FromABI(Handle));
+#if NET10_0_OR_GREATER
+            Impl = new( LLVMModuleRefAlias.FromABI( Handle ) );
+#else
+            ImplBackingField = new(LLVMModuleRefAlias.FromABI(Handle));
+#endif
         }
 
         internal LLVMModuleRef Handle { get; set; }
@@ -334,6 +348,7 @@ namespace Ubiquity.NET.Llvm
             return retVal;
         }
 
+#if NET10_0_OR_GREATER
         private ModuleAlias Impl
         {
             get
@@ -343,5 +358,17 @@ namespace Ubiquity.NET.Llvm
             }
             set;
         }
+#else
+        private ModuleAlias Impl
+        {
+            get
+            {
+                ObjectDisposedException.ThrowIf( IsDisposed, this );
+                return ImplBackingField;
+            }
+        }
+
+        private readonly ModuleAlias ImplBackingField;
+#endif
     }
 }

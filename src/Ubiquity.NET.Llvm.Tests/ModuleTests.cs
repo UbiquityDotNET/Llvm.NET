@@ -492,6 +492,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             var clonedGlobal = clone.GetNamedGlobal( globalName );
             Assert.IsNotNull( clonedGlobal );
+            Assert.IsNotNull( clonedGlobal.Comdat );
             Assert.IsFalse( clonedGlobal.Comdat.IsNull );
 
             Assert.AreEqual( globalName, clonedGlobal.Comdat!.Name, "Name of the comdat on the cloned global should match the one set in the original module" );
@@ -529,6 +530,7 @@ namespace Ubiquity.NET.Llvm.UT
 
             Assert.IsTrue( clone.TryGetFunction( globalName, out Function? clonedGlobal ) );
             Assert.IsNotNull( clonedGlobal );
+            Assert.IsNotNull( clonedGlobal.Comdat );
             Assert.IsFalse( clonedGlobal.Comdat.IsNull );
             Assert.AreEqual( globalName, clonedGlobal.Comdat!.Name, "Name of the comdat on the cloned global should match the one set in the original module" );
             Assert.AreEqual( ComdatKind.Any, module.Comdats[ globalName ].Kind );

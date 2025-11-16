@@ -549,6 +549,7 @@ namespace Ubiquity.NET.Llvm
             return func;
         }
 
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public Function CreateFunction( IDIBuilder diBuilder
                                       , LazyEncodedString name
@@ -556,6 +557,16 @@ namespace Ubiquity.NET.Llvm
                                       , IDebugType<ITypeRef, DIType> returnType
                                       , params IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
                                       )
+#else
+        /// <inheritdoc/>
+        public Function CreateFunction( IDIBuilder diBuilder
+                                      , LazyEncodedString name
+                                      , bool isVarArg
+                                      , IDebugType<ITypeRef, DIType> returnType
+                                      , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
+                                      )
+
+#endif
         {
             IFunctionType signature = Context.CreateFunctionType( diBuilder, isVarArg, returnType, argumentTypes );
             return CreateFunction( name, signature );
@@ -613,7 +624,7 @@ namespace Ubiquity.NET.Llvm
         {
             return LLVMStripModuleDebugInfo(Handle);
         }
-        #endregion
+#endregion
 
         internal ModuleAlias( LLVMModuleRefAlias handle )
         {

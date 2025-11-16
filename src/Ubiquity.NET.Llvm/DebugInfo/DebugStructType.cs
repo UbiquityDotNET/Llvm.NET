@@ -178,12 +178,18 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// <summary>Gets the Source/Debug name</summary>
         public string SourceName => DebugInfoType?.Name ?? string.Empty;
 
+#if NET9_0_OR_GREATER
         /// <inheritdoc/>
         public void SetBody( bool packed, params IEnumerable<ITypeRef> elements )
+#else
+        /// <inheritdoc/>
+        public void SetBody( bool packed, params ITypeRef[] elements )
+#endif
         {
             NativeType.SetBody( packed, elements );
         }
 
+#if NET9_0_OR_GREATER
         /// <summary>Set the body of a type</summary>
         /// <param name="packed">Flag to indicate if the body elements are packed (e.g. no padding)</param>
         /// <param name="diBuilder">To construct the debug information for this instance</param>
@@ -200,6 +206,24 @@ namespace Ubiquity.NET.Llvm.DebugInfo
                            , DebugInfoFlags debugFlags
                            , params IEnumerable<DebugMemberInfo> debugElements
                            )
+#else
+        /// <summary>Set the body of a type</summary>
+        /// <param name="packed">Flag to indicate if the body elements are packed (e.g. no padding)</param>
+        /// <param name="diBuilder">To construct the debug information for this instance</param>
+        /// <param name="scope">Scope containing this type</param>
+        /// <param name="file">File containing the type</param>
+        /// <param name="line">Line in <paramref name="file"/> for this type</param>
+        /// <param name="debugFlags">Debug flags for this type</param>
+        /// <param name="debugElements">Descriptors for all the elements in the type</param>
+        public void SetBody( bool packed
+                           , IDIBuilder diBuilder
+                           , DIScope? scope
+                           , DIFile? file
+                           , uint line
+                           , DebugInfoFlags debugFlags
+                           , IEnumerable<DebugMemberInfo> debugElements
+                           )
+#endif
         {
             var debugMembersArray = debugElements as IList<DebugMemberInfo> ?? [ .. debugElements ];
             var nativeElements = debugMembersArray.Select( e => e.DebugType.NativeType );

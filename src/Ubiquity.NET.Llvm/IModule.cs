@@ -189,6 +189,7 @@ namespace Ubiquity.NET.Llvm
                                       , bool isOptimized
                                       );
 
+#if NET9_0_OR_GREATER
         /// <summary>Creates a function</summary>
         /// <param name="diBuilder"><see cref="DIBuilder"/> for creation of debug information</param>
         /// <param name="name">Name of the function</param>
@@ -205,6 +206,24 @@ namespace Ubiquity.NET.Llvm
                                       , IDebugType<ITypeRef, DIType> returnType
                                       , params IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
                                       );
+#else
+        /// <summary>Creates a function</summary>
+        /// <param name="diBuilder"><see cref="DIBuilder"/> for creation of debug information</param>
+        /// <param name="name">Name of the function</param>
+        /// <param name="isVarArg">Flag indicating if the function supports a variadic argument list</param>
+        /// <param name="returnType">Return type of the function</param>
+        /// <param name="argumentTypes">Arguments for the function</param>
+        /// <returns>
+        /// Function, matching the signature specified. This may be a previously declared or defined
+        /// function or a new function if none matching the name and signature is already present.
+        /// </returns>
+        public Function CreateFunction( IDIBuilder diBuilder
+                                      , LazyEncodedString name
+                                      , bool isVarArg
+                                      , IDebugType<ITypeRef, DIType> returnType
+                                      , IEnumerable<IDebugType<ITypeRef, DIType>> argumentTypes
+                                      );
+#endif
 
         /// <summary>Writes a bit-code module to a file</summary>
         /// <param name="path">Path to write the bit-code into</param>
@@ -380,11 +399,39 @@ namespace Ubiquity.NET.Llvm
         public bool StripDebugInformation();
     }
 
-    // Internal helper to get the underlying ABI handle as an "Alias" handle
-    // even when it is an owned module. This hides the difference between
-    // the two.
-    internal static class ModuleExtensions
+    /// <summary>Utility class to provide extensions to <see cref="IModule"/></summary>
+    /// <remarks>
+    /// This is used mostly to provide support for legacy runtimes that don't have the `params IEnumerable` language feature.
+    /// In such a case, this provides extensions that allow use of a parmas array and then re-directs to the enumerable
+    /// form of the function. This allows source compat of consumers while not trying to leverage support beyond what
+    /// is supported by the runtime.
+    /// </remarks>
+    public static class ModuleExtensions
     {
+#if !NET9_0_OR_GREATER
+        /// <summary>Creates a function</summary>
+        /// <param name="self">Modules to use for creating the function</param>
+        /// <param name="diBuilder"><see cref="DIBuilder"/> for creation of debug information</param>
+        /// <param name="name">Name of the function</param>
+        /// <param name="isVarArg">Flag indicating if the function supports a variadic argument list</param>
+        /// <param name="returnType">Return type of the function</param>
+        /// <param name="argumentTypes">Arguments for the function</param>
+        /// <returns>
+        /// Function, matching the signature specified. This may be a previously declared or defined
+        /// function or a new function if none matching the name and signature is already present.
+        /// </returns>
+        public static Function CreateFunction( this IModule self
+                                             , IDIBuilder diBuilder
+                                             , LazyEncodedString name
+                                             , bool isVarArg
+                                             , IDebugType<ITypeRef, DIType> returnType
+                                             , params IDebugType<ITypeRef, DIType>[] argumentTypes
+                                             )
+        {
+            return self.CreateFunction(diBuilder, name, isVarArg, returnType, argumentTypes);
+        }
+#endif
+
         // TODO: Is this needed? Owned handles are implicitly castable to the unowned forms
         internal static LLVMModuleRefAlias GetUnownedHandle( this IModule self )
         {

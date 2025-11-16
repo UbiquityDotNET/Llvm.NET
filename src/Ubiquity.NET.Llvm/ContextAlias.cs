@@ -176,12 +176,20 @@ namespace Ubiquity.NET.Llvm
             };
         }
 
+#if NET9_0_OR_GREATER
         public IFunctionType GetFunctionType( ITypeRef returnType, params IEnumerable<ITypeRef> args )
+#else
+        public IFunctionType GetFunctionType( ITypeRef returnType, IEnumerable<ITypeRef> args )
+#endif
         {
             return GetFunctionType( isVarArgs: false, returnType, args );
         }
 
+#if NET9_0_OR_GREATER
         public IFunctionType GetFunctionType( bool isVarArgs, ITypeRef returnType, params IEnumerable<ITypeRef> args )
+#else
+        public IFunctionType GetFunctionType( bool isVarArgs, ITypeRef returnType, IEnumerable<ITypeRef> args )
+#endif
         {
             ArgumentNullException.ThrowIfNull( returnType );
             ArgumentNullException.ThrowIfNull( args );
@@ -221,11 +229,19 @@ namespace Ubiquity.NET.Llvm
             return CreateFunctionType( diBuilder, isVarArg, retType, (IEnumerable<IDebugType<ITypeRef, DIType>>)argTypes );
         }
 
+#if NET9_0_OR_GREATER
         public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder
                                                    , bool isVarArg
                                                    , IDebugType<ITypeRef, DIType> retType
                                                    , params IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
                                                    )
+#else
+        public DebugFunctionType CreateFunctionType( IDIBuilder diBuilder
+                                                   , bool isVarArg
+                                                   , IDebugType<ITypeRef, DIType> retType
+                                                   , IEnumerable<IDebugType<ITypeRef, DIType>> argTypes
+                                                   )
+#endif
         {
             ArgumentNullException.ThrowIfNull( retType );
             ArgumentNullException.ThrowIfNull( argTypes );
@@ -269,7 +285,11 @@ namespace Ubiquity.NET.Llvm
             return new DebugFunctionType( llvmType, diBuilder, DebugInfoFlags.None, retType, argTypes );
         }
 
+#if NET9_0_OR_GREATER
         public Constant CreateConstantStruct( bool packed, params IEnumerable<Constant> values )
+#else
+        public Constant CreateConstantStruct( bool packed, IEnumerable<Constant> values )
+#endif
         {
             ArgumentNullException.ThrowIfNull( values );
 
@@ -283,7 +303,11 @@ namespace Ubiquity.NET.Llvm
             return CreateNamedConstantStruct( type, (IEnumerable<Constant>)values );
         }
 
+#if NET9_0_OR_GREATER
         public Constant CreateNamedConstantStruct( IStructType type, params IEnumerable<Constant> values )
+#else
+        public Constant CreateNamedConstantStruct( IStructType type, IEnumerable<Constant> values )
+#endif
         {
             ArgumentNullException.ThrowIfNull( type );
             ArgumentNullException.ThrowIfNull( values );
@@ -332,7 +356,11 @@ namespace Ubiquity.NET.Llvm
             return (IStructType)handle.CreateType();
         }
 
+#if NET9_0_OR_GREATER
         public IStructType CreateStructType( bool packed, params IEnumerable<ITypeRef> elements )
+#else
+        public IStructType CreateStructType( bool packed, params ITypeRef[] elements )
+#endif
         {
             ArgumentNullException.ThrowIfNull( elements );
 
@@ -341,7 +369,11 @@ namespace Ubiquity.NET.Llvm
             return (IStructType)handle.CreateType();
         }
 
+#if NET9_0_OR_GREATER
         public IStructType CreateStructType( LazyEncodedString name, bool packed, params IEnumerable<ITypeRef> elements )
+#else
+        public IStructType CreateStructType( LazyEncodedString name, bool packed, params ITypeRef[] elements )
+#endif
         {
             ArgumentNullException.ThrowIfNull( name );
             ArgumentNullException.ThrowIfNull( elements );

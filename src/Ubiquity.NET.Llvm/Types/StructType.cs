@@ -30,17 +30,28 @@ namespace Ubiquity.NET.Llvm.Types
         /// <summary>Gets a value indicating whether the structure is packed (e.g. no automatic alignment padding between elements)</summary>
         bool IsPacked { get; }
 
+#if NET9_0_OR_GREATER
         /// <summary>Sets the body of the structure</summary>
         /// <param name="packed">Flag to indicate if the body elements are packed (e.g. no padding)</param>
         /// <param name="elements">Types of each element (may be empty)</param>
         void SetBody( bool packed, params IEnumerable<ITypeRef> elements );
+#else
+        /// <summary>Sets the body of the structure</summary>
+        /// <param name="packed">Flag to indicate if the body elements are packed (e.g. no padding)</param>
+        /// <param name="elements">Types of each element (may be empty)</param>
+        void SetBody( bool packed, params ITypeRef[] elements );
+#endif
     }
 
     internal sealed class StructType
         : TypeRef
         , IStructType
     {
+#if NET9_0_OR_GREATER
         public void SetBody( bool packed, params IEnumerable<ITypeRef> elements )
+#else
+        public void SetBody( bool packed, params ITypeRef[] elements )
+#endif
         {
             LLVMTypeRef[ ] llvmArgs = [ .. elements.Select( e => e.GetTypeRef() ) ];
             LLVMStructSetBody( Handle, llvmArgs, (uint)llvmArgs.Length, packed );

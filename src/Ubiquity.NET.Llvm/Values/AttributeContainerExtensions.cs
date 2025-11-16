@@ -20,11 +20,19 @@ namespace Ubiquity.NET.Llvm.Values
             return self.Any( a => a.Id == id );
         }
 
+#if NET9_0_OR_GREATER
         /// <summary>Adds a range of values to a collection</summary>
         /// <typeparam name="T">Type of elements in the collection</typeparam>
         /// <param name="self">Collection to Add values to</param>
         /// <param name="range">values to add</param>
         public static void AddRange<T>( this ICollection<T> self, params IEnumerable<T>? range )
+#else
+        /// <summary>Adds a range of values to a collection</summary>
+        /// <typeparam name="T">Type of elements in the collection</typeparam>
+        /// <param name="self">Collection to Add values to</param>
+        /// <param name="range">values to add</param>
+        public static void AddRange<T>( this ICollection<T> self, params T[] range )
+#endif
         {
             ArgumentNullException.ThrowIfNull( self );
             if(range is null)
@@ -38,10 +46,17 @@ namespace Ubiquity.NET.Llvm.Values
             }
         }
 
+#if NET9_0_OR_GREATER
         /// <summary>Add a range of attributes to an attribute container</summary>
         /// <param name="self">Attribute container to add attributes to</param>
         /// <param name="range">Range of attributes to operate on</param>
         public static void AddAttributes( this IAttributeContainer self, params IEnumerable<LazyEncodedString>? range )
+#else
+        /// <summary>Add a range of attributes to an attribute container</summary>
+        /// <param name="self">Attribute container to add attributes to</param>
+        /// <param name="range">Range of attributes to operate on</param>
+        public static void AddAttributes( this IAttributeContainer self, params LazyEncodedString[] range )
+#endif
         {
             ArgumentNullException.ThrowIfNull( self );
             if(range is null)
@@ -55,10 +70,17 @@ namespace Ubiquity.NET.Llvm.Values
             }
         }
 
+#if NET9_0_OR_GREATER
         /// <summary>Add a range of attributes to an attribute container</summary>
         /// <param name="self">Attribute container to add attributes to</param>
         /// <param name="range">Range of attributes to operate on</param>
         public static void AddAttributes( this IAttributeContainer self, params IEnumerable<AttributeValue>? range )
+#else
+        /// <summary>Add a range of attributes to an attribute container</summary>
+        /// <param name="self">Attribute container to add attributes to</param>
+        /// <param name="range">Range of attributes to operate on</param>
+        public static void AddAttributes( this IAttributeContainer self, params AttributeValue[] range )
+#endif
         {
             ArgumentNullException.ThrowIfNull( self );
             if(range is null)
@@ -102,6 +124,7 @@ namespace Ubiquity.NET.Llvm.Values
             return self;
         }
 
+#if NET9_0_OR_GREATER
         /// <summary>Adds <see cref="AttributeValue"/>s to an <see cref="IFunctionAttributeAccessor"/></summary>
         /// <typeparam name="T">Accessor type</typeparam>
         /// <param name="self">Accessor to add the attribute to</param>
@@ -110,6 +133,16 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns><paramref name="self"/> for fluent use</returns>
         public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, params IEnumerable<LazyEncodedString>? names )
             where T : notnull, IFunctionAttributeAccessor
+#else
+        /// <summary>Adds <see cref="AttributeValue"/>s to an <see cref="IFunctionAttributeAccessor"/></summary>
+        /// <typeparam name="T">Accessor type</typeparam>
+        /// <param name="self">Accessor to add the attribute to</param>
+        /// <param name="index"><see cref="FunctionAttributeIndex"/> to add the attributes to</param>
+        /// <param name="names">Names of a attributes to add to the accessor [All must be an enum with no args OR a string attribute that accepts an empty string]</param>
+        /// <returns><paramref name="self"/> for fluent use</returns>
+        public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, IEnumerable<LazyEncodedString> names )
+            where T : notnull, IFunctionAttributeAccessor
+#endif
         {
             ArgumentNullException.ThrowIfNull( self );
 
@@ -124,6 +157,22 @@ namespace Ubiquity.NET.Llvm.Values
             return self;
         }
 
+#if !NET9_0_OR_GREATER
+        /// <summary>Adds <see cref="AttributeValue"/>s to an <see cref="IFunctionAttributeAccessor"/></summary>
+        /// <typeparam name="T">Accessor type</typeparam>
+        /// <param name="self">Accessor to add the attribute to</param>
+        /// <param name="index"><see cref="FunctionAttributeIndex"/> to add the attributes to</param>
+        /// <param name="names">Names of a attributes to add to the accessor [All must be an enum with no args OR a string attribute that accepts an empty string]</param>
+        /// <returns><paramref name="self"/> for fluent use</returns>
+        [MethodImpl( MethodImplOptions.AggressiveInlining )]
+        public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, params LazyEncodedString[] names )
+            where T : notnull, IFunctionAttributeAccessor
+        {
+            return AddAttributes( self, index, (IEnumerable<LazyEncodedString>)names );
+        }
+#endif
+
+#if NET9_0_OR_GREATER
         /// <summary>Adds <see cref="AttributeValue"/>s to an <see cref="IFunctionAttributeAccessor"/></summary>
         /// <typeparam name="T">Container type</typeparam>
         /// <param name="self">Container to add the attribute to</param>
@@ -132,6 +181,16 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns><paramref name="self"/> for fluent use</returns>
         public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, params IEnumerable<AttributeValue> attributes )
             where T : notnull, IFunctionAttributeAccessor
+#else
+        /// <summary>Adds <see cref="AttributeValue"/>s to an <see cref="IFunctionAttributeAccessor"/></summary>
+        /// <typeparam name="T">Container type</typeparam>
+        /// <param name="self">Container to add the attribute to</param>
+        /// <param name="index"><see cref="FunctionAttributeIndex"/> to add the attributes to</param>
+        /// <param name="attributes">Attribute to add to the container</param>
+        /// <returns><paramref name="self"/> for fluent use</returns>
+        public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, IEnumerable<AttributeValue> attributes )
+            where T : notnull, IFunctionAttributeAccessor
+#endif
         {
             ArgumentNullException.ThrowIfNull( self );
 
@@ -145,6 +204,20 @@ namespace Ubiquity.NET.Llvm.Values
 
             return self;
         }
+
+#if !NET9_0_OR_GREATER
+        /// <summary>Adds <see cref="AttributeValue"/>s to an <see cref="IFunctionAttributeAccessor"/></summary>
+        /// <typeparam name="T">Container type</typeparam>
+        /// <param name="self">Container to add the attribute to</param>
+        /// <param name="index"><see cref="FunctionAttributeIndex"/> to add the attributes to</param>
+        /// <param name="attributes">Attribute to add to the container</param>
+        /// <returns><paramref name="self"/> for fluent use</returns>
+        public static T AddAttributes<T>( this T self, FunctionAttributeIndex index, params AttributeValue[] attributes )
+            where T : notnull, IFunctionAttributeAccessor
+        {
+            return AddAttributes(self, index, (IEnumerable<AttributeValue>)attributes);
+        }
+#endif
 
         /// <summary>Removes an <see cref="UInt32"/> from an <see cref="IFunctionAttributeAccessor"/></summary>
         /// <typeparam name="T">Container type</typeparam>
