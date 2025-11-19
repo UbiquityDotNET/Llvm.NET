@@ -4,6 +4,10 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
+#if DEBUG
+using System.Linq;
+#endif
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Extensions;
