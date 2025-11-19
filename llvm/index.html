@@ -82,16 +82,17 @@
         <article data-uid="">
 <h1 id="ubiquitynetllvm">Ubiquity.NET.Llvm</h1>
 
-<p>Ubiquity.NET.Llvm is a managed wrapper around an extended LLVM-C API including an Object
-Oriented model that closely matches the underlying LLVM internal object model. This allows
-for building code generation, JIT and other utilities leveraging LLVM from .NET applications.</p>
+<p>Ubiquity.NET.Llvm is a managed wrapper around an extended LLVM-C API providing an Object
+Oriented (OO) model that closely matches the underlying LLVM internal object model. This
+allows for building code generation, JIT and other utilities leveraging LLVM from .NET
+applications.</p>
 <h2 id="guiding-principles">Guiding principles</h2>
 <ol>
 <li>Mirror the underlying LLVM model as much as possible while providing a well behaved
 .NET projection including:
 <ol>
 <li>Class names and hierarchies</li>
-<li>Object identity and reference equality</li>
+<li>Object identity and equality</li>
 <li><a href="https://en.wikipedia.org/wiki/Fluent_interface">Fluent</a> APIs when plausible and
 appropriate.</li>
 </ol>
@@ -114,8 +115,10 @@ into .NET programming patterns.</li>
 <h2 id="features">Features</h2>
 <ul>
 <li>LLVM Cross target code generation from .NET code</li>
-<li>JIT engine support for creating dynamic domain specific language runtimes with JIT support.</li>
-<li>Ahead of time compilation with support for Link time optimization and debug information</li>
+<li>JIT engine support for creating dynamic Domain Specific Language (DSL) runtimes with JIT
+support.</li>
+<li>Ahead of Time (AOT) compilation with support for Link time optimization and debug
+information.</li>
 <li>Object model that reflects the underlying LLVM classes</li>
 </ul>
 <div class="IMPORTANT">
@@ -123,12 +126,12 @@ into .NET programming patterns.</li>
 <p>It is important to point out that the <code>Ubiquity.NET.Llvm</code> documentation is not a
 substitute for the official LLVM documentation itself. That is, the content here is
 focused on using <code>Ubiquity.NET.Llvm</code> and how it maps to the underlying LLVM. The LLVM
-documentation is, generally speaking, required reading to understand Ubiquity.NET.Llvm.
+documentation is, generally speaking, required reading to understand <code>Ubiquity.NET.Llvm</code>.
 The topics here often contain links to the official LLVM documentation to help in
 further understanding the functionality of the library.</p>
 </div>
 <h2 id="breaking-changes-from-prior-versions">Breaking changes from prior versions</h2>
-<p>In Version 20.1.0 a number of issues were resolved using newer .NET as well as in the LLVM
+<p>In Version 20.1.x a number of issues were resolved using newer .NET as well as in the LLVM
 design itself that allows for a fundamentally new implementation. While there isn't a LOT of
 code that consumers have to change (See the samples and compare against older versions)
 there are important factors to consider in the new library:</p>
@@ -140,13 +143,13 @@ It routinely provided types that under some circumstances require disposal, and 
 did not (Alias). This caused problems for the interning of projected types as the
 behavior of the first instance interned was used. (Usually leading to leaks or strange
 crashes at obscure unrelated times that made testing extremely difficult [Worst case
-scenario, it works fine in all in-house testing but breaks in the field!).</li>
+scenario, it works fine in all in-house testing but breaks in the field!]).</li>
 </ul>
 </li>
 <li>No Interning of projected types
 <ul>
 <li>Projected types are no longer interned, this dramatically increases performance and
-reduces the complexity of maintenance of this library. Generally it should have little
+reduces the complexity to maintain this library. Generally it should have little
 impact as anything that produces an alias where the type might in other cases require
 the owner to dispose it should now produce an interface that is not disposable.
 Anything the caller owns IS an <code>IDisposable</code>.
@@ -155,7 +158,7 @@ Anything the caller owns IS an <code>IDisposable</code>.
 but the Dispose remains a safe NOP. This helps prevent leaks or confusion when
 transfer is unable to complete due to an exception. The caller still owns the
 resource. Either way, <code>Dispose()</code> is called to clean it up, which is either a
-safe NOP, or an actual release of the native resource.</li>
+safe NOP, or an actual release of the native resource of transfer didn't complete.</li>
 </ul>
 </li>
 </ul>
@@ -167,25 +170,30 @@ safe NOP, or an actual release of the native resource.</li>
 <li>Such types MAY be value equal if they refer to the same underlying native instance.</li>
 </ul>
 </li>
+<li>Reference equality only considers the MANAGED wrapper instances and NOT the LLVM
+handles or the contents of the object they refer to.</li>
 </ol>
 </li>
 </ol>
 <h3 id="ownership-and-idisposable">Ownership and IDisposable</h3>
 <p>When dealing with native interop the concept of ownership is of critical importance. The
-underlying resources are NOT controlled by a Garbage collector, and therefore require care
-to avoid access violations and other app crash scenarios. This library aims to make that
-much easier by using IDisposable for these scenarios. It is <em><strong>HIGHLY</strong></em> recommended to use
-the <a href="https://www.nuget.org/packages/IDisposableAnalyzers/">IDisposableAnalyzers</a> in ANY
+underlying resources are NOT controlled by a Garbage Collector (GC), and therefore require
+care to avoid access violations and other app crash scenarios. This library aims to make
+that much easier by using IDisposable for these scenarios. It is <em><strong>HIGHLY</strong></em> recommended to
+use the <a href="https://www.nuget.org/packages/IDisposableAnalyzers/">IDisposableAnalyzers</a> in ANY
 project that consumes this library. (It was/is used internally to find and fix issues across
-the library that were tedious to identify otherwise).</p>
+the library that were tedious to identify otherwise). The down side of this is that there is
+no standard pattern for move semantics (e.g., when there is a transfer of ownership
+responsibility).</p>
 <h4 id="ownership-transfer-move-semantics">Ownership transfer (move semantics)</h4>
 <p>Sometimes an API will transfer ownership to a containing type or native code in general. In
 C++ terminology that is known as 'move semantics' and typically handled with <code>std::move()</code>
 but .NET and C# have no such concept. To make life easier and keep usage of disposable types
-consistent, when a method follows the move semantics it should be documented as such and,
-more importantly, it will set the value provided as invalid BUT calling <code>Dispose()</code> is still
-a NOP. This keeps usage consistent even if ownership is transferred. Attempting to use an
-instance after it is transferred will result in an <code>ObjectDisposedException</code>.</p>
+consistent, when a method follows the move semantics it should be documented as such.
+Furthermore, and more importantly, it will set the value provided as invalid BUT calling
+<code>Dispose()</code> is still a NOP. This keeps usage consistent even if ownership is transferred.
+Attempting to use an instance after it is transferred will result in an
+<code>ObjectDisposedException</code>.</p>
 <p>Example from <a class="xref" href="articles/Samples/OrcV2VeryLazy/OrcV2VeryLazy.html">OrcV2VeryLazy</a> sample application</p>
 <pre><code class="lang-C#">// ownership of this Materialization Unit (MU) is &quot;moved&quot; to the JITDyLib in the
 // call to Define. Applying a &quot;using&quot; ensures it is released even if an exception
@@ -216,10 +224,10 @@ It was all confusing on whether you are supposed to call Dispose() or not. (Exac
 of recommended best practice for IDisposable).</p>
 <p>Thus, this version of the library eliminates the confusion and complexity by use of objects
 that are disposable, interfaces and a usage pattern that ensures <code>Dispose()</code> is idempotent
-and a NOP when already disposed. In the current release no interning is performed, and
-instead wrapping types implement <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1"><code>IEquatable&lt;T&gt;</code></a> to allow value
-equality to compare the underlying native handle and resolve them as the same underlying
-instance or not.</p>
+and a NOP when already disposed or transferred. In the current release no interning is
+performed, and instead wrapping types implement <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1"><code>IEquatable&lt;T&gt;</code></a>
+to allow value equality to compare the underlying native handle and resolve them as the same
+underlying instance or not.</p>
 
 </article>
 
@@ -241,7 +249,7 @@ instance or not.</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>

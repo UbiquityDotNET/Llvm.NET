@@ -92,6 +92,13 @@ just a pointer to an internal const string that does not need any release.)</p>
 <code>Ubiquity.NET.Llvm.Interop</code> uses custom marshaling of the strings to mark the exact behavior
 directly on the P/Invoke signature so it is both clear and easy to use for the upper layers
 (In most cases this is a <code>LazyEncodedString</code> but for a few it's just a <code>System.String</code>)</p>
+<h2 id="lazyencodedstring">LazyEncodedString</h2>
+<p>The <code>Ubiquity.NET.Llvm.Interop</code> library makes extensive user if the
+<a href="https://ubiquitydotnet.github.io/Ubiquity.NET.Utils/interop-helpers/api/Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a>
+type. This allows for minimal overhead marshaling of strings to and from native code. In,
+particular it lazily encodes into either form depending on what it started with. It does
+this exactly once. So that the overhead of encode/decode is realized only the first time it
+is needed.</p>
 
 </article>
 
@@ -113,7 +120,7 @@ directly on the P/Invoke signature so it is both clear and easy to use for the u
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>

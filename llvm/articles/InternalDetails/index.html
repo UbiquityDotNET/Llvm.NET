@@ -83,16 +83,16 @@
 <h1 id="internal-details">Internal details</h1>
 
 <p>This section is focused on providing internal details of the Ubiquity.NET.Llvm
-implementation for developers contributing to the contents of the Ubiquity.NET.Llvm library
-itself. If you are only interested in using the <code>Ubiquity.NET.Llvm</code> APIs you don't need this
-information, though it may satisfy curiosity 8^).</p>
+implementation for developers contributing to the contents of the <code>Ubiquity.NET.Llvm</code>
+library itself. If you are only interested in using the <code>Ubiquity.NET.Llvm</code> APIs you don't
+need this information, though it may satisfy curiosity 🤓.</p>
 <h2 id="generate-handles">Generate Handles</h2>
-<p>The source for the handles is generated from the headers by the LibLLVM repository build.
-They are created  by the <code>LLvmBindingsGenerator</code> from the headers contained in the
-<code>Ubiquity.NET.LibLLvm</code> package. The LibLLVM package is a bundle of the RID neutral headers
-along with any RID specific headers. It is ultimately a &quot;Uber&quot; package that references the
-RID specific native libraries. This keeps the size of each package down to meet NuGet
-standards.</p>
+<p>The source for the handles is generated from the headers by the <code>:lvmBindingGenerator</code> from
+the headers contained in the <code>Ubiquity.NET.LibLLvm</code> package. The LibLLVM package is a bundle
+of the RID neutral headers along with any RID specific headers. It is ultimately a &quot;meta&quot;
+package that references the RID specific native libraries. This keeps the size of each
+package down to meet NuGet standards while allowing easy addition of new runtimes in the
+future.</p>
 
 </article>
 
@@ -114,7 +114,7 @@ standards.</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>

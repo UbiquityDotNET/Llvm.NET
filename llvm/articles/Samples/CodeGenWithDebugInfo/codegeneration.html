@@ -214,10 +214,10 @@ reference the context of another thread nor reference any of the objects created
 another thread's context. This is a fundamental design of LLVM and reduces the complexity
 of attempting to manage collections of objects and interning them in a thread safe manner.
 Applications instead just create a context per thread if needed. This constraint does not
-prevent use with asyncornous operations as long as such operations NEVER touch the context
-from multiple threads. That is, each leg of an asynchonous operation may use the same
-<code>Context</code> but no other threads or operations may use the same one. This ensoures that the
-<code>Context</code> is only used by one thread at a time even if it is passed arround between
+prevent use with asynchronous operations as long as such operations NEVER touch the context
+from multiple threads. That is, each leg of an asynchronous operation may use the same
+<code>Context</code> but no other threads or operations may use the same one. This ensures that the
+<code>Context</code> is only used by one thread at a time even if it is passed around between
 threads.</p>
 </div>
 <p>To generate code for a particular target the application initializes the module to include
@@ -246,16 +246,15 @@ this sample there is a direct 1:1 correlation between the compile unit and the s
 so it creates a <a class="xref" href="../../../api/Ubiquity.NET.Llvm.DebugInfo.DIFile.html">DIFile</a> for the source at the same
 time.</p>
 <p>The sample code creates the <code>DICompileUnit</code> when creating the bit code module. This is the
-normal pattern for creating the compile unit when generating debugging information. Though
-it is possible to create it independently but there usually isn't any real benefit to doing
-so.</p>
+normal pattern for creating the compile unit when generating debugging information. While
+it is possible to create it independently there usually isn't any real benefit to doing so.</p>
 <h2 id="creating-basic-types-with-debug-information">Creating basic types with debug information</h2>
 <p>In LLVM types are fairly minimalistic and only contain the basic structural information for
 generating the final machine code. Debug information, as metadata in LLVM, provides all the
 source level debugging information. In LLVM this requires creating and tracking both the
 native type and the Debug information metadata as independent object instances. In
 <code>Ubiquity.NET.Llvm</code> this is handled by a unified debug and type information system. That is,
-in Ubiquity.NET.Llvm a single class is used to represent types and it acts as a binder
+in <code>Ubiquity.NET.Llvm</code>, a single class is used to represent types and it acts as a binder
 between the full debugging description of the type and the native LLVM minimal description.
 These types all implement a common interface <a class="xref" href="../../../api/Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a>.
 This interface is used throughout Ubiquity.NET.Llvm to expose types in a consistent fashion.
@@ -469,8 +468,8 @@ is visible only locally. This is indicated by the
 <a class="xref" href="../../../api/Ubiquity.NET.Llvm.Values.Linkage.html#Ubiquity_NET_Llvm_Values_Linkage_Internal">Linkage.Internal</a> linkage value.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>The use of fluent style extension methods in the Ubiquity.NET.Llvm API helps make it easy
-to add to or modify the attributes and linkage etc...</p>
+<p>The use of fluent style extension methods in the <code>Ubiquity.NET.Llvm</code> API helps make it
+easy to add to or modify the attributes and linkage etc...</p>
 </div>
 <p><code>DeclareCopyFunc()</code> is a bit special in that it handles some target specific support in a
 generalized way. In particular the calling convention for the struct to use the <code>byval</code> form
@@ -575,13 +574,14 @@ intrinsic function that is used to declare the debug information for a variable.
 <code>Ubiquity.NET.Llvm</code> this is emitted using the <a class="xref" href="../../../api/Ubiquity.NET.Llvm.DebugInfo.DIBuilder.InsertDeclare.html">InsertDeclare</a>
 method.</p>
 <h3 id="calling-llvm-intrinsics">Calling LLVM Intrinsics</h3>
-<p>The generated code needs to copy some data, rather than directly doing a copy in a loop, the
-code uses the LLVM intrinsic memcopy function. This function is lowered to an optimized copy
-for the target so that applications need not worry about building optimal versions of IR for
-this common functionality. Furthermore, the LLVM intrinsic supports a variety of signatures
-for various data types all of which are hidden in the <code>Ubiquity.NET.Llvm</code> method. Rather
-than require callers to create a declaration of the correct signature the <code>Ubiquity.NET.Llvm</code>
-wrapper automatically figures out the correct signature from the parameters provided.</p>
+<p>The generated code needs to copy some data. Rather than directly doing a copy in a loop, the
+code uses the LLVM intrinsic memcopy function. This function is lowered to an optimized
+variant for the target so that applications need not worry about building optimal versions
+of IR for this common functionality. Furthermore, the LLVM intrinsic supports a variety of
+signatures for various data types all of which are hidden in the <code>Ubiquity.NET.Llvm</code> method.
+Rather than require callers to create a declaration of the correct signature the
+<code>Ubiquity.NET.Llvm</code> wrapper automatically figures out the correct signature from the
+parameters provided.</p>
 <h2 id="final-llvm-ir">Final LLVM IR</h2>
 <pre><code class="lang-llvm">; ModuleID = 'test_M3.bc'
 source_filename = &quot;test.c&quot;
@@ -691,7 +691,7 @@ attributes #2 = { argmemonly nounwind }
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>

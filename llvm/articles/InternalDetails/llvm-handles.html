@@ -94,18 +94,21 @@ release the resource.</li>
 This occurs when a child of a resource contains a reference to the parent. In
 such a case the handle should be considered like an alias and not disposed.</li>
 </ol>
-<p>The Handle implementations in Ubiquity.NET.Llvm follow consistent patterns for implementing
-each form of handle. All handle types are generated from the native C++ headers contained in
-the <code>Ubiquity.NET.LibLLVM</code> package. Ultimately, the handles are reduced to two forms:</p>
+<p>The Handle implementations in <code>Ubiquity.NET.Llvm</code> follow consistent patterns for
+implementing each form of handle. All handle types are generated from the native C++ headers
+contained in the <code>Ubiquity.NET.LibLLVM</code> package. Ultimately, the handles are reduced to two
+forms:</p>
 <ol>
 <li>Requires caller to release them
 <ul>
+<li>Case 1 &amp; 2 <a href="#llvm-c-handle-wrappers">previously discussed</a>.</li>
 <li>Lifetime of the thing the handle refers to is controlled by the caller</li>
 <li>Release is implemented by standard .NET pattern with <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></li>
 </ul>
 </li>
 <li>Does NOT require any dispose
 <ul>
+<li>Case 3 <a href="#llvm-c-handle-wrappers">previously discussed</a>.</li>
 <li>Lifetime of the thing the handle refers to is controlled by the container</li>
 </ul>
 </li>
@@ -114,8 +117,9 @@ the <code>Ubiquity.NET.LibLLVM</code> package. Ultimately, the handles are reduc
 <h5>Note</h5>
 <p>The generated sources are not useful outside of the <code>Ubiquity.NET.Llvm.Interop</code> as they
 use classes within that as a base class. These are generated manually via the
-<code>Generate-HandleWrappers.ps1</code> script. This is done once for any updates to the LibLLVM
-package to ensure the handles are kept up to date with the underlying native library.</p>
+<code>Generate-HandleWrappers.ps1</code> script with the sources checked in to the repository. This
+is done once for any updates to the <code>Ubiquity.NET.LibLLVM</code> package to ensure the handles
+are kept up to date with the underlying native library.</p>
 </div>
 <h3 id="contextual-handles-and-aliases">Contextual handles and Aliases</h3>
 <p>These handles are never manually released or disposed, though releasing their containers
@@ -135,7 +139,7 @@ replace the wrapped handle with a default value on <code>Dispose()</code> or whe
 native code) IFF, the wrapper supports &quot;move&quot; semantics then the <code>Dispose()</code> call is
 idempotent. Calling Dispose() may be a NOP. This ensures that applications need not worry
 about move semantics and just call <code>Dispose()</code> [Usually implicitly via a <code>using</code> expression]
-Thus, even if an exception occured and the move didn't complete, the resource is properly
+Thus, even if an exception occurred and the move didn't complete, the resource is properly
 disposed of.</p>
 <p>All resource handles in <code>Ubiquity.NET.Llvm,Interop</code> requiring explicit release are handled
 consistently using the generated handle types as a distinct type implementing <code>IDisposable</code></p>
@@ -146,9 +150,10 @@ conversion to the unowned form of the handle.</p>
 in ownership control/release. These are commonly used when a child of a global container
 exposes a property that references the parent container. In such cases the reference
 retrieved from the child shouldn't be used to destroy the parent when no longer used.</p>
-<p>In Ubiquity.NET.Llvm.Interop this is represented as an unowned context handle, that is alias
-handles are the same as a context handle. There is no way to convert from an unowned alias
-to an owned global handle (The other way around is allowed and supported)</p>
+<p>In <code>Ubiquity.NET.Llvm.Interop</code> this is represented as an unowned context handle, that is
+alias handles are the same as a context handle. There is no way to convert from an unowned
+alias to an owned global handle (Though the other way around is allowed and supported
+implicitly)</p>
 
 </article>
 
@@ -170,7 +175,7 @@ to an owned global handle (The other way around is allowed and supported)</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>

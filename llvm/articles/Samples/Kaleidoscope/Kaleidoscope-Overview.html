@@ -104,7 +104,7 @@ use cases for Ubiquity.NET.Llvm for code generation and JIT execution.</p>
 <p>It is worth pointing out that this example is not intended as a treatise on compiler design
 nor on language parsing. While it contains many aspects of those topics the tutorial is,
 mostly, focused on the use of Ubiquity.NET.Llvm for code generation. Furthermore it isn't
-a trans-literation of the LLVM C++ sample as that would defeat one of the major points of
+a trans-literation of the LLVM <code>C++</code> sample as that would defeat one of the major points of
 <code>Ubiquity.NET.Llvm</code> - to provide a familiar API and use patterns familiar to C# developers.</p>
 <h2 id="general-layout">General layout</h2>
 <p>The samples are built using common core libraries and patterns. They are explicitly designed
@@ -119,7 +119,9 @@ grammar using <a href="http://antlr.org">ANTLR4</a> with the full grammar for al
 language features in a single assembly. Ultimately the parsing produces an
 <a class="xref" href="Kaleidoscope.Grammar/AST/Kaleidoscope-AST.html">AST</a> so that the actual technology used for the parse is hidden as
 an implementation detail. This helps in isolating the parsing from the use of
-<code>Ubiquity.NET.Llvm</code> for code generation and JIT compilation for interactive languages.</p>
+<code>Ubiquity.NET.Llvm</code> for code generation and JIT compilation for interactive languages.
+Additionally, a number of <a href="https://github.com/UbiquityDotNET/Ubiquity.NET.Utils">utilities</a>
+are used to further enable use by additional DSL implementations or any other use.</p>
 <h2 id="the-kaleidoscope-language">The Kaleidoscope Language</h2>
 <h3 id="general-concepts">General Concepts</h3>
 <p>Kaleidoscope is a simple functional language with the following major features:</p>
@@ -321,7 +323,7 @@ LLVM version, it serves well as an example of what you can do with <code>Ubiquit
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>

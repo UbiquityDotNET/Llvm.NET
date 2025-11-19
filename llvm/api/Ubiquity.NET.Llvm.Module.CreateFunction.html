@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Llvm_Module_CreateFunction_" data-uid="Ubiquity.NET.Llvm.Module.CreateFunction*" class="text-break">
-Method CreateFunction  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Llvm/Module.cs/#L114"><i class="bi bi-code-slash"></i></a>
+Method CreateFunction  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8/src/Ubiquity.NET.Llvm/Module.cs/#L114"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -116,7 +116,7 @@ Method CreateFunction  <a class="header-action link-secondary" title="View sourc
 
 <h3 id="Ubiquity_NET_Llvm_Module_CreateFunction_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_Types_IFunctionType_" data-uid="Ubiquity.NET.Llvm.Module.CreateFunction(Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.Llvm.Types.IFunctionType)">
   CreateFunction(LazyEncodedString, IFunctionType)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Llvm/Module.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8/src/Ubiquity.NET.Llvm/Module.cs/#L114"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Gets an existing function with the specified signature in the module or creates a new one if it doesn't exist</p>
@@ -129,7 +129,7 @@ Method CreateFunction  <a class="header-action link-secondary" title="View sourc
 
 <h4 class="section">Parameters</h4>
 <dl class="parameters">
-  <dt><code>name</code> <a class="xref" href="../../interop-helpers/api/Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a></dt>
+  <dt><code>name</code> <span class="xref">LazyEncodedString</span></dt>
   <dd><p>Name of the function to add</p>
 </dd>
   <dt><code>signature</code> <a class="xref" href="Ubiquity.NET.Llvm.Types.IFunctionType.html">IFunctionType</a></dt>
@@ -164,7 +164,7 @@ not perform any function overloading.</p>
 
 <h3 id="Ubiquity_NET_Llvm_Module_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Ubiquity_NET_Llvm_DebugInfo_DIScope_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_InteropHelpers_LazyEncodedString_Ubiquity_NET_Llvm_DebugInfo_DIFile_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType_System_Boolean_System_Boolean_System_UInt32_Ubiquity_NET_Llvm_DebugInfo_DebugInfoFlags_System_Boolean_" data-uid="Ubiquity.NET.Llvm.Module.CreateFunction(Ubiquity.NET.Llvm.DebugInfo.IDIBuilder,Ubiquity.NET.Llvm.DebugInfo.DIScope,Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.InteropHelpers.LazyEncodedString,Ubiquity.NET.Llvm.DebugInfo.DIFile,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType,System.Boolean,System.Boolean,System.UInt32,Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags,System.Boolean)">
   CreateFunction(IDIBuilder, DIScope?, LazyEncodedString, LazyEncodedString?, DIFile?, uint, DebugFunctionType, bool, bool, uint, DebugInfoFlags, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Llvm/Module.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8/src/Ubiquity.NET.Llvm/Module.cs/#L117"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Creates a Function definition with Debug information</p>
@@ -183,10 +183,10 @@ not perform any function overloading.</p>
   <dt><code>scope</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIScope.html">DIScope</a></dt>
   <dd><p>Containing scope for the function</p>
 </dd>
-  <dt><code>name</code> <a class="xref" href="../../interop-helpers/api/Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a></dt>
+  <dt><code>name</code> <span class="xref">LazyEncodedString</span></dt>
   <dd><p>Name of the function in source language form</p>
 </dd>
-  <dt><code>linkageName</code> <a class="xref" href="../../interop-helpers/api/Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a></dt>
+  <dt><code>linkageName</code> <span class="xref">LazyEncodedString</span></dt>
   <dd><p>Mangled linker visible name of the function (may be same as <code class="paramref">name</code> if mangling not required by source language</p>
 </dd>
   <dt><code>file</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIFile.html">DIFile</a></dt>
@@ -235,8 +235,8 @@ not perform any function overloading.</p>
 <a id="Ubiquity_NET_Llvm_Module_CreateFunction_" data-uid="Ubiquity.NET.Llvm.Module.CreateFunction*"></a>
 
 <h3 id="Ubiquity_NET_Llvm_Module_CreateFunction_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___" data-uid="Ubiquity.NET.Llvm.Module.CreateFunction(Ubiquity.NET.Llvm.DebugInfo.IDIBuilder,Ubiquity.NET.InteropHelpers.LazyEncodedString,System.Boolean,Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType},System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.DebugInfo.IDebugType{Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.DebugInfo.DIType}})">
-  CreateFunction(IDIBuilder, LazyEncodedString, bool, IDebugType&lt;ITypeRef, DIType&gt;, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Llvm/Module.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  CreateFunction(IDIBuilder, LazyEncodedString, bool, IDebugType&lt;ITypeRef, DIType&gt;, IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8/src/Ubiquity.NET.Llvm/Module.cs/#L156"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Creates a function</p>
@@ -244,7 +244,7 @@ not perform any function overloading.</p>
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public Function CreateFunction(IDIBuilder diBuilder, LazyEncodedString name, bool isVarArg, IDebugType&lt;ITypeRef, DIType&gt; returnType, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt; argumentTypes)</code></pre>
+  <pre><code class="lang-csharp hljs">public Function CreateFunction(IDIBuilder diBuilder, LazyEncodedString name, bool isVarArg, IDebugType&lt;ITypeRef, DIType&gt; returnType, IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt; argumentTypes)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -252,7 +252,7 @@ not perform any function overloading.</p>
   <dt><code>diBuilder</code> <a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.IDIBuilder.html">IDIBuilder</a></dt>
   <dd><p><a class="xref" href="Ubiquity.NET.Llvm.DebugInfo.DIBuilder.html">DIBuilder</a> for creation of debug information</p>
 </dd>
-  <dt><code>name</code> <a class="xref" href="../../interop-helpers/api/Ubiquity.NET.InteropHelpers.LazyEncodedString.html">LazyEncodedString</a></dt>
+  <dt><code>name</code> <span class="xref">LazyEncodedString</span></dt>
   <dd><p>Name of the function</p>
 </dd>
   <dt><code>isVarArg</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
@@ -287,7 +287,7 @@ function or a new function if none matching the name and signature is already pr
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Llvm/Module.cs/#L114" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8/src/Ubiquity.NET.Llvm/Module.cs/#L114" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -303,7 +303,7 @@ function or a new function if none matching the name and signature is already pr
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>

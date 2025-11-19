@@ -93,10 +93,10 @@ classic Read, Evaluate, Print, Loop (REPL) common for interactive/interpreted/JI
 run-times. This uses an asynchronous pattern and allows cancellation via a standard
 cancellation token. This supports a clean shutdown via a CTRl-C handler etc...</p>
 <h2 id="kaleidoscope-jit-engine">Kaleidoscope JIT engine</h2>
-<p>The JIT engine used for Kaleidoscope is based on the Ubiquity.NET.Llvm OrcJIT v2, which,
-unsurprisingly, uses the LLVM OrcJit functionality to provide On Request Compilation (ORC).
-For most of the chapters, the JIT uses a moderately lazy compilation technique where the
-source language is parsed, converted to LLVM IR and submitted to the JIT engine. The JIT
+<p>The JIT engine used for Kaleidoscope is based on the <code>Ubiquity.NET.Llvm</code> OrcJIT v2, which,
+unsurprisingly, uses the LLVM OrcJit v2 functionality to provide On Request Compilation
+(ORC). For most of the chapters, the JIT uses a moderately lazy compilation technique where
+the source language is parsed, converted to LLVM IR and submitted to the JIT engine. The JIT
 engine does not immediately generate native code from the module, however. Instead it stores
 the module, and whenever compiled code calls to a symbol exported by the IR module, it will
 then generate the native code for the function &quot;on the fly&quot;. This has the advantage of not
@@ -106,11 +106,12 @@ execute.</p>
 <h3 id="really-lazy-compilation">Really lazy compilation</h3>
 <p>While the basic lazy compilation of IR to native code has performance benefits over a pure
 interpreter, it still has the potential for wasted overhead converting the parsed language
-to LLVM IR. Fortunately, the LLVM and Ubiquity.NET.Llvm.OrcJitv2 supports truly lazy
+to LLVM IR. Fortunately, the LLVM and <code>Ubiquity.NET.Llvm.OrcJitv2</code> supports truly lazy
 compilation. This is done by asking the JIT to create a stub for a named symbol and then,
 whenever code calls that symbol the stub calls back to the JIT which then calls back the
 application to 'materialize' the IR, add the module to the JIT and trigger compilation to
-native. Thus, achieving true Just-In-Time compilation.</p>
+native. hat is, the code generation stores the AST for a function and only converts it to
+IR, and then native code when needed. Thus, achieving true Just-In-Time compilation.</p>
 
 </article>
 
@@ -132,7 +133,7 @@ native. Thus, achieving true Just-In-Time compilation.</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>

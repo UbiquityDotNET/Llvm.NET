@@ -96,8 +96,8 @@ convert to SSA form directly.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p><em><strong>In LLVM There is no need for a language front-end to convert to SSA form directly!</strong></em>
-In fact, <em><strong>manually</strong></em> converting to SSA form is strongly discouraged! LLVM already has
-very efficient, and more importantly, well tested, support for converting to SSA form
+In fact, <em><strong>manually</strong></em> converting to SSA form is <em><strong>strongly discouraged!</strong></em> LLVM already
+has very efficient, and more importantly, well tested, support for converting to SSA form
 (though how that works might be a bit surprising - read on!). The use of this support is
 the focus of this chapter.</p>
 </div>
@@ -247,7 +247,7 @@ The mem2reg pass is an integral part of the full solution to mutable variables. 
 mem2reg is highly recommended. There are a few conditions for using mem2reg correctly.</p>
 <ol>
 <li>mem2reg is based on alloca: it looks for and promotes alloca. It does not apply to
-globals or heap allocations.</li>
+global variables or heap allocations.</li>
 <li>mem2reg only looks for alloca instructions in the <strong>entry block</strong> of the function.
 <ol>
 <li>Placing Alloca instructions for all variables, in all scopes, in the entry block
@@ -697,7 +697,7 @@ Now, that's convenient!</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>

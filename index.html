@@ -72,9 +72,8 @@
 focus is AOT code generation of .NET for Embedded systems. We aren't quite there yet, but
 are rather close. In the mean time this set of libraries provides the building blocks needed
 for creating a Domain Specific Language (DSL) implementation or custom language compiler,
-including JIT execution. Several useful generalized libraries are also included.</p>
-<h2 id="the-libraries-in-this-repository">The Libraries in this repository</h2>
-<p>(At least the ones generating docs at this point anyway! 😁)</p>
+including JIT execution.</p>
+<h2 id="the-libraries1-in-this-repository">The Libraries<a href="#footnote_1"><sup>1</sup></a> in this repository</h2>
 <table>
 <thead>
 <tr>
@@ -84,35 +83,16 @@ including JIT execution. Several useful generalized libraries are also included.
 </thead>
 <tbody>
 <tr>
-<td><a href="antlr-utils/index.html">Ubiquity.NET.Antlr.Utils</a></td>
-<td>This library contains extensions and helpers for using ANTLR with .NET</td>
-</tr>
-<tr>
-<td><a href="CommandLine/index.html">Ubiquity.NET.CommandLine</a></td>
-<td>This library contains extensions and helpers for command line parsing via <code>System.CommandLine</code></td>
-</tr>
-<tr>
-<td><a href="extensions/index.html">Ubiquity.NET.Extensions</a></td>
-<td>This library contains general extensions and helpers for many scenarios using .NET</td>
-</tr>
-<tr>
 <td><a href="llvm/index.html">Ubiquity.NET.Llvm</a></td>
 <td>This library contains The core of the LLVM projection to .NET</td>
 </tr>
-<tr>
-<td><a href="runtime-utils/index.html">Ubiquity.NET.Runtime.Utils</a></td>
-<td>This library contains common support for DSL runtime and language implementors</td>
-</tr>
-<tr>
-<td><a href="interop-helpers/index.html">Ubiquity.NET.InteropHelpers</a></td>
-<td>This library contains extensions and helpers for implementing interop support for native libraries</td>
-</tr>
-<tr>
-<td><a href="SrcGeneration/index.html">Ubiquity.NET.SrcGeneration</a></td>
-<td>This library contains extensions and helpers for implementing source generators</td>
-</tr>
 </tbody>
 </table>
+<hr>
+<p><a id="footnote_1"></a><sup>1</sup> The Ubiquity.NET.Llvm.Interop is intentionally NOT
+documented. It is an internal implementation detail subject to change in the future. There
+are plans to merge it with the OO wrapper library. Therefore, applications should NOT depend
+on it as it is likely to cease existing in the future.</p>
 
 </article>
 
@@ -134,7 +114,7 @@ including JIT execution. Several useful generalized libraries are also included.
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>

@@ -90,20 +90,21 @@ break that and get down and dirty with the parser a bit to make the operators wo
 particular implementing user defined precedence.</p>
 <div class="TIP">
 <h5>Tip</h5>
-<p>The actual value of user defined operator precedence in a language is a bit debatable, and
-the initial plan for the Ubiquity.NET.Llvm tutorials was to skip this chapter as it
-doesn't involve any new LLVM IR or code generation. After the code was done to get the
-other chapters working - this one was still nagging, begging really, for a solution. The
+<p>The actual value of user defined operator precedence in a language is a bit debatable. The
+initial plan for the <code>Ubiquity.NET.Llvm</code> tutorials was to skip this chapter as it doesn't
+involve any new LLVM IR or code generation. After the code was done to get the other
+chapters working - this one was still nagging, begging really, for a solution. The
 challenge to come up with a good solution was ultimately too tempting to resist, and we
 now have a full implementation with a few useful extensions on top! (Exponent operator '^',
-'=' vs '==', '++', and '--')</p>
+(assignment) '=' vs (equality) '==', '++', and '--')</p>
 </div>
 <h2 id="general-idea-of-user-defined-operators">General idea of user defined operators</h2>
 <p>User defined operators in Kaleidoscope are a bit unique. Unlike C++ and other similar
 languages, the precedence of the user defined operators in Kaleidoscope are not fixed.
-Though, the built-in operators all use a fixed precedence. That poses some interesting
-challenges for a parser as it must dynamically adapt to the state of the language runtime as
-it is parsing so that it can correctly evaluate the operator expressions.</p>
+Though, the built-in operators all use a fixed precedence. That poses some &quot;interesting&quot;
+challenges for a parser (let alone a user! 🤓) as it must dynamically adapt to the state
+of the language runtime as it is parsing so that it can correctly evaluate the operator
+expressions.</p>
 <p>Making that work while using ANTLR requires looking under the hood to how ANTLR4 ordinarily
 handles precedence. A full treatise on the subject is outside the scope of this tutorial,
 but the <a href="https://github.com/antlr/antlr4/blob/master/doc/left-recursion.md">ANTLR GitHub site</a>
@@ -516,7 +517,7 @@ unimplemented feature - truly lazy compilation, which is covered in
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>

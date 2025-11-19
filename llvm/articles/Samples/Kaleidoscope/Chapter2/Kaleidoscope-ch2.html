@@ -189,8 +189,37 @@ versions. Thus, the Ubiquity.NET.Llvm version reserves the '=' in all versions, 
 the '==' operator for equality comparisons. (It also adds the '++' and '--' tokens as user
 operators [The official LLVM implementation only allows a single character as the operator
 lexeme])</p>
-<p>Additionally the Ubiquity.NET.Llvm implementation adds the built-in '^' operator for
-exponentiation.</p>
+<p>The <code>Ubiquity.NET.Llvm</code> implementation adds the following:</p>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>'^'</td>
+<td>operator for exponentiation.</td>
+</tr>
+<tr>
+<td>'='</td>
+<td>operator for assignment.</td>
+</tr>
+<tr>
+<td>'=='</td>
+<td>operator for equality checks</td>
+</tr>
+<tr>
+<td>'++'</td>
+<td>operator for incrementing a value</td>
+</tr>
+<tr>
+<td>'--'</td>
+<td>operator for decrementing a value</td>
+</tr>
+</tbody>
+</table>
 </div>
 <h3 id="parser">Parser</h3>
 <p>The parser, like the lexer, uses Semantic Predicates, which allows for dynamic adaptation of
@@ -209,7 +238,7 @@ points as new features are enabled.</p>
 handle the fact that some operators don't make any sense as unary operators (e.g. you can't
 create a user defined unary '=' operator. Technically, you could implement that but it would
 make for some confusing code. If you really like hard to read and comprehend code there are
-<a href="https://en.wikipedia.org/wiki/Brainfuck">other languages</a> better suited to that end 8^) )</p>
+<a href="https://en.wikipedia.org/wiki/Brainfuck">other languages</a> better suited to that end 🤓 )</p>
 <p>To manage detection of appropriate operator tokens the grammar uses a set of parser rules
 that group the operator tokens by their allowed kinds. This allows subsequent rules to
 simply refer to the kind of operator expected and not worry about the actual tokens
@@ -297,7 +326,7 @@ binaryop
     ;
 </code></pre>
 <h3 id="initializers">Initializers</h3>
-<p>The Initializers rule provides a way to handle a common sequence in the language in multiple
+<p>The initializers rule provides a way to handle a common sequence in the language in multiple
 different contexts (sort of like a function in most programming languages, in fact, ANTLR
 rules are implemented in the generated parser as methods).</p>
 <pre><code class="lang-antlr">// pull the initializer out to a distinct rule so it is easier to get at
@@ -419,7 +448,7 @@ will generate a parser based on the grammar description input file. This generat
 generates these types as partial classes so they are extensible from the parser assembly
 without needing to derive a new type or use virtual methods etc. Thus, the
 <code>Kaleidoscope.Grammar</code> assembly contains partial class extensions that provide simpler
-property accessors and support methods to aid is generating the AST.</p>
+property accessor and support methods to aid is generating the AST.</p>
 <p>See <a class="xref" href="../Kaleidoscope.Grammar/ANTLR/Kaleidoscope-Parsetree-examples.html">Kaleidoscope Parse Tree Examples</a> for more
 information and example diagrams of the parse tree for various language constructs.</p>
 <h2 id="abstract-syntax-tree-ast">Abstract Syntax Tree (AST)</h2>
@@ -594,16 +623,17 @@ Of particular use is the ability to generate DGML and <a href="http://blockdiag.
 representations of the parse tree for a given parse.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>All of the diagrams in these tutorials were created by generating the blockdiag files and
-then producingthe SVG files from that. Having a nice visual representation of a parse tree
-result is helpful to understanding the parsing and various parse tree node types.</p>
+<p>All of the diagrams in these tutorials were created by generating the <code>blockdiag</code> files
+and then producing the SVG files from that. Having a nice visual representation of a parse
+tree result is helpful to understanding the parsing and various parse tree node types.</p>
 </div>
 <p>The visual graph is also immensely valuable when making changes to the grammar so you can
 see the results of a parse and more readily understand why something isn't right. In fact,
-this feature was created to help track down bugs in the parsing for user defined operator
-precedence that was difficult to figure out. Once the visualization was available it became
-quite easy to see the problems. Thus, Chapter 2 is both a simple introductory example and a
-tool for use when doing more advanced language tweaking or extension.</p>
+this diagram generation feature was created to help track down bugs in the parsing for user
+defined operator precedence that was difficult to figure out. Once the visualization was
+available it became quite easy to see the problems. Thus, Chapter 2 is both a simple
+introductory example and a tool for use when doing more advanced language tweaking or
+extension.</p>
 
 </article>
 
@@ -625,7 +655,7 @@ tool for use when doing more advanced language tweaking or extension.</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>

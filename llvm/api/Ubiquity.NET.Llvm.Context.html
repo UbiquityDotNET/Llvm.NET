@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Llvm_Context" data-uid="Ubiquity.NET.Llvm.Context" class="text-break">
-Class Context  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Llvm/Context.cs/#L28"><i class="bi bi-code-slash"></i></a>
+Class Context  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8/src/Ubiquity.NET.Llvm/Context.cs/#L28"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -139,6 +139,25 @@ Class Context  <a class="header-action link-secondary" title="View source" href=
     </div>
   </dd></dl>
 
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.ContextExtensions.CreateConstantStruct.html#Ubiquity_NET_Llvm_ContextExtensions_CreateConstantStruct_Ubiquity_NET_Llvm_IContext_System_Boolean_Ubiquity_NET_Llvm_Values_Constant___">ContextExtensions.CreateConstantStruct(IContext, bool, params Constant[])</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.ContextExtensions.CreateFunctionType.html#Ubiquity_NET_Llvm_ContextExtensions_CreateFunctionType_Ubiquity_NET_Llvm_IContext_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType____">ContextExtensions.CreateFunctionType(IContext, IDIBuilder, IDebugType&lt;ITypeRef, DIType&gt;, params IDebugType&lt;ITypeRef, DIType&gt;[])</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.ContextExtensions.CreateNamedConstantStruct.html#Ubiquity_NET_Llvm_ContextExtensions_CreateNamedConstantStruct_Ubiquity_NET_Llvm_IContext_Ubiquity_NET_Llvm_Types_IStructType_Ubiquity_NET_Llvm_Values_Constant___">ContextExtensions.CreateNamedConstantStruct(IContext, IStructType, params Constant[])</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.ContextExtensions.GetFunctionType.html#Ubiquity_NET_Llvm_ContextExtensions_GetFunctionType_Ubiquity_NET_Llvm_IContext_System_Boolean_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Types_ITypeRef___">ContextExtensions.GetFunctionType(IContext, bool, ITypeRef, params ITypeRef[])</a>
+  </div>
+  <div>
+      <a class="xref" href="Ubiquity.NET.Llvm.ContextExtensions.GetFunctionType.html#Ubiquity_NET_Llvm_ContextExtensions_GetFunctionType_Ubiquity_NET_Llvm_IContext_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Types_ITypeRef___">ContextExtensions.GetFunctionType(IContext, ITypeRef, params ITypeRef[])</a>
+  </div>
+  </dd></dl>
 
 
 
@@ -380,17 +399,17 @@ of other undefined issues.</p></div>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.CreateConstantStruct.html#Ubiquity_NET_Llvm_Context_CreateConstantStruct_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Constant__">CreateConstantStruct(bool, params IEnumerable&lt;Constant&gt;)</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.CreateConstantStruct.html#Ubiquity_NET_Llvm_Context_CreateConstantStruct_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Constant__">CreateConstantStruct(bool, IEnumerable&lt;Constant&gt;)</a></dt>
     <dd><p>Creates a constant structure from a set of values</p>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.CreateFunctionType.html#Ubiquity_NET_Llvm_Context_CreateFunctionType_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___">CreateFunctionType(IDIBuilder, bool, IDebugType&lt;ITypeRef, DIType&gt;, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.CreateFunctionType.html#Ubiquity_NET_Llvm_Context_CreateFunctionType_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_System_Boolean_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___">CreateFunctionType(IDIBuilder, bool, IDebugType&lt;ITypeRef, DIType&gt;, IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)</a></dt>
     <dd><p>Creates a FunctionType with Debug information</p>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.CreateFunctionType.html#Ubiquity_NET_Llvm_Context_CreateFunctionType_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___">CreateFunctionType(IDIBuilder, IDebugType&lt;ITypeRef, DIType&gt;, params IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.CreateFunctionType.html#Ubiquity_NET_Llvm_Context_CreateFunctionType_Ubiquity_NET_Llvm_DebugInfo_IDIBuilder_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType__System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_DebugInfo_IDebugType_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_DebugInfo_DIType___">CreateFunctionType(IDIBuilder, IDebugType&lt;ITypeRef, DIType&gt;, IEnumerable&lt;IDebugType&lt;ITypeRef, DIType&gt;&gt;)</a></dt>
     <dd><p>Creates a FunctionType with Debug information</p>
 </dd>
   </dl>
@@ -405,12 +424,12 @@ of other undefined issues.</p></div>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.CreateNamedConstantStruct.html#Ubiquity_NET_Llvm_Context_CreateNamedConstantStruct_Ubiquity_NET_Llvm_Types_IStructType_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Constant__">CreateNamedConstantStruct(IStructType, params IEnumerable&lt;Constant&gt;)</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.CreateNamedConstantStruct.html#Ubiquity_NET_Llvm_Context_CreateNamedConstantStruct_Ubiquity_NET_Llvm_Types_IStructType_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Constant__">CreateNamedConstantStruct(IStructType, IEnumerable&lt;Constant&gt;)</a></dt>
     <dd><p>Creates a constant instance of a specified structure type from a set of values</p>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.CreateStructType.html#Ubiquity_NET_Llvm_Context_CreateStructType_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__">CreateStructType(bool, params IEnumerable&lt;ITypeRef&gt;)</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.CreateStructType.html#Ubiquity_NET_Llvm_Context_CreateStructType_System_Boolean_Ubiquity_NET_Llvm_Types_ITypeRef___">CreateStructType(bool, params ITypeRef[])</a></dt>
     <dd><p>Create an anonymous structure type (e.g. Tuple)</p>
 </dd>
   </dl>
@@ -420,7 +439,7 @@ of other undefined issues.</p></div>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.CreateStructType.html#Ubiquity_NET_Llvm_Context_CreateStructType_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__">CreateStructType(LazyEncodedString, bool, params IEnumerable&lt;ITypeRef&gt;)</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.CreateStructType.html#Ubiquity_NET_Llvm_Context_CreateStructType_Ubiquity_NET_InteropHelpers_LazyEncodedString_System_Boolean_Ubiquity_NET_Llvm_Types_ITypeRef___">CreateStructType(LazyEncodedString, bool, params ITypeRef[])</a></dt>
     <dd><p>Creates a new structure type in this <span class="xref">Ubiquity.NET.Llvm.ContextAlias</span></p>
 </dd>
   </dl>
@@ -445,12 +464,12 @@ of other undefined issues.</p></div>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.GetFunctionType.html#Ubiquity_NET_Llvm_Context_GetFunctionType_System_Boolean_Ubiquity_NET_Llvm_Types_ITypeRef_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__">GetFunctionType(bool, ITypeRef, params IEnumerable&lt;ITypeRef&gt;)</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.GetFunctionType.html#Ubiquity_NET_Llvm_Context_GetFunctionType_System_Boolean_Ubiquity_NET_Llvm_Types_ITypeRef_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__">GetFunctionType(bool, ITypeRef, IEnumerable&lt;ITypeRef&gt;)</a></dt>
     <dd><p>Get an LLVM Function type (e.g. signature)</p>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.GetFunctionType.html#Ubiquity_NET_Llvm_Context_GetFunctionType_Ubiquity_NET_Llvm_Types_ITypeRef_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__">GetFunctionType(ITypeRef, params IEnumerable&lt;ITypeRef&gt;)</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Context.GetFunctionType.html#Ubiquity_NET_Llvm_Context_GetFunctionType_Ubiquity_NET_Llvm_Types_ITypeRef_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Types_ITypeRef__">GetFunctionType(ITypeRef, IEnumerable&lt;ITypeRef&gt;)</a></dt>
     <dd><p>Get an LLVM Function type (e.g. signature)</p>
 </dd>
   </dl>
@@ -490,7 +509,7 @@ of other undefined issues.</p></div>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8-rc.1/src/Ubiquity.NET.Llvm/Context.cs/#L28" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.8/src/Ubiquity.NET.Llvm/Context.cs/#L28" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -506,7 +525,7 @@ of other undefined issues.</p></div>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8-rc.1
+          - Build: 20.1.8
         </div>
       </div>
     </footer>
