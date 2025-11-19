@@ -226,7 +226,7 @@ exponentiation a efficiently as the back-end generator can.
 
 ## Examples
 
-```Console
+``` Shell
 Ubiquity.NET.Llvm Kaleidoscope Interpreter - SimpleExpressions
 Ready># simple top level expression
 >4+5;

@@ -3,7 +3,7 @@ Ubiquity.NET family of libraries provides support for a number of scenarios but 
 focus is AOT code generation of .NET for Embedded systems. We aren't quite there yet, but
 are rather close. In the mean time this set of libraries provides the building blocks needed
 for creating a Domain Specific Language (DSL) implementation or custom language compiler,
-including JIT execution. Several useful generalized libraries are also included.
+including JIT execution.
 
 ## The Libraries[<sup>1</sup>](#footnote_1) in this repository
 
@@ -12,7 +12,7 @@ including JIT execution. Several useful generalized libraries are also included.
 | [Ubiquity.NET.Llvm](llvm/index.md) | This library contains The core of the LLVM projection to .NET |
 
 ---
-<a id="footnote_1"/><sup>1</sup> The Ubiquity.NET.Llvm.Interop is intentionally NOT documented. It is an internal
-implementation detail subject to change in the future. There are plans to merge it with the
-OO wrapper library. Therefore, applications should NOT depend on it as it is likely to cease
-existing in the future.
+<a id="footnote_1"/><sup>1</sup> The Ubiquity.NET.Llvm.Interop is intentionally NOT
+documented. It is an internal implementation detail subject to change in the future. There
+are plans to merge it with the OO wrapper library. Therefore, applications should NOT depend
+on it as it is likely to cease existing in the future.

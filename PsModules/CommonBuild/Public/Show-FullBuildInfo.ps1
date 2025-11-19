@@ -9,7 +9,7 @@ function Show-FullBuildInfo
     properties so that the full details are available in logs.
 
 .DESCRIPTION
-    This function displays all the properties of the buildinfo to the information stream. Additionally,
+    This function displays all the properties of the build info to the information stream. Additionally,
     details of the current PATH, the .NET SDKs and runtimes installed is logged to the Verbose stream.
 #>
     Param($buildInfo)

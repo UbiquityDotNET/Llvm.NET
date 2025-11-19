@@ -39,9 +39,15 @@
     <PackageVersion Include="System.Memory" Version="4.5.5" />
 
     <!-- Currently, only in preview -->
-    <PackageVersion Include="System.CommandLine" Version="2.0.0-rc.2.25502.107" />
+    <PackageVersion Include="System.CommandLine" Version="2.0.0" />
 
-    <!-- Security vulnerability overrides -->
+    <!--
+    Security vulnerability overrides.
+    NOTE: For these to work the assemblies ***MUST** also have an explicit reference in the
+          impacted projects. Otherwise no upgrade.override occurs and the projects remain
+          vulnerable. Ideally the dependent projects would update to resolve this but,
+          sadly they do not, and remain vulnerable, and we must stop it here.
+    -->
     <!-- https://github.com/dotnet/roslyn-sdk/issues/1191 -->
     <PackageVersion Include="System.Formats.Asn1" Version="10.0.0" />
     <!-- https://github.com/advisories/GHSA-7jgj-8wvc-jh57 -->
@@ -51,14 +57,13 @@
 
     <!-- Common packages for solution -->
     <PackageVersion Include="System.Linq.Async" Version="6.0.3" />
-    <PackageVersion Include="Ubiquity.NET.InteropHelpers" Version="20.1.8-rc.2" />
-    <PackageVersion Include="Ubiquity.NET.Extensions" Version="20.1.8-rc.2" />
-    <PackageVersion Include="Ubiquity.NET.Runtime.Utils" Version="20.1.8-rc.2" />
-    <PackageVersion Include="Ubiquity.NET.CommandLine" Version="20.1.8-rc.2" />
-    <PackageVersion Include="Ubiquity.NET.ANTLR.Utils" Version="20.1.8-rc.2" />
-
+    <PackageVersion Include="Ubiquity.NET.InteropHelpers" Version="20.1.8" />
+    <PackageVersion Include="Ubiquity.NET.Extensions" Version="20.1.8" />
+    <PackageVersion Include="Ubiquity.NET.Runtime.Utils" Version="20.1.8" />
+    <PackageVersion Include="Ubiquity.NET.CommandLine" Version="20.1.8" />
+    <PackageVersion Include="Ubiquity.NET.ANTLR.Utils" Version="20.1.8" />
     <PackageVersion Include="Ubiquity.NET.LibLLVM" Version="20.1.8" />
-    <PackageVersion Include="Ubiquity.NET.Versioning" Version="6.0.2-beta" />
+    <PackageVersion Include="Ubiquity.NET.Versioning" Version="6.0.2" />
     <PackageVersion Include="Antlr4BuildTasks" Version="12.11.0" />
     <PackageVersion Include="Antlr4.Runtime.Standard" Version="4.13.1" />
     <PackageVersion Include="OpenSoftware.DgmlBuilder" Version="2.1.0" />

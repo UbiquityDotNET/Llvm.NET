@@ -15,14 +15,15 @@ For details of releases, see the [release notes](https://github.com/UbiquityDotN
 Ubiquity.NET.Llvm provides LLVM language and runtime bindings for .NET based applications.
 Ubiquity.NET.Llvm's goal is to provide a robust Class library that accurately reflects the
 underlying LLVM C++ model. This is done through an extended LLVM-C API bundled as a native
-library (LibLLVM). Ubiquity.NET.Llvm uses the support of LibLLVM to gain access to the LLVM
-class library and project it into a .NET managed library that reflects the original class
-library design as best as possible.
+library (`Ubiquity.NET.LibLLVM`). Ubiquity.NET.Llvm uses the support of LibLLVM to gain
+access to the LLVM class library and project it into a .NET managed library that reflects
+the original class library design as best as possible.
 
 The goal is to match the original class model as closely as possible, while providing an
 object model to .NET applications that feels familiar and consistent with common styles and
 patterns in .NET Framework applications. Thus, while class, method and enumeration names are
-similar to their counterparts in LLVM, they are not always identical.
+similar to their counterparts in LLVM, they are not always identical (especially casing and
+use of `_`).
 
 ### Brief History
 Ubiquity.NET.Llvm was initially developed as a means to leverage LLVM as the back-end for an
@@ -36,24 +37,25 @@ code generator that was tied to the ARMv4 Instruction set. ([Llilum](https://www
 Ubiquity.NET.Llvm has continued to evolve and improve and remains a distinct project as it
 has no dependencies on Llilum or any of its components. Ubiquity.NET.Llvm is viable for any
 .NET applications wishing to leverage the functionality of the LLVM libraries from .NET
-applications.
+applications. In fact, it's most common use now is for supporting JIT execution of Domain
+Specific Languages (DSL) though it is not limited to that as the [Kaleidoscope Tutorials](#kaleidoscope-tutorial)
+show an interactive JIT implementation along with full AOT compilation.
 
 Ubiquity.NET.Llvm began with LLVM 3.4 as a C++/CLI wrapper which enabled a closer binding to
 the original C++ object model then the official LLVM-C API supported. As Ubiquity.NET.Llvm
 progressed so to did LLVM. Eventually, the LLVM code base migrated to requiring C++/11
 support in the language to build. This became an issue for the C++/CLI wrapper as the
-Microsoft C++/CLI compiler didn't support the C++11 syntax. Thus a change was made to
-Ubiquity.NET.Llvm to move to an extended C API with a C# adapter layer to provide the full
-experience .NET developers expect. While the transition was a tedious one very little
-application code required changes. LLVM and Ubiquity.NET.Llvm have continued to progress and
-Ubiquity.NET.Llvm is currently based on LLVM 20.1.x.
+Microsoft C++/CLI compiler didn't support the `C++11` syntax. Thus, a change was made to
+`Ubiquity.NET.Llvm` to move to an extended C API with a C# adapter layer to provide the full
+experience .NET developers expect. While the transition was a tedious one, very little
+application code required changes. LLVM and `Ubiquity.NET.Llvm` have continued to progress
+and `Ubiquity.NET.Llvm` is currently based on LLVM 20.1.x.
 
 There are a few major goals of the current release that required breaking changes:
 1) AOT compilation of applications leveraging this library
-    - While this goal is not yet fully realized many steps were taken to aid in getting
-      there.
 2) Platform independence
-    - Again, not fully realized yet but many steps were taken to aid in getting there.
+    - Not fully realized in this release yet but many steps were taken to aid in getting
+      there.
         * The largest impediment is the massive resource requirements of building the native
           LLVM libraries for a given runtime. Building them runs afoul of the limitations of
           every available OSS not to mention exceeding the size of a NUGET package to host
@@ -72,16 +74,16 @@ package is built for the "AnyCPU" platform and references the Ubiquity.NET.Llvm.
 package to bring in the native binary support. Ubiquity.NET.Llvm.Interop contains code to
 dynamically detect the platform it is running on and load the appropriate native library.
 This allows applications to build for AnyCPU without creating multiple build configurations
-and release vehicles for applications. (Any new platforms would need to update the dynamic
-loading support and include the appropriate P/Invokable binaries - consuming apps would not
-need to change except to pick up a new package version.)
+and release vehicles for applications. Any new platforms would need to update the dynamic
+loading support and include the appropriate P/Invokable binaries. Consuming apps would not
+need to change except to pick up a new package version.
 
 ### CI Build NuGet Packages
-The CI Builds of the NuGet package built from the latest source in the master branch are
-available as build artifacts from the build. Unfortunately with an all GitHub build via
-GitHub Actions we don't have a good story for accessing the packages from unreleased
-automated CI builds. While GitHub does support a package registry (GPR), it really doesn't
-meet the needs of CI builds. In particular:
+The CI Builds of the NuGet package built from the latest source in the `develop` branch are
+available as build artifacts. Unfortunately with an all GitHub build via GitHub Actions we
+don't have a good story for accessing the packages from unreleased automated CI builds.
+While GitHub does support a package registry (GPR), it really doesn't meet the needs of CI
+builds. In particular:
 * GPR Doesn't support deletion of older CI build packages (Cluttering the feed)
 * GPR requires complex login/Tokens just to get packages from the feed, despite being a
   public repository...
@@ -92,7 +94,8 @@ used for publishing releases. (Official NuGet will serve that role for releases)
 and PR build packages are available as artifacts from the GitHub actions that build them.
 
 ### API Documentation
-The full API documentation on using Ubiquity.NET.Llvm is available on the [Ubiquity.NET.Llvm documentation site](https://ubiquitydotnet.github.io/Llvm.NET/).
+The full API documentation on using Ubiquity.NET.Llvm is available on the
+[Ubiquity.NET.Llvm documentation site](https://ubiquitydotnet.github.io/Llvm.NET/).
 
 ### Sample Applications
 #### Code Generation With Debug Information
@@ -123,13 +126,13 @@ the use of the library.
  
 #### Using Visual Studio
 The repository contains Visual Studio solution files that allow building the components
-individually for modifying Ubiquity.NET.Llvm, as well as running the available unit tests
-and samples. This is the primary mode of working with the Ubiquity.NET.Llvm source code
+individually for modifying `Ubiquity.NET.Llvm`, as well as running the available unit tests
+and samples. This is the primary mode of working with the `Ubiquity.NET.Llvm` source code
 during development.
 
 ### Replicating the automated build
-The Automated build support for Ubiquity.NET.Llvm uses Build-All.ps1 PowerShell script to
-build all the binaries and generate a NuGet package. To build the full package simply run
+The Automated build support for `Ubiquity.NET.Llvm` uses `Build-All.ps1` PowerShell script
+to build all the binaries and generate a NuGet package. To build the full package simply run
 `Build-All.ps1 -ForceClean` from a PowerShell command prompt with MSBuild tools on the
 system search path.
 

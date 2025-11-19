@@ -76,10 +76,9 @@ console output support.
 
 > [!WARNING]
 > All such methods implemented in .NET must block any exception from bubbling out of the
-> call as the JIT engine doesn't know anything about them and neither does the Kaleidoscope
+> call as the LLVM JIT engine doesn't know anything about them and neither does the Kaleidoscope
 > language. Exceptions thrown in these functions would produce undefined results, at best -
 > probably crashing the application.
-
 
 #### Generator Dispose
 Since the JIT engine is disposable, the code generators Dispose() method must now call the

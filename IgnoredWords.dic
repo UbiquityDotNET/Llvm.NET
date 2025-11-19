@@ -77,6 +77,7 @@ getelementptr
 getters
 gh
 github
+gitignore
 Globalization
 Hashtable
 Identifier
@@ -88,12 +89,15 @@ inlined
 inlining
 Interop
 ints
+Invokable
 jit
 len
 Lexer
+libclang
 LibLLVM
 Llilum
 llvm
+llvmroot
 llvmversion
 lookups
 LValue
@@ -110,6 +114,8 @@ minimalistic
 Mips
 msbuild
 msg
+namespace
+namespaces
 nav
 nint
 noinline
@@ -125,6 +131,7 @@ outdent
 pages
 paren
 perf
+performant
 pointee
 polyfills
 pragma
@@ -156,12 +163,14 @@ telliam
 templated
 templating
 tl
+tocyml
 trx
 typdef
 Typedef
 typedefs
 typelib
 typeof
+Uber
 uid
 uint
 unaryop

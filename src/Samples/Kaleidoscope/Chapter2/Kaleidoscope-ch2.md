@@ -121,8 +121,17 @@ BINARY: {FeatureUserOperators}? 'binary';
 > operators [The official LLVM implementation only allows a single character as the operator
 > lexeme])
 >
-> Additionally the Ubiquity.NET.Llvm implementation adds the built-in '^' operator for
-> exponentiation.
+>
+> The `Ubiquity.NET.Llvm` implementation adds the following:  
+>
+>| Syntax | Description |
+>|--------|-------------|
+>| '^' | operator for exponentiation. |
+>| '=' | operator for assignment. |
+>| '==' | operator for equality checks |
+>| '++' | operator for incrementing a value |
+>| '--' | operator for decrementing a value |
+
 
 ### Parser
 The parser, like the lexer, uses Semantic Predicates, which allows for dynamic adaptation of
@@ -143,7 +152,7 @@ In order to support the parser detecting attempts to overload built-in operators
 handle the fact that some operators don't make any sense as unary operators (e.g. you can't
 create a user defined unary '=' operator. Technically, you could implement that but it would
 make for some confusing code. If you really like hard to read and comprehend code there are
-[other languages](https://en.wikipedia.org/wiki/Brainfuck) better suited to that end 8^) )
+[other languages](https://en.wikipedia.org/wiki/Brainfuck) better suited to that end :nerd_face: )
 
 To manage detection of appropriate operator tokens the grammar uses a set of parser rules
 that group the operator tokens by their allowed kinds. This allows subsequent rules to
@@ -235,7 +244,7 @@ binaryop
 ```
 
 ### Initializers
-The Initializers rule provides a way to handle a common sequence in the language in multiple
+The initializers rule provides a way to handle a common sequence in the language in multiple
 different contexts (sort of like a function in most programming languages, in fact, ANTLR
 rules are implemented in the generated parser as methods).
 
@@ -347,7 +356,7 @@ printstar(100);
 For loops with mutable values support in the language may provide a result that isn't always
 0.0, for example:
 
-```Kaleidoscope
+``` Kaleidoscope
 # Define ':' for sequencing: as a low-precedence operator that ignores operands
 # and just returns the RHS.
 def binary : 1 (x y) y;
@@ -383,7 +392,7 @@ will generate a parser based on the grammar description input file. This generat
 generates these types as partial classes so they are extensible from the parser assembly
 without needing to derive a new type or use virtual methods etc. Thus, the 
 `Kaleidoscope.Grammar` assembly contains partial class extensions that provide simpler
-property accessors and support methods to aid is generating the AST.
+property accessor and support methods to aid is generating the AST.
 
 See [Kaleidoscope Parse Tree Examples](xref:Kaleidoscope-Parsetree-examples) for more
 information and example diagrams of the parse tree for various language constructs.
@@ -482,13 +491,14 @@ Of particular use is the ability to generate DGML and [blockdiag](http://blockdi
 representations of the parse tree for a given parse.
 
 >[!NOTE]
->All of the diagrams in these tutorials were created by generating the blockdiag files and
-> then producingthe SVG files from that. Having a nice visual representation of a parse tree
-> result is helpful to understanding the parsing and various parse tree node types.
+> All of the diagrams in these tutorials were created by generating the `blockdiag` files
+> and then producing the SVG files from that. Having a nice visual representation of a parse
+> tree result is helpful to understanding the parsing and various parse tree node types.
 
 The visual graph is also immensely valuable when making changes to the grammar so you can
 see the results of a parse and more readily understand why something isn't right. In fact,
-this feature was created to help track down bugs in the parsing for user defined operator
-precedence that was difficult to figure out. Once the visualization was available it became
-quite easy to see the problems. Thus, Chapter 2 is both a simple introductory example and a
-tool for use when doing more advanced language tweaking or extension.
+this diagram generation feature was created to help track down bugs in the parsing for user
+defined operator precedence that was difficult to figure out. Once the visualization was
+available it became quite easy to see the problems. Thus, Chapter 2 is both a simple
+introductory example and a tool for use when doing more advanced language tweaking or
+extension.

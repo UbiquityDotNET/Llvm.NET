@@ -6,6 +6,7 @@ alltmp
 antlr
 arity
 ascii
+baz
 binaryop
 binop
 blockdiag
@@ -32,10 +33,14 @@ ifresult
 imag
 impl
 initializer
+initializers
 inline
 inlined
+inliner
+inlining
 lexer
 literation
+llvm
 lookups
 loopcond
 mandel
@@ -54,6 +59,7 @@ printdensity
 printstar
 putchard
 readonly
+repl
 ret
 serializer
 structs
@@ -61,5 +67,6 @@ subtmp
 uid
 unaryop
 uniqued
+unoptimized
 userdefinedop
 xref
