@@ -16,6 +16,4 @@ PreReleaseFix
     BuildMajor = "20"
     BuildMinor = "1"
     BuildPatch = "8"
-    PreReleaseName = "rc"
-    PreReleaseNumber ="1"
 />
