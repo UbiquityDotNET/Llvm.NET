@@ -13,7 +13,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <remarks>
         /// For this class, this is an idempotent method. This allows MOVE semantics for native
         /// code to function and callers remain oblivious. Callers should always call this for
-        /// correctness if it was succesfully moved to native code then such a call is a NOP.
+        /// correctness if it was successfully moved to native code then such a call is a NOP.
         /// </remarks>
         /// <inheritdoc/>
         protected override void Dispose( bool disposing )
@@ -27,7 +27,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             base.Dispose( disposing );
         }
 
-        /// <summary>This will set the internal handle to a default state; makeing <see cref="Dispose"/> a NOP</summary>
+        /// <summary>This will set the internal handle to a default state; making <see cref="Dispose"/> a NOP</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void InvalidateAfterMove( )
         {

@@ -10,7 +10,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         /// <param name="r"><see cref="MaterializationResponsibility"/> that serves as the context for this materialization</param>
         void Materialize( MaterializationResponsibility r );
 
-        /// <summary>Discards a symbol overwridden by the JIT (Before materialization)</summary>
+        /// <summary>Discards a symbol overridden by the JIT (Before materialization)</summary>
         /// <param name="jitLib">Library the symbols is discarded from</param>
         /// <param name="symbol">Symbol being discarded</param>
         void Discard( ref readonly JITDyLib jitLib, SymbolStringPoolEntry symbol );

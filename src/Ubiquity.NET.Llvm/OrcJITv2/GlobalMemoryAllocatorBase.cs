@@ -10,9 +10,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     /// While this type implements <see cref="IDisposable"/> via <see cref="ObjectLayer"/> it is ONLY intended for
     /// clean up on exceptions. A factory returns the instances to the native JIT, which takes over ownership.</para>
     /// <para>
-    /// Derived types need not be concrend with any of the low level native interop. Instead
+    /// Derived types need not be concerned with any of the low level native interop. Instead
     /// they simply implement the abstract methods to perform the required allocations. This
-    /// base type handles all of the interop, including the reverse P/Invoke marhsalling for
+    /// base type handles all of the interop, including the reverse P/Invoke marshaling for
     /// callbacks.
     /// </para>
     /// </remarks>

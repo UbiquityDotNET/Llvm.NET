@@ -49,7 +49,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial nuint LibLLVMGetNumKnownAttribs( );
 
-        // Fills in an array of const string pointers. No deallocation is needed for each as
+        // Fills in an array of const string pointers. No de-allocation is needed for each as
         // they are global static constants.
 
         [LibraryImport( LibraryName )]

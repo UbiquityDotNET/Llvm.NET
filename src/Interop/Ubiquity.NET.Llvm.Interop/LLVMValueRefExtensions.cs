@@ -5,7 +5,7 @@ namespace Ubiquity.NET.Llvm.Interop
 {
     // This does NOT use the new C# 14 extension syntax due to several reasons
     // 1) Code lens does not work https://github.com/dotnet/roslyn/issues/79006 [Sadly, marked as "not planned" - e.g., dead-end]
-    // 2) MANY analyzers get things wrong and need to be supressed (CA1000, CA1034, and many others [SAxxxx])
+    // 2) MANY analyzers get things wrong and need to be suppressed (CA1000, CA1034, and many others [SAxxxx])
     // 3) Many tools (like docfx) don't support the new syntax yet and it isn't clear if they will in the future.
     // 4) No clear support for Caller* attributes ([CallerArgumentExpression(...)]).
     //

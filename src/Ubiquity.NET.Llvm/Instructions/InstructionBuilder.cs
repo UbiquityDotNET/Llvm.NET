@@ -598,7 +598,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 
         /// <summary>Creates an atomic Compare exchange instruction</summary>
         /// <param name="ptr">Pointer to the value to update (e.g. destination and the left hand operand)</param>
-        /// <param name="cmp">Comparand for the operation</param>
+        /// <param name="cmp">Compare value for the operation</param>
         /// <param name="value">Right hand side operand</param>
         /// <returns><see cref="AtomicRMW"/></returns>
         public AtomicCmpXchg AtomicCmpXchg( Value ptr, Value cmp, Value value )

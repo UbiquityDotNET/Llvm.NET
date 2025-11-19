@@ -28,7 +28,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         internal static unsafe byte* AllocateCodeSection(void* ctx, nuint size, UInt32 alignment, UInt32 sectionId, byte* sectionName)
         {
 #pragma warning disable CA2000 // Dispose objects before losing scope
-            // NOT dispsable, just "borrowed" via ctx
+            // NOT disposable, just "borrowed" via ctx
             return NativeContext.TryFrom<IJitMemoryAllocator>( ctx, out var self )
                 ? (byte*)self!.AllocateCodeSection(size, alignment, sectionId, LazyEncodedString.FromUnmanaged(sectionName))
                 : (byte*)null;
@@ -46,7 +46,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
             )
         {
 #pragma warning disable CA2000 // Dispose objects before losing scope
-            // NOT dispsable, just "borrowed" via ctx
+            // NOT disposable, just "borrowed" via ctx
             return NativeContext.TryFrom<IJitMemoryAllocator>( ctx, out var self )
                 ? (byte*)self!.AllocateDataSection(size, alignment, sectionId, LazyEncodedString.FromUnmanaged(sectionName), isReadOnly != 0)
                 : (byte*)null;
@@ -59,7 +59,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         {
             *errMsg = null;
 #pragma warning disable CA2000 // Dispose objects before losing scope
-            // NOT dispsable, just "borrowed" via ctx
+            // NOT disposable, just "borrowed" via ctx
             if(NativeContext.TryFrom<IJitMemoryAllocator>( ctx, out var self ))
             {
                 if(!self!.FinalizeMemory(out LazyEncodedString? managedErrMsg))
@@ -77,7 +77,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         internal static unsafe void NotifyTerminating(void* ctx)
         {
 #pragma warning disable CA2000 // Dispose objects before losing scope
-            // NOT dispsable, just "borrowed" via ctx
+            // NOT disposable, just "borrowed" via ctx
             if(NativeContext.TryFrom<IJitMemoryAllocator>( ctx, out var self ))
             {
                 // Don't dispose it here; But do release the context

@@ -3,6 +3,7 @@ afterloop
 alloca
 allocas
 alltmp
+alwaysinline
 antlr
 arity
 ascii

@@ -402,7 +402,7 @@ namespace Ubiquity.NET.Llvm
     /// <summary>Utility class to provide extensions to <see cref="IModule"/></summary>
     /// <remarks>
     /// This is used mostly to provide support for legacy runtimes that don't have the `params IEnumerable` language feature.
-    /// In such a case, this provides extensions that allow use of a parmas array and then re-directs to the enumerable
+    /// In such a case, this provides extensions that allow use of a params array and then re-directs to the enumerable
     /// form of the function. This allows source compat of consumers while not trying to leverage support beyond what
     /// is supported by the runtime.
     /// </remarks>
