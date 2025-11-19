@@ -69,7 +69,7 @@ namespace LlvmBindingsGenerator
             = new Option<DirectoryInfo>("-l")
             {
                 Required = true,
-                Description = "Root of source with the LLVM headers to parse (Assumes and validates a subfolder 'include')",
+                Description = "Root of source with the LLVM headers to parse (Assumes and validates a sub-folder 'include')",
             }.AcceptExistingFolderOnly()
              .AddValidator(CmdLineArgs.ValidateIncludeFolder);
 
@@ -77,7 +77,7 @@ namespace LlvmBindingsGenerator
             = new Option<DirectoryInfo>("-e")
             {
                 Required = true,
-                Description = "Root of source with the LibLLVM extension headers to parse (Assumes and validates a subfolder 'include')",
+                Description = "Root of source with the LibLLVM extension headers to parse (Assumes and validates a sub-folder 'include')",
             }.AcceptExistingFolderOnly()
              .AddValidator(CmdLineArgs.ValidateIncludeFolder);
 

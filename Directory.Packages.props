@@ -23,22 +23,26 @@
     <!-- Roslyn Analyzers ***MUST*** target older framework -->
     <PackageVersion Include="AnsiCodes" Version="0.2.1" />
     <PackageVersion Include="Microsoft.Bcl.HashCode" Version="6.0.0" />
+
+    <!--
+    NOTE: These CA packages are NOT updated to 5.0, which IDE NuGet management suggests is compatible but is NOT.
+          Upgrading to 5.0.0 or later REQUIRES .NET10 SDK which is not yet tested.
+    -->
     <PackageVersion Include="Microsoft.CodeAnalysis" Version="4.14.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="4.14.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="4.14.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.14.0" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing" Version="1.1.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.14.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="4.14.0" />
+
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing" Version="1.1.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.VisualBasic.SourceGenerators.Testing" Version="1.1.2" />
     <PackageVersion Include="Basic.Reference.Assemblies.Net80" Version="1.8.3" />
     <PackageVersion Include="PolySharp" Version="1.15.0" />
     <PackageVersion Include="System.Buffers" Version="4.6.1" />
     <PackageVersion Include="System.Collections.Immutable" Version="9.0.10" />
     <PackageVersion Include="System.Memory" Version="4.5.5" />
-
-    <!-- Currently, only in preview -->
     <PackageVersion Include="System.CommandLine" Version="2.0.0" />
 
     <!--
@@ -67,8 +71,13 @@
     <PackageVersion Include="Antlr4BuildTasks" Version="12.11.0" />
     <PackageVersion Include="Antlr4.Runtime.Standard" Version="4.13.1" />
     <PackageVersion Include="OpenSoftware.DgmlBuilder" Version="2.1.0" />
+    <PackageVersion Include="System.CodeDom" Version="10.0.0" />
+
+    <!--
+    NOTE: A newer version of this exists but it requires targeting .NET 9 that's a breaking change
+          and not properly reported via NuGet dependencies.
+    -->
     <PackageVersion Include="CppSharp" Version="1.1.5.3168" />
-    <PackageVersion Include="System.CodeDom" Version="9.0.7" />
 
     <!-- Tests all use the same framework versions -->
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />

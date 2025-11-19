@@ -30,9 +30,9 @@ forms:
 >[!NOTE]
 > The generated sources are not useful outside of the `Ubiquity.NET.Llvm.Interop` as they
 > use classes within that as a base class. These are generated manually via the
-> `Generate-HandleWrappers.ps1` script. With the sources checked in to the repository. This
-> is done once for any updates to the LibLLVM package to ensure the handles are kept up to
-> date with the underlying native library.
+> `Generate-HandleWrappers.ps1` script with the sources checked in to the repository. This
+> is done once for any updates to the `Ubiquity.NET.LibLLVM` package to ensure the handles
+> are kept up to date with the underlying native library.
 
 ### Contextual handles and Aliases
 These handles are never manually released or disposed, though releasing their containers

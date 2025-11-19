@@ -23,7 +23,7 @@
         NOTE: This isn't directly used by this project. However, it allows for scripts to restore this project, which
         guarantees the package is available, so that running it can use the contained headers as input.
         -->
-        <PackageReference Include="Ubiquity.NET.LibLLVM" VersionOverride="20.1.*-*" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Ubiquity.NET.LibLLVM" GeneratePathProperty="true" PrivateAssets="all" />
     </ItemGroup>
 
     <!-- Runtime T4 templates need to specify the single file generator for the code behind -->

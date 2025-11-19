@@ -34,6 +34,7 @@ buildtransitive
 builtinop
 byref
 byval
+cacheable
 callee
 canonicalization
 castable
@@ -66,6 +67,7 @@ enum
 Enums
 env
 exe
+façade
 facepalm
 fallback
 finalizer
@@ -79,17 +81,19 @@ gh
 github
 gitignore
 Globalization
+Globals
 Hashtable
 Identifier
 ifunc
 Impl
 initializer
+initializers
 inline
 inlined
 inlining
 Interop
 ints
-Invokable
+invocable
 jit
 len
 Lexer
@@ -102,6 +106,7 @@ llvmversion
 lookups
 LValue
 malloc
+marshalers
 marshallers
 marshalling
 materializer
@@ -119,10 +124,12 @@ namespaces
 nav
 nint
 noinline
+noogies
 nounwind
 nuint
 nullability
 Nullable
+nullptr
 numerics
 Nvidia
 online
@@ -184,6 +191,8 @@ unmarshal
 unoptimized
 unreferenced
 Unshipped
+untrusted
+untyped
 userdefinedop
 Users
 usings

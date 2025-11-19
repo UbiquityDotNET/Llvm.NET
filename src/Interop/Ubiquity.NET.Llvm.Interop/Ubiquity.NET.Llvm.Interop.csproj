@@ -77,8 +77,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <!-- Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here-->
-        <PackageReference Include="Ubiquity.NET.LibLLVM" VersionOverride="20.1.*-*" GeneratePathProperty="true" />
+        <!--
+        Sadly, the version range syntax doesn't work for Directory.Package.props so it must be provided here
+        when using CI builds.
+        -->
+        <PackageReference Include="Ubiquity.NET.LibLLVM" GeneratePathProperty="true" />
         <PackageReference Include="Ubiquity.NET.InteropHelpers" />
         <PackageReference Include="Ubiquity.NET.Extensions" />
         <PackageReference Include="Ubiquity.NET.Versioning" />

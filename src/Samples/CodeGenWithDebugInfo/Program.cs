@@ -340,7 +340,7 @@ namespace CodeGenWithDebugInfo
             if(!hasParam0ByVal)
             {
                 // since the function's LLVM signature uses a pointer, which is copied locally
-                // inform the debugger to treat it as the value by dereferencing the pointer
+                // inform the debugger to treat it as the value by de-referencing the pointer
                 diBuilder.InsertDeclare( copyFunc.Parameters[ 0 ]
                                        , paramSrc
                                        , diBuilder.CreateExpression( ExpressionOp.Deref )

@@ -11,9 +11,9 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 {
     /// <summary>Base class for a simple MCJIT style memory allocator</summary>
     /// <remarks>
-    /// Derived types need not be concrend with any of the low level native interop. Instead
+    /// Derived types need not be concerned with any of the low level native interop. Instead
     /// they simply implement the abstract methods to perform the required allocations. This
-    /// base type handles all of the interop, including the reverse P/Invoke marhsalling for
+    /// base type handles all of the interop, including the reverse P/Invoke marshaling for
     /// callbacks.
     /// </remarks>
     [Experimental("LLVMEXP005")]

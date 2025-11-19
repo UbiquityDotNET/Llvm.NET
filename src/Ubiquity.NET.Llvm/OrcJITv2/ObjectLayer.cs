@@ -9,7 +9,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
     /// <remarks>
     /// Since instances of an Object Linking layer are ONLY ever created by <see cref="ObjectLayerFactory"/> and
     /// returned directly to the native code as the raw handle, they are not generally disposable. They do
-    /// implement IDisposable as a means to enusre proper release in the face of an exception in an implementation
+    /// implement IDisposable as a means to ensure proper release in the face of an exception in an implementation
     /// of <see cref="ObjectLayerFactory"/> but are not something that generally needs disposal at a managed level.
     /// </remarks>
     public class ObjectLayer

@@ -64,7 +64,7 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
         internal LLVMOrcIRTransformLayerRef Handle { get; }
 
         // internal keep alive holder for a native call back as a delegate
-        private sealed class TransformCallback
+        private static class TransformCallback
         {
             [UnmanagedCallersOnly( CallConvs = [ typeof( CallConvCdecl ) ] )]
             [SuppressMessage( "Design", "CA1031:Do not catch general exception types", Justification = "REQUIRED for unmanaged callback - Managed exceptions must never cross the boundary to native code" )]

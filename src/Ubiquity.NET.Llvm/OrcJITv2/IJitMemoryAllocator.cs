@@ -46,17 +46,17 @@ namespace Ubiquity.NET.Llvm.OrcJITv2
 
         /// <summary>Finalizes a previous allocation by applying page settings for the allocation</summary>
         /// <param name="errMsg">Error message in the event of a failure</param>
-        /// <returns><see langword="true"/> if successfull (<paramref name="errMsg"/> is <see langword="null"/>); <see langword="false"/> if not (<paramref name="errMsg"/> has the reason)</returns>
+        /// <returns><see langword="true"/> if successful (<paramref name="errMsg"/> is <see langword="null"/>); <see langword="false"/> if not (<paramref name="errMsg"/> has the reason)</returns>
         bool FinalizeMemory([NotNullWhen(false)] out LazyEncodedString? errMsg);
 
         /// <summary>Release the context for the memory. No further callbacks will occur for this allocator</summary>
         /// <remarks>
         /// This is similar to a call to <see cref="IDisposable.Dispose"/> except that it releases only the native context
-        /// in respnse to a callback, not the handle for allocator itself. That MUST live longer than the JIT as any memory
+        /// in response to a callback, not the handle for allocator itself. That MUST live longer than the JIT as any memory
         /// it allocated MAY still be in use as code or data in the JIT. (This interface only deals with WHOLE JIT memory
         /// allocation. It is at least plausible to have an allocator per JitDyLib but that would end up needing to leverage
-        /// a global one to ensure that secion ordering and size limits of the underlying OS are met. If such a things is
-        /// ever implented, it would use a different interface for clarity.)
+        /// a global one to ensure that section ordering and size limits of the underlying OS are met. If such a things is
+        /// ever implemented, it would use a different interface for clarity.)
         /// </remarks>
         void ReleaseContext();
     }

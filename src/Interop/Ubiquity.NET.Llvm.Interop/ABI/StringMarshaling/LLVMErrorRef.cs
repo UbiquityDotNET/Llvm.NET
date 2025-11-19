@@ -151,7 +151,7 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.StringMarshaling
         }
 
         /// <summary>Create a new <see cref="LLVMErrorRef"/> as <see cref="nint"/> from <see cref="Exception.Message"/></summary>
-        /// <param name="ex">Exceotion to get the error message from</param>
+        /// <param name="ex">Exception to get the error message from</param>
         /// <inheritdoc cref="CreateForNativeOut(LazyEncodedString)"/>
         public static nint CreateForNativeOut( Exception ex)
         {
