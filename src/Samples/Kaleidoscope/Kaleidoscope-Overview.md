@@ -2,7 +2,6 @@
 uid: Kaleidoscope-ch1
 ---
 
-
 # 1. Kaleidoscope: Language Introduction
 The general flow of this tutorial follows that of the official
 [LLVM tutorial](xref:llvm_kaleidoscope_tutorial)
@@ -27,7 +26,7 @@ use cases for Ubiquity.NET.Llvm for code generation and JIT execution.
 It is worth pointing out that this example is not intended as a treatise on compiler design
 nor on language parsing. While it contains many aspects of those topics the tutorial is,
 mostly, focused on the use of Ubiquity.NET.Llvm for code generation. Furthermore it isn't
-a trans-literation of the LLVM C++ sample as that would defeat one of the major points of
+a trans-literation of the LLVM `C++` sample as that would defeat one of the major points of
 `Ubiquity.NET.Llvm` - to provide a familiar API and use patterns familiar to C# developers.
 
 ## General layout
@@ -45,6 +44,8 @@ language features in a single assembly. Ultimately the parsing produces an
 [AST](xref:Kaleidoscope-AST) so that the actual technology used for the parse is hidden as
 an implementation detail. This helps in isolating the parsing from the use of
 `Ubiquity.NET.Llvm` for code generation and JIT compilation for interactive languages.
+Additionally, a number of [utilities](https://github.com/UbiquityDotNET/Ubiquity.NET.Utils)
+are used to further enable use by additional DSL implementations or any other use.
 
 ## The Kaleidoscope Language
 ### General Concepts

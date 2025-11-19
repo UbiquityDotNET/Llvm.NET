@@ -52,6 +52,7 @@ function Initialize-CommonBuildEnvironment
         [string]$repoRoot,
         [switch]$FullInit
     )
+
     try
     {
         # Script code should ALWAYS use the global CurrentBuildKind
@@ -101,9 +102,12 @@ function Initialize-CommonBuildEnvironment
             # "profile" and the actual command is exposed.
             if($null -eq (Find-OnPath vswhere))
             {
-                # NOTE: automated builds in Github do NOT include WinGet (for reasons unknown)
+                # NOTE: automated builds in Github do NOT include winget (for reasons unknown)
                 # However, they do contain VSWHERE so should not hit this.
                 winget install Microsoft.VisualStudio.Locator | Out-Null
+
+                # location is fixed and the same no matter what version!
+                $env:PATH +=';%ProgramFiles(x86)%\Microsoft Visual Studio\Installer'
             }
 
             $vsShellModulePath = vswhere -latest -find **\Microsoft.VisualStudio.DevShell.dll

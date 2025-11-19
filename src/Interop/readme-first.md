@@ -17,15 +17,15 @@ following scenarios:
             - They are still immutable types and the use of IDisposable is simply to unify
               the disposal and leverage built-in patterns for ownership. Since these are
               immutable types the `Dispose()` is NOT idempotent.
-            - This is normally not an issue as this is NOT inteded for exposire to end users.
-              It is expected that the handles are wrapped in an OO type that can replace the
-              handle held with a default value on Dispose() to allow for an idempotent
-              dispose.
+            - This is normally not an issue as this is NOT intended for exposure to end
+              users. It is expected that the handles are wrapped in an OO type that can
+              replace the handle held with a default value on Dispose() to allow for an
+              idempotent dispose.
                 - Idempotent dispose is useful for APIs that use `move` semantics where the
                   native API takes over ownership, but only on success. Thus, a caller might
                   still own the resource on error/exception. By allowing idempotent `Dispose`
-                  the caller need not care about such subtlties and ALWAYS calls `Dispose`
-                  which is normally a NOP, but if an error occured actually releases the
+                  the caller need not care about such subtleties and ALWAYS calls `Dispose`
+                  which is normally a NOP, but if an error occurred actually releases the
                   resource.
 
 ## Roslyn Source Generators - 'There be dragons there!'
@@ -90,7 +90,7 @@ correct code.
    of needing a source generator.
     1) This can work, however it means a great deal of tedious attribution that the
        compilation should do for us.
-        1) Elimination of tedious typing and repetive code is WHY templates/generics exist.
+        1) Elimination of tedious typing and repetitive code is WHY templates/generics exist.
 
 ### The final choice
 Keep using `LlvmBindingsGenerator` as a generator for the handle types. This used to work,
@@ -167,7 +167,4 @@ as it may not exist in the future
 :warning: You have been warned! :warning:
 
 ^2^ Currently ONLY win-x64 is supported but the foundational work is present to allow
-building for other platorms.
-
-
-
+building for other platforms.

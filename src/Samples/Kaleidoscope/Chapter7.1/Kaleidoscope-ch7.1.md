@@ -3,14 +3,13 @@ uid: Kaleidoscope-ch7.1
 ---
 
 >[!WARNING]
-> There is a fatal flaw in the current design of this support for an interactive runtime
+> There is an issue in the current design of this support for an interactive runtime
 > like Kaleidoscope thus far. It does NOT allow for re-defining a function. Once it is
 > defined, you cannot define it again or an exception or application crash will occur.
 > This is handled in Kaleidoscope by setting an option in the `DynamicRuntimeState` to
 > indicate that redefinition is not supported. This is then processed in the AST conversion
 > to produce an error node. This reports the redefinition as an error in the input rather
-> then an exception at runtime. Hopefully a future variant of this sample will address
-> tracking and removing that. See [Special notes for interactive run-times](#special-notes-for-interactive-run-times)
+> then an exception at runtime. See [Special notes for interactive run-times](#special-notes-for-interactive-run-times)
 > for more details.
 
 # 7. Kaleidoscope: Extreme Lazy JIT
@@ -153,23 +152,24 @@ outside of the driving application code control so it can't specify a resource t
 Additionally, there is no resource tracker for a materialization unit that can remove the
 unit BEFORE it is run.
 
-There are at least three states of a function definition to deal with:
+To help clarify the problem there are at least three states of a function definition to deal
+with:
 1) Not defined anywhere yet (First occurrence)
 2) Materializer Created, but not yet materialized
 3) Already materialized.
 
-Tracking of each is different and thus handling removal will require different
+Tracking of each is different and thus handling removal for each would require different
 implementations. All of which requires thread synchronization as the JIT could materialize
-the function at ANY point along the way! So it is possible that while trying to remove a
+the function at ANY point along the way! So it is possible that while trying to replace a
 definition it transitions from #2 to #3. Even if code for removal looked at the state first
 it's a classic [TOCTOU](https://en.wikipedia.org/wiki/Time-of-check_to_time-of-use) problem.
 There is no mechanism in the standard OrcJIT v2 for this scenario. It is arguable what the
-validity of such a thing is for an interactive language/runtime. For any sufficiently
-complex thing there's at least two high level default questions to ask:
+validity of such a thing is for a non-interactive language/runtime.
 
+For any sufficiently complex thing there's at least two high level default questions to ask:
 1) Do we even know HOW to do it yet?
 2) Is it worth the cost of implementation?
 
 For an interactive language/runtime like Kaleidoscope, the answer to both thus far is a
 hard 'NO'. This sort of support is best for non-interactive run-times like .NET or Java
-where redefinition isn't legal syntax and caught in the parser/AST transforms.
+where redefinition isn't legal syntax and caught before even generating the IR.

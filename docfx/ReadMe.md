@@ -18,7 +18,7 @@ constructed a complete custom template to deal with it... Sigh, what a waste of 
 ## Changes Over Time
 DocFX has obsoleted the `docfxconsole` NuGet package that was used to run docfx for a
 project via MSBUILD. Instead it focused on a .NET tool to do it all via the command line.
-Ultimately the docfx.json serves as the corellary to a "project" file for the different site
+Ultimately the docfx.json serves as the corollary to a "project" file for the different site
 builds. The PowerShell script `Build-Docs.ps1` was updated to use the new tool directly.
 Using that script should have little or no impact on the overall flow. There is a
 "no-targets" project in the solution to enable easier access to the input files but does not
@@ -78,9 +78,9 @@ Since this is generated it is listed in the [.gitignore](#gitignore) file.
 These folders (named after the `*` portion of the [api-*](#api-*) folder names contains
 manually written additional files, articles, samples etc... related to a given library.
 
-## Guide to wrting XML DOC comments
+## Guide to writing XML DOC comments
 When dealing with doc comments the XML can sometimes get in the way of general readability
-of the source code. There is an inherent tension beween how a particular editor renders the
+of the source code. There is an inherent tension between how a particular editor renders the
 docs for a symbol/method (VS calls this "Quick Info") and how it is rendered in the final
 documentation by a tool like docfx. This guides general use to simplify things as much as
 possible.
@@ -144,7 +144,7 @@ render properly in final docs.
        everything is trimmed it is at least a distinct pattern that is readable.
 5) ***DO NOT*** put lists in any place other than inside a `remarks` region
     a) Usually, the remarks comments are not even rendered as the most useful part is the
-        API signaure and parameter info. Different editors may allow control of that.
+        API signature and parameter info. Different editors may allow control of that.
         i) In VS [2019|2022] for C# it is controlled by
             `Text Editor > C# > Advanced > Editor Help: "Show remarks in Quick Info."`
             1) Turning this off can greatly reduce the noise AND reduce the problems of

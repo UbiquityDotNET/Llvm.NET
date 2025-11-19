@@ -11,3 +11,10 @@ To resolve these issues and make the requirements explicitly clear and consisten
 directly on the P/Invoke signature so it is both clear and easy to use for the upper layers
 (In most cases this is a `LazyEncodedString` but for a few it's just a `System.String`)
 
+## LazyEncodedString
+The `Ubiquity.NET.Llvm.Interop` library makes extensive user if the
+[LazyEncodedString](https://ubiquitydotnet.github.io/Ubiquity.NET.Utils/interop-helpers/api/Ubiquity.NET.InteropHelpers.LazyEncodedString.html)
+type. This allows for minimal overhead marshaling of strings to and from native code. In,
+particular it lazily encodes into either form depending on what it started with. It does
+this exactly once. So that the overhead of encode/decode is realized only the first time it
+is needed.

@@ -86,10 +86,10 @@ is required.
 > another thread's context. This is a fundamental design of LLVM and reduces the complexity
 > of attempting to manage collections of objects and interning them in a thread safe manner.
 > Applications instead just create a context per thread if needed. This constraint does not
-> prevent use with asyncornous operations as long as such operations NEVER touch the context
-> from multiple threads. That is, each leg of an asynchonous operation may use the same
-> `Context` but no other threads or operations may use the same one. This ensoures that the
-> `Context` is only used by one thread at a time even if it is passed arround between
+> prevent use with asynchronous operations as long as such operations NEVER touch the context
+> from multiple threads. That is, each leg of an asynchronous operation may use the same
+> `Context` but no other threads or operations may use the same one. This ensures that the
+> `Context` is only used by one thread at a time even if it is passed around between
 > threads.
 
 To generate code for a particular target the application initializes the module to include
@@ -111,9 +111,8 @@ so it creates a [DIFile](xref:Ubiquity.NET.Llvm.DebugInfo.DIFile) for the source
 time.
 
 The sample code creates the `DICompileUnit` when creating the bit code module. This is the
-normal pattern for creating the compile unit when generating debugging information. Though
-it is possible to create it independently but there usually isn't any real benefit to doing
-so.
+normal pattern for creating the compile unit when generating debugging information. While
+it is possible to create it independently there usually isn't any real benefit to doing so.
 
 ## Creating basic types with debug information
 In LLVM types are fairly minimalistic and only contain the basic structural information for
@@ -121,7 +120,7 @@ generating the final machine code. Debug information, as metadata in LLVM, provi
 source level debugging information. In LLVM this requires creating and tracking both the
 native type and the Debug information metadata as independent object instances. In
 `Ubiquity.NET.Llvm` this is handled by a unified debug and type information system. That is,
-in Ubiquity.NET.Llvm a single class is used to represent types and it acts as a binder
+in `Ubiquity.NET.Llvm`, a single class is used to represent types and it acts as a binder
 between the full debugging description of the type and the native LLVM minimal description.
 These types all implement a common interface [ITypeRef](xref:Ubiquity.NET.Llvm.Types.ITypeRef).
 This interface is used throughout Ubiquity.NET.Llvm to expose types in a consistent fashion.
@@ -214,8 +213,8 @@ is visible only locally. This is indicated by the
 [Linkage.Internal](xref:Ubiquity.NET.Llvm.Values.Linkage.Internal) linkage value.
 
 >[!NOTE]
-> The use of fluent style extension methods in the Ubiquity.NET.Llvm API helps make it easy
-> to add to or modify the attributes and linkage etc...
+> The use of fluent style extension methods in the `Ubiquity.NET.Llvm` API helps make it
+> easy to add to or modify the attributes and linkage etc...
 
 `DeclareCopyFunc()` is a bit special in that it handles some target specific support in a 
 generalized way. In particular the calling convention for the struct to use the `byval` form
@@ -254,13 +253,14 @@ intrinsic function that is used to declare the debug information for a variable.
 method.
 
 ### Calling LLVM Intrinsics
-The generated code needs to copy some data, rather than directly doing a copy in a loop, the
-code uses the LLVM intrinsic memcopy function. This function is lowered to an optimized copy
-for the target so that applications need not worry about building optimal versions of IR for
-this common functionality. Furthermore, the LLVM intrinsic supports a variety of signatures
-for various data types all of which are hidden in the `Ubiquity.NET.Llvm` method. Rather
-than require callers to create a declaration of the correct signature the `Ubiquity.NET.Llvm`
-wrapper automatically figures out the correct signature from the parameters provided. 
+The generated code needs to copy some data. Rather than directly doing a copy in a loop, the
+code uses the LLVM intrinsic memcopy function. This function is lowered to an optimized
+variant for the target so that applications need not worry about building optimal versions
+of IR for this common functionality. Furthermore, the LLVM intrinsic supports a variety of
+signatures for various data types all of which are hidden in the `Ubiquity.NET.Llvm` method.
+Rather than require callers to create a declaration of the correct signature the
+`Ubiquity.NET.Llvm` wrapper automatically figures out the correct signature from the
+parameters provided. 
 
 ## Final LLVM IR
 ```llvm

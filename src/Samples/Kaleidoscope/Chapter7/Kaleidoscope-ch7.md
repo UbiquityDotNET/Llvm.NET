@@ -17,15 +17,15 @@ convert to SSA form directly.
 
 >[!IMPORTANT]
 >***In LLVM There is no need for a language front-end to convert to SSA form directly!***
-> In fact, ***manually*** converting to SSA form is strongly discouraged! LLVM already has
-> very efficient, and more importantly, well tested, support for converting to SSA form
+> In fact, ***manually*** converting to SSA form is ***strongly discouraged!*** LLVM already
+> has very efficient, and more importantly, well tested, support for converting to SSA form
 > (though how that works might be a bit surprising - read on!). The use of this support is
 > the focus of this chapter.
 
 ## Mutable Variables in LLVM
 ### Mutable Variables vs. SSA, What's the big deal?
 Consider the following simple "C" code:
-```C
+``` C
 int G, H;
 
 int test(_Bool Condition)
@@ -43,7 +43,7 @@ The general idea of how to handle this in LLVM SSA form was already covered in [
 Since there are two possible values for X when the function returns, a PHI node is inserted
 to merge the values. The LLVM IR for this would look like this:
 
-```llvm
+``` llvm
 @G = weak global i32 0   ; type of @G is i32*
 @H = weak global i32 0   ; type of @H is i32*
 
@@ -99,7 +99,7 @@ address for that space (e.g. it's a pointer). Stack variables work the same way,
 instead of static allocation via a global declaration they are declared with the
 [LLVM alloca instruction](xref:Ubiquity.NET.Llvm.Instructions.Alloca).
 
-```llvm
+``` llvm
 define i32 @example() {
 entry:
   %X = alloca i32           ; type of %X is i32*.
@@ -115,7 +115,7 @@ memory allocated with alloca is completely generalized. you can pass the address
 slot to a function, store it in a variable, etc... Using alloca, the previous example could
 be re-written using alloca without the PHI node as follows:
 
-```llvm
+``` llvm
 @G = weak global i32 0   ; type of @G is i32*
 @H = weak global i32 0   ; type of @H is i32*
 
@@ -185,7 +185,7 @@ The mem2reg pass is an integral part of the full solution to mutable variables. 
 mem2reg is highly recommended. There are a few conditions for using mem2reg correctly.
 
 1. mem2reg is based on alloca: it looks for and promotes alloca. It does not apply to
-   globals or heap allocations.
+   global variables or heap allocations.
 1. mem2reg only looks for alloca instructions in the **entry block** of the function.
     1. Placing Alloca instructions for all variables, in all scopes, in the entry block
        ensures they are executed only once, which makes the conversion simpler.
@@ -228,7 +228,7 @@ variables. Defining variables is just a generally useful concept that can serve 
 purposes, including self documentation. The following is an example on how these features
 are used:
 
-```Kaleidoscope
+``` Kaleidoscope
 # Define ':' for sequencing: as a low-precedence operator that ignores operands
 # and just returns the RHS.
 def binary : 1 (x y) y;

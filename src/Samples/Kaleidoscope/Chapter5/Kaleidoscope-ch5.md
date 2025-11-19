@@ -16,14 +16,14 @@ understanding the language functionality to implement.
 The ultimate goal of the changes to support code generation for control flow constructs is
 to transform Kaleidoscope code such as:
 
-```Kaleidoscope
+``` Kaleidoscope
 extern foo();
 extern bar();
 def baz(x) if x then foo() else bar();
 ```
 
 and generate LLVM like this (unoptimized):
-```llvm
+``` llvm
 declare double @foo()
 
 declare double @bar()
@@ -115,7 +115,7 @@ concepts to implement the for loop constructs for the language.
 
 The general idea is to transform the loops in Kaleidoscope such as this:
 
-```Kaleidoscope
+``` Kaleidoscope
 extern putchard(char);
 def printstar(n)
   for i = 1, i < n, 1.0 in

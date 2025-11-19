@@ -11,6 +11,8 @@ extensions required generally decreases with each release of LLVM).
 * Just In Time (JIT) compilation support
     - Including fully lazy compilation
 * Generation of detailed debug information
+* Use for AOT code generation from managed code (usually C#)
+   * Including .NET AOT generation of the application itself.
 
 ### Full documentation
 [Full documentation](https://ubiquitydotnet.github.io/Llvm.NET/) is available online.

@@ -26,7 +26,7 @@ distinct scenarios the grammar has different rules. For the interactive scenario
 previously mentioned "repl" rule is used. When parsing a full source file the "fullsrc" rule
 is used as the start.
 
-```antlr
+``` antlr
 // Full source parse accepts a series of definitions or prototypes, all top level expressions
 // are generated into a single function called Main()
 fullsrc
@@ -58,7 +58,7 @@ typed in an interactive console. A trick used in the code generation is to mark 
 anonymous functions as private and always inline so that a simple optimization pass can
 eliminate the anonymous functions after inlining them all into the main() function.
 
-```C#
+``` C#
 // mark anonymous functions as always-inline and private so they can be removed
 if(definition.IsAnonymous)
 {

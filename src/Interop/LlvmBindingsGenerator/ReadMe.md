@@ -18,16 +18,16 @@ repositories:
     1) This version is the one in this repository this document discusses
 
 ### Common implementation 
-While there is a common implementation between the implementations (They started as simply
-the same code and commenting out the functionality not desired) they have and will diverge
-over time. Though, anything in the core parsing of headers and general code generation from
-templates is likely to remain. (It may be viable to support a common library for this
-scenario but this is ONLY necessary when the native side of the interop library changes)
+While there is a common implementation between the two (They started as simply the same code
+and commenting out the functionality not desired) they have and will diverge over time.
+Though, anything in the core parsing of headers and general code generation from templates
+is likely to remain. (It may be viable to support a common library for this scenario but
+this is ONLY necessary when the native side of the interop library changes)
 
 ## Usage
 > [!IMPORTANT]
 > This project has a dependency on the `CppSharp` library which ONLY supports the `X64`
-> architecture but the generated wrappers are NOT dependent on a particular architecture.
+> architecture but the generated wrappers are NOT dependent on any particular architecture.
 > This limits the environments that can be used to generate the sources. To simplify that,
 > the generated sources are placed into source control but generated off-line by a
 > developer. A developer machine doing this ***MUST*** be X64 or this tool can't run. This
@@ -42,12 +42,12 @@ scenario but this is ONLY necessary when the native side of the interop library 
 | HandleOutputPath   | [Optional] Path to the root folder where the handle files are generated |
 | Diagnostics        | Diagnostics output level for the app |
 
-This tool is generally only required once per Major LLVM release. (Though a Minor release
-that adds new APIs would also warrant a new run) However, to ensure the code generation tool
-itself isn't altered with a breaking change, the PowerShell script takes care of running the
-generator to update the Generated code base on each run, even if nothing changes in the end.
-This is run on every automated build before building the res of the project so that
-the generator is tested on every full automated build. 
+This tool is generally only required once per Major `Ubiquity.NET.LibLLVM` release. (Though
+a Minor release that adds new APIs would also warrant a new run) However, to ensure the code
+generation tool itself isn't altered with a breaking change, the PowerShell script takes
+care of running the generator to update the Generated code base on each run, even if nothing
+changes in the end. This is run on every automated build before building the rest of the
+project so that the generator is tested on every full automated build. 
 
 ### Generated code
 This library will generate the handle file directly. Therefore ROSLYN source generators are
@@ -71,7 +71,7 @@ for this particular code base.
       of problems for the binary runtime dependencies of source generators, which don't flow
       with them as project references...
 
-Specifically, in this code, the built-in generator that otherwise knows noting about the
+Specifically, in this code, the built-in generator that otherwise knows nothing about the
 handle generation, needs to see and use the **OUTPUT** of the handle source generation.
 (It's not just a run ordering problem as ALL generators see the same input text!)  
 [See: [Discussion on ordering and what a generator "sees"](https://github.com/dotnet/roslyn/discussions/57912#discussioncomment-1682779)
@@ -83,10 +83,10 @@ code used, Specifically, it must have access to the `NativeMarshalling` attribut
 the handle types. Otherwise, it doesn't know how to marshal the type and bails out. It is
 possible to "overcome" this with an explicit `MarshalUsingAttribute` on every parameter or
 return type but that's tedious. Tedious, typing is what source generators and templates are
-supposed to remove. Thus, this library will host the source generator (like a unit test
-would) and generates the handle sources **BEFORE** they are compiled in the project. Thus,
-the generated source files will contain the marshaling attributes so that the interop source
-generator knows how to generate the correct code.
+supposed to remove. Thus, this library is used to generate the handle sources **BEFORE**
+they are compiled in the project. Thus, the generated source files will contain the
+marshaling attributes so that the interop source generator knows how to generate the correct
+code.
 
 >To be crystal clear - The problem is **NOT** one of generator run ordering, but on the
 > ***dependency of outputs***. By design, Roslyn source generators can only see the original
@@ -102,7 +102,7 @@ generator knows how to generate the correct code.
 #### Alternate solutions considered and rejected
 1) Running the source generator directly in the project
     1) This is where the problem on non-deterministic ordering and visibility of the
-       generated code was discovered. Obviously (now anyway!) this won't work.
+       generated code was discovered. Obviously, (now anyway!) this won't work.
 2) Use a source generator in a separate assembly
     1) This solves the generator output dependency problem but introduces a new problem of
        how the build infrastructure for these types manage NuGet versions.
@@ -114,7 +114,7 @@ generator knows how to generate the correct code.
        the custom generator runs before the built-in one.
     2) However, this runs afoul of the binary dependency problem... Not 100% insurmountable
        but the number of caveats on the Roslyn Source Generator side of things grows to a
-       significant factor.
+       significant factor when an existing working solution already exists.
 
 #### The final choice
 Keep using this app as a generator for the handle types. This used to work, and still does.
@@ -125,12 +125,11 @@ this sort of one off specialized code generation.
 
 Solving the problem of expressing P/Invokes is simply to just manage that directly. It
 seemed like a good idea to automate the tedium of generating those. Sadly, there are so many
-subtleties of "special cases" that involve reading the docs (or source code) before you can
-correctly implement it. In the end, there's no value in expressing all that subtlety in
-anything other than C#.
+subtleties of "special cases" that involve reading the docs (or, often, source code) before
+you can correctly implement it. In the end, there's no value in expressing all that subtlety
+in anything other than the implementation language (C#).
 
 This also keeps the door open to use the native AST from within the source generator or an
 analyzer to perform additional checks and ensure the hand written code matches the actual
 native code... (Though this would involve more direct use of the Roslyn parser/analyzer and
 may be best to generate an input to a proper analyzer)
-

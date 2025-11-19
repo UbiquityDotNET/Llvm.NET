@@ -16,10 +16,10 @@ run-times. This uses an asynchronous pattern and allows cancellation via a stand
 cancellation token. This supports a clean shutdown via a CTRl-C handler etc...
 
 ## Kaleidoscope JIT engine
-The JIT engine used for Kaleidoscope is based on the Ubiquity.NET.Llvm OrcJIT v2, which,
-unsurprisingly, uses the LLVM OrcJit functionality to provide On Request Compilation (ORC).
-For most of the chapters, the JIT uses a moderately lazy compilation technique where the
-source language is parsed, converted to LLVM IR and submitted to the JIT engine. The JIT
+The JIT engine used for Kaleidoscope is based on the `Ubiquity.NET.Llvm` OrcJIT v2, which,
+unsurprisingly, uses the LLVM OrcJit v2 functionality to provide On Request Compilation
+(ORC). For most of the chapters, the JIT uses a moderately lazy compilation technique where
+the source language is parsed, converted to LLVM IR and submitted to the JIT engine. The JIT
 engine does not immediately generate native code from the module, however. Instead it stores
 the module, and whenever compiled code calls to a symbol exported by the IR module, it will
 then generate the native code for the function "on the fly". This has the advantage of not
@@ -30,8 +30,9 @@ execute.
 ### Really lazy compilation
 While the basic lazy compilation of IR to native code has performance benefits over a pure
 interpreter, it still has the potential for wasted overhead converting the parsed language
-to LLVM IR. Fortunately, the LLVM and Ubiquity.NET.Llvm.OrcJitv2 supports truly lazy
+to LLVM IR. Fortunately, the LLVM and `Ubiquity.NET.Llvm.OrcJitv2` supports truly lazy
 compilation. This is done by asking the JIT to create a stub for a named symbol and then,
 whenever code calls that symbol the stub calls back to the JIT which then calls back the
 application to 'materialize' the IR, add the module to the JIT and trigger compilation to
-native. Thus, achieving true Just-In-Time compilation.
+native. hat is, the code generation stores the AST for a function and only converts it to
+IR, and then native code when needed. Thus, achieving true Just-In-Time compilation.

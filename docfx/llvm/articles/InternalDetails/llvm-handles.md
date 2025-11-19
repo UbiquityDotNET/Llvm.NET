@@ -15,20 +15,24 @@ title: LLVM-C Handle Wrappers
      This occurs when a child of a resource contains a reference to the parent. In
      such a case the handle should be considered like an alias and not disposed.
 
-The Handle implementations in Ubiquity.NET.Llvm follow consistent patterns for implementing
-each form of handle. All handle types are generated from the native C++ headers contained in
-the `Ubiquity.NET.LibLLVM` package. Ultimately, the handles are reduced to two forms:
+The Handle implementations in `Ubiquity.NET.Llvm` follow consistent patterns for
+implementing each form of handle. All handle types are generated from the native C++ headers
+contained in the `Ubiquity.NET.LibLLVM` package. Ultimately, the handles are reduced to two
+forms:
 1) Requires caller to release them
+    - Case 1 & 2 [previously discussed](#llvm-c-handle-wrappers).
     - Lifetime of the thing the handle refers to is controlled by the caller
     - Release is implemented by standard .NET pattern with [IDisposable](xref:System.IDisposable)
 2) Does NOT require any dispose
+    - Case 3 [previously discussed](#llvm-c-handle-wrappers).
     - Lifetime of the thing the handle refers to is controlled by the container
 
 >[!NOTE]
 > The generated sources are not useful outside of the `Ubiquity.NET.Llvm.Interop` as they
 > use classes within that as a base class. These are generated manually via the
-> `Generate-HandleWrappers.ps1` script. This is done once for any updates to the LibLLVM
-> package to ensure the handles are kept up to date with the underlying native library.
+> `Generate-HandleWrappers.ps1` script. With the sources checked in to the repository. This
+> is done once for any updates to the LibLLVM package to ensure the handles are kept up to
+> date with the underlying native library.
 
 ### Contextual handles and Aliases
 These handles are never manually released or disposed, though releasing their containers
@@ -49,7 +53,7 @@ replace the wrapped handle with a default value on `Dispose()` or when "moved" (
 native code) IFF, the wrapper supports "move" semantics then the `Dispose()` call is
 idempotent. Calling Dispose() may be a NOP. This ensures that applications need not worry
 about move semantics and just call `Dispose()` [Usually implicitly via a `using` expression]
-Thus, even if an exception occured and the move didn't complete, the resource is properly
+Thus, even if an exception occurred and the move didn't complete, the resource is properly
 disposed of.
 
 All resource handles in `Ubiquity.NET.Llvm,Interop` requiring explicit release are handled
@@ -64,7 +68,8 @@ in ownership control/release. These are commonly used when a child of a global c
 exposes a property that references the parent container. In such cases the reference
 retrieved from the child shouldn't be used to destroy the parent when no longer used.
 
-In Ubiquity.NET.Llvm.Interop this is represented as an unowned context handle, that is alias
-handles are the same as a context handle. There is no way to convert from an unowned alias
-to an owned global handle (The other way around is allowed and supported)
+In `Ubiquity.NET.Llvm.Interop` this is represented as an unowned context handle, that is
+alias handles are the same as a context handle. There is no way to convert from an unowned
+alias to an owned global handle (Though the other way around is allowed and supported
+implicitly)
 
