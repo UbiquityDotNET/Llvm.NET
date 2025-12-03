@@ -4,12 +4,12 @@ grammar used in the documentation template for the site docs. This allows highli
 an editor.
 
 ## VisualStudio
-In Visual Studio copies of subfolders of this folder can be placed into the user profile
+In Visual Studio copies of sub-folders of this folder can be placed into the user profile
 folder `.vs/Extensions` to enable syntax highlighting of the Kaleidoscope
 language files.
 
 >[!NOTE]
-> For Windows the user profile is available in an environment varialbe. In PowerShell that
+> For Windows the user profile is available in an environment variable. In PowerShell that
 > is accessed as `$env:userprofile`. In classic CMD prompts it is `%USERPROFILE%`. Normally
 > it is `C:\Users\<UserName>` but can vary depending on how your system is set up.
 

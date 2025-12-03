@@ -215,6 +215,14 @@ namespace Ubiquity.NET.Llvm.Interop.ABI.libllvm_c
         [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
         public static unsafe partial LLVMDWARFEmissionKind LibLLVMDiCompileUnitGetEmissionKind( LLVMMetadataRef handle );
 
+#if FEATURE_366_IMPLEMENTED
+// See: https://github.com/UbiquityDotNET/Llvm.NET/issues/366
+        [LibraryImport( LibraryName )]
+        [UnmanagedCallConv( CallConvs = [ typeof( CallConvCdecl ) ] )]
+        [return: MarshalAs( UnmanagedType.Bool )]
+        public static partial bool LibLLVMDiBuilderGetAllowUnresolvedNodes( LLVMDIBuilderRefAlias builder );
+#endif
+
         [MethodImpl( MethodImplOptions.AggressiveInlining )]
         public static LLVMMetadataRef LibLLVMDIBuilderCreateTempFunctionFwdDecl(
             LLVMDIBuilderRefAlias D,
