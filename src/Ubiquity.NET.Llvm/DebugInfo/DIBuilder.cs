@@ -39,6 +39,10 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         {
             if(!Handle.IsNull)
             {
+                // TODO: detect if unresolved allowed and only take overhead of Finish() if they are allowed
+                // see: https://github.com/UbiquityDotNET/Llvm.NET/issues/366
+                // see: MetadataBindings.LibLLVMDiBuilderGetAllowUnresolvedNodes
+                Finish();
                 Handle.Dispose();
                 InvalidateAfterMove();
             }
