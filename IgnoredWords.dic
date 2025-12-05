@@ -103,6 +103,7 @@ Llilum
 llvm
 llvmroot
 llvmversion
+localizable
 lookups
 LValue
 malloc

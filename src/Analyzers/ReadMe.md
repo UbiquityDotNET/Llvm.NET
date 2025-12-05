@@ -7,21 +7,14 @@ This repository does NOT use the new C# 14 extension syntax due to several reaso
 1) Code lens does not work https://github.com/dotnet/roslyn/issues/79006
     1. Sadly marked as "not planned" - e.g., dead-end
     1. [New issue created](https://developercommunity.visualstudio.com/t/VS2026-Codelens-does-not-appearwork-f/10988233)
+        1. Still awaiting response/results...
 2) MANY analyzers get things wrong and need to be suppressed
     1. (CA1000, CA1034, and many others [SAxxxx])
 3) Many tools (like docfx) don't support the new syntax yet.
-4) No clear support for Caller* attributes on the extended symbol
-    1. Example: `[CallerArgumentExpression(...)]`.
 
 Bottom line it's a good idea with an incomplete implementation lacking support in the
 overall ecosystem. Don't use it unless you absolutely have to until all of that is sorted
 out.
-
->[!IMPORTANT]
->Due to a [bug](https://developercommunity.visualstudio.com/t/VS2026--NET-10-Cant-test-analyzer-fo/10989212),
->the extension keyword banned analyzer doesn't actually run and is not testable. Hopefully,
->this is fixed soon as it's a major PITA not to work correctly for any new syntax. For now,
->a Regex search using `extension(?([^\r\n])\s)*\(` is all that can be done...
 
 # Reference Equality Analyzer
 Reference equality is usually the wrong behavior for comparing wrapped LLVM types. This, is

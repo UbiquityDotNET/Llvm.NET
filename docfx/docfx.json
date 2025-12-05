@@ -1,4 +1,4 @@
-// NOTE: docfx does NOT support multi-targetting
+// NOTE: docfx does NOT support multi-targeting
 // It can generate docs for ONLY one version of the library
 // docfx merge was supposed to resolve that, but is broken (https://github.com/dotnet/docfx/issues/2289).
 // Sadly that's been open since 2017 so not likely to ever be resolved.
@@ -40,6 +40,12 @@
                 "files": [
                     "index.md",
                     "toc.yml"
+                ]
+            },
+            {
+                // Analyzers are content only
+                "files": [
+                    "Analyzers/index.md"
                 ]
             },
             {

@@ -5,7 +5,6 @@ allows for building code generation, JIT and other utilities leveraging LLVM fro
 applications.
 
 ## Guiding principles
-
   1. Mirror the underlying LLVM model as much as possible while providing a well behaved
     .NET projection including:
      1. Class names and hierarchies
@@ -125,3 +124,9 @@ and a NOP when already disposed or transferred. In the current release no intern
 performed, and instead wrapping types implement [`IEquatable<T>`](xref:System.IEquatable`1)
 to allow value equality to compare the underlying native handle and resolve them as the same
 underlying instance or not.
+
+### Analyzer
+To aid in transitioning and ambiguity an [analyzer](../Analyzers/index.md) is provided to
+detect the ambiguity of equality testing and report it as an error. There is no support to
+disable this analyzer, instead the calling code ***MUST*** be changed to explicitly express
+reference equality as the intended behavior via `object.ReferenceEquals()`.
