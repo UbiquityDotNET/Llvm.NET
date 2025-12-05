@@ -4,10 +4,10 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>12.0</LangVersion>
         <Nullable>enable</Nullable>
-        <IsPackable>false</IsPackable>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <NeutralLanguage>en-US</NeutralLanguage>
+        <IsPackable>False</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,6 +17,10 @@
     <ItemGroup>
         <Compile Update="Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />
         <EmbeddedResource Update="Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="ReadMe.md" Pack="True" PackagePath="\"/>
     </ItemGroup>
 
 </Project>

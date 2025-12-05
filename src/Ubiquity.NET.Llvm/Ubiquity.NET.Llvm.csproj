@@ -22,10 +22,13 @@
         <RepositoryType>git</RepositoryType>
         <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
         <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+        <LLvmAnalyzerName>Ubiquity.NET.Llvm.Analyzer</LLvmAnalyzerName>
+        <LLvmAnalyzerPath>$(BaseBuildOutputBinPath)\$(LLvmAnalyzerName)\$(Configuration)\netstandard2.0\$(LLvmAnalyzerName).dll</LLvmAnalyzerPath>
     </PropertyGroup>
 
     <ItemGroup>
         <None Include="ReadMe.md" Pack="true" PackagePath="\" />
+        <None Include="$(LLvmAnalyzerPath)" Visible="false" Pack="True" PackagePath="analyzers\dotnet\cs"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -37,7 +40,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Interop\Ubiquity.NET.Llvm.Interop\Ubiquity.NET.Llvm.Interop.csproj" />
-        <ProjectReference Include="..\Analyzers\RepositoryVerifier\RepositoryVerifier.csproj">
+        <ProjectReference Include="..\Analyzers\RepositoryVerifier\Ubiquity.NET.Llvm.Analyzer.csproj">
             <PrivateAssets>all</PrivateAssets>
             <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
             <OutputItemType>Analyzer</OutputItemType>

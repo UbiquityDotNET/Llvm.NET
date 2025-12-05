@@ -12,14 +12,27 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Operations;
 
-namespace RepositoryVerifier
+namespace Ubiquity.NET.Llvm.Analyzer
 {
     /// <summary>Analyzer to perform the checks for use of reference equality when <see cref="IEquatable{T}"/> should be used</summary>
     /// <remarks>
-    /// This analyzer helps in reducing pain in transition from the legacy "cached/interned" managed wrappers approach to
+    /// <para>This analyzer is constrained to ONLY types in the <c>Ubiquity.NET.Llvm</c>
+    /// </para>
+    /// <para>This analyzer helps in reducing pain in transition from the legacy "cached/interned" managed wrappers approach to
     /// dealing with LLVM handles. That approach proved problematic for a number of reasons and is no longer used. This,
     /// analyzer helps to identify places where reference equality is used but value equality should be used. Reference
-    /// equality is rarely ever the correct intended use.
+    /// equality is rarely ever the correct intended use.</para>
+    /// <note type="important">
+    /// There is no "FIX" for this, it identifies a potential problem that requires clarification. There are two possible
+    /// cases that are unclear or potentially incorrect as written:<br/>
+    /// 1) The comparison is intended to use reference equality<br/>
+    ///     a) The comparison should change to explicitly use <see cref="object.ReferenceEquals(object, object)"/><br/>
+    /// 2) The comparison is intended to use value equality<br/>
+    ///     b) The comparison should change to explicitly use <see cref="object.Equals(object, object)"/>.<br/>
+    ///
+    /// There are intentionally, no fixes, and no means to suppress this message - it identifies an ambiguity of
+    /// intent and the means to suppress it is to make the intent explicit by changing the code.
+    /// </note>
     /// </remarks>
     [DiagnosticAnalyzer( LanguageNames.CSharp )]
     public class ReferenceEqualityAnalyzer

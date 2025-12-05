@@ -11,3 +11,5 @@
   items:
     - name: Llvm
       href: llvm/index.md
+    - name: Analyzers
+      href: Analyzers/index.md

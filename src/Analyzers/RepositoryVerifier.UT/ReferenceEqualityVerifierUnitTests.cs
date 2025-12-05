@@ -8,9 +8,11 @@ using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Ubiquity.NET.Llvm.Analyzer;
+
 using static Microsoft.CodeAnalysis.Testing.ReferenceAssemblies;
 
-namespace RepositoryVerifier.UT
+namespace Ubiquity.NET.Llvm.Analyzer.UT
 {
     [TestClass]
     public class ReferenceEqualityVerifierUnitTests
@@ -44,7 +46,7 @@ namespace RepositoryVerifier.UT
             var analyzerTest = CreateTestRunner(AdvancedItfSource);
             analyzerTest.ExpectedDiagnostics.AddRange(
                 [
-                    new DiagnosticResult("UNL001", DiagnosticSeverity.Error).WithLocation(17, 16),
+                    new DiagnosticResult("UNL001", DiagnosticSeverity.Error).WithLocation(21, 20),
                 ]
             );
 
@@ -171,21 +173,26 @@ namespace RepositoryVerifier.UT
        private const string AdvancedItfSource = """
         using System;
 
-        namespace Ubiquity.NET.Llvm;
-
-        public interface IBaz
-            : IEquatable<IBaz>
+        namespace Ubiquity.NET.Llvm
         {
+
+            public interface IBaz
+                : IEquatable<IBaz>
+            {
+            }
         }
 
-        public class Class1
-            : IBaz
+        namespace Test
         {
-            public bool Equals( IBaz? other ) => true;
-
-            bool Baz(IBaz x)
+            public class Class1
+                : Ubiquity.NET.Llvm.IBaz
             {
-                return this == x; // OOPS = Reference equality!
+                public bool Equals( Ubiquity.NET.Llvm.IBaz? other ) => true;
+
+                bool Baz(Ubiquity.NET.Llvm.IBaz x)
+                {
+                    return this == x; // OOPS = Reference equality!
+                }
             }
         }
         """;

@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RepositoryVerifier\RepositoryVerifier.csproj" />
+    <ProjectReference Include="..\RepositoryVerifier\Ubiquity.NET.Llvm.Analyzer.csproj" />
   </ItemGroup>
 
 </Project>

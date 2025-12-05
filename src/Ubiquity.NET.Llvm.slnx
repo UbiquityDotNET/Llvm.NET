@@ -1,7 +1,7 @@
 <Solution>
   <Folder Name="/Analyzers/" Id="02ea681e-c7d8-13c7-8484-4ac65e1b71e8">
     <File Path="Analyzers/ReadMe.md" />
-    <Project Path="Analyzers/RepositoryVerifier/RepositoryVerifier.csproj" />
+    <Project Path="Analyzers/RepositoryVerifier/Ubiquity.NET.Llvm.Analyzer.csproj" />
   </Folder>
   <Folder Name="/Interop/">
     <File Path="Interop/readme-first.md" />
@@ -71,7 +71,7 @@
     <File Path="Samples/Kaleidoscope/TextMate/syntaxes/Kaleidoscope.plist" />
   </Folder>
   <Folder Name="/Tests/">
-    <Project Path="Analyzers/RepositoryVerifier.UT/RepositoryVerifier.UT.csproj" />
+    <Project Path="Analyzers/RepositoryVerifier.UT/Ubiquity.NET.Llvm.Analyzer.UT.csproj" />
     <Project Path="Interop/InteropTests/Ubiquity.NET.Llvm.Interop.UT.csproj" />
     <Project Path="Samples/Kaleidoscope/Kaleidoscope.Tests/Kaleidoscope.Tests.csproj" />
     <Project Path="Ubiquity.NET.Llvm.JIT.Tests/Ubiquity.NET.Llvm.JIT.Tests.csproj" />

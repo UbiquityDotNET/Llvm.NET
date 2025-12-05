@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RepositoryVerifier {
+namespace Ubiquity.NET.Llvm.Analyzer {
     using System;
     
     
@@ -19,7 +19,7 @@ namespace RepositoryVerifier {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -39,7 +39,7 @@ namespace RepositoryVerifier {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RepositoryVerifier.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ubiquity.NET.Llvm.Analyzer.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,81 +63,54 @@ namespace RepositoryVerifier {
         /// <summary>
         ///   Looks up a localized string similar to An internal analyzer exception occurred..
         /// </summary>
-        internal static string UNL000_Description {
+        internal static string InternalError_Description {
             get {
-                return ResourceManager.GetString("UNL000_Description", resourceCulture);
+                return ResourceManager.GetString("InternalError_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Exception message is: &apos;{0}&apos;.
         /// </summary>
-        internal static string UNL000_MessageFormat {
+        internal static string InternalError_MessageFormat {
             get {
-                return ResourceManager.GetString("UNL000_MessageFormat", resourceCulture);
+                return ResourceManager.GetString("InternalError_MessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Internal Error.
         /// </summary>
-        internal static string UNL000_Title {
+        internal static string InternalError_Title {
             get {
-                return ResourceManager.GetString("UNL000_Title", resourceCulture);
+                return ResourceManager.GetString("InternalError_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Reference equality used when value equality is present, this usually indicates an error of intent. If reference equality is really intended, use the ReferenceEquality method instead..
         /// </summary>
-        internal static string UNL001_Description {
+        internal static string RefEqualityWhenEquatable_Description {
             get {
-                return ResourceManager.GetString("UNL001_Description", resourceCulture);
+                return ResourceManager.GetString("RefEqualityWhenEquatable_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; is value equatable with &apos;{1}&apos; via IEquatable&lt;T&gt; but reference equality is used.
         /// </summary>
-        internal static string UNL001_MessageFormat {
+        internal static string RefEqualityWhenEquatable_MessageFormat {
             get {
-                return ResourceManager.GetString("UNL001_MessageFormat", resourceCulture);
+                return ResourceManager.GetString("RefEqualityWhenEquatable_MessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Reference equality used when value equality is present.
         /// </summary>
-        internal static string UNL001_Title {
+        internal static string RefEqualityWhenEquatable_Title {
             get {
-                return ResourceManager.GetString("UNL001_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Use of the C# 14 `extension` keyword is currently banned in this repository..
-        /// </summary>
-        internal static string UNL002_Description {
-            get {
-                return ResourceManager.GetString("UNL002_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to C# `extension` keyword used - Use of this keyword is currently banned in this repository.
-        /// </summary>
-        internal static string UNL002_MessageFormat {
-            get {
-                return ResourceManager.GetString("UNL002_MessageFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to C# `extension` keyword used.
-        /// </summary>
-        internal static string UNL002_Title {
-            get {
-                return ResourceManager.GetString("UNL002_Title", resourceCulture);
+                return ResourceManager.GetString("RefEqualityWhenEquatable_Title", resourceCulture);
             }
         }
     }
