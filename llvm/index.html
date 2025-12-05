@@ -228,6 +228,11 @@ and a NOP when already disposed or transferred. In the current release no intern
 performed, and instead wrapping types implement <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1"><code>IEquatable&lt;T&gt;</code></a>
 to allow value equality to compare the underlying native handle and resolve them as the same
 underlying instance or not.</p>
+<h3 id="analyzer">Analyzer</h3>
+<p>To aid in transitioning and ambiguity an <a href="../Analyzers/index.html">analyzer</a> is provided to
+detect the ambiguity of equality testing and report it as an error. There is no support to
+disable this analyzer, instead the calling code <em><strong>MUST</strong></em> be changed to explicitly express
+reference equality as the intended behavior via <code>object.ReferenceEquals()</code>.</p>
 
 </article>
 
@@ -249,7 +254,7 @@ underlying instance or not.</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.8
+          - Build: 20.1.9
         </div>
       </div>
     </footer>

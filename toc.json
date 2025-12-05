@@ -1,2 +1,2 @@
 
-{"items":[{"name":"Source Repository","href":"https://github.com/UbiquityDotNET/Llvm.NET","topicHref":"https://github.com/UbiquityDotNET/Llvm.NET"},{"name":"Projects","items":[{"name":"Llvm","href":"llvm/index.html","topicHref":"llvm/index.html"}]}]}
+{"items":[{"name":"Source Repository","href":"https://github.com/UbiquityDotNET/Llvm.NET","topicHref":"https://github.com/UbiquityDotNET/Llvm.NET"},{"name":"Projects","items":[{"name":"Llvm","href":"llvm/index.html","topicHref":"llvm/index.html"},{"name":"Analyzers","href":"Analyzers/index.html","topicHref":"Analyzers/index.html"}]}]}

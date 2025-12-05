@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | Ubiquity.NET </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | Ubiquity.NET ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/Analyzers/index.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../llvm/DragonSharp48x48.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+        </div>
+
+        <article data-uid="">
+
+<h2 id="referenceequalityanalyzer">ReferenceEqualityAnalyzer</h2>
+<p>This analyzer was designed to identify places within the Ubiquity.NET.Llvm library where the
+transition away from interning impacts the code base, as well as aid consumers in detecting
+problems with ambiguity. The transition means any code doing a reference equality check,
+assuming that all unique instances are interned would get a big surprise as they are no
+longer guaranteed unique and will fail for things that are really the same. (To handle the
+problem of unowned &quot;aliasing&quot;, which existed in the previous releases as well!). Thus, this
+analyzer will flag as an error any use of operator <code>==</code> or <code>!=</code> that results in reference
+equality where one of the types involved implements value equality (via <code>IEquatable</code> or
+<code>IEquatable&lt;T&gt;</code>. This is almost ALWAYS an error in the consuming code. In any case where it
+isn't the code should be converted to use an explicit call to <code>object.ReferenceEquals()</code> so
+that it is explicitly clear what the intent is.</p>
+<h2 id="ids">IDs</h2>
+<table>
+<thead>
+<tr>
+<th>Rule ID</th>
+<th>Category</th>
+<th>Severity</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UNL000</td>
+<td>Internal</td>
+<td>Error</td>
+<td>Diagnostics</td>
+</tr>
+<tr>
+<td>UNL001</td>
+<td>Usage</td>
+<td>Error</td>
+<td>Diagnostics</td>
+</tr>
+</tbody>
+</table>
+<h3 id="unl000">UNL000</h3>
+<p>An internal error (exception) was detected in the analyzer itself. This is unlikely to occur
+but any occurrences of this are an error in the analyzer itself that should be <a href="https://github.com/UbiquityDotNET/Llvm.NET/issues/new/choose">reported</a>
+(and fixed) as a bug.</p>
+<h3 id="unl001">UNL001</h3>
+<p>Reference equality was inferred but value equality is available. This is an indication of
+some part of the code base that has not properly transitioned or new code that is
+implemented incorrectly. If, and ONLY if, reference equality is actually intended then the
+call-site should use <code>object.ReferenceEquals()</code> and add an explanatory comment.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/Analyzers/index.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Copyright (C) 2017-2025, Ubiquity.NET Contributors
+          - Build: 20.1.9
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
