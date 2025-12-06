@@ -89,6 +89,12 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         }
 
         /// <inheritdoc/>
+        public override string? ToString( )
+        {
+            return NativeType?.ToString();
+        }
+
+        /// <inheritdoc/>
         public bool IsVarArg => NativeType.IsVarArg;
 
         /// <inheritdoc/>

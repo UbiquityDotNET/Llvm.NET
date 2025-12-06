@@ -22,6 +22,9 @@
         <RepositoryType>git</RepositoryType>
         <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
         <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
         <LLvmAnalyzerName>Ubiquity.NET.Llvm.Analyzer</LLvmAnalyzerName>
         <LLvmAnalyzerPath>$(BaseBuildOutputBinPath)\$(LLvmAnalyzerName)\$(Configuration)\netstandard2.0\$(LLvmAnalyzerName).dll</LLvmAnalyzerPath>
     </PropertyGroup>

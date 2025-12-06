@@ -24,6 +24,7 @@
         <PackageLicenseExpression>Apache-2.0 WITH LLVM-exception</PackageLicenseExpression>
         <IncludeSymbols Condition="'$(Configuration)'=='Release'">true</IncludeSymbols>
         <EmbedUntrackedSources>false</EmbedUntrackedSources>
+        <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
         <!-- This is an internal undocumented package ignore the analysis that complains about a missing ReadMe -->
