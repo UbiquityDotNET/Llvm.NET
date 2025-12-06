@@ -425,7 +425,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                                                   , llvmArgs
                                                   , then.BlockHandle
                                                   , catchBlock.BlockHandle
-                                                  , string.Empty
+                                                  , LazyEncodedString.Empty
                                                   );
 
             return Value.FromHandle<Invoke>( invoke.ThrowIfInvalid() )!;
@@ -440,7 +440,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                                                          , resultType.GetTypeRef( )
                                                          , default // personality function no longer part of instruction
                                                          , 0
-                                                         , string.Empty
+                                                         , LazyEncodedString.Empty
                                                          );
 
             return Value.FromHandle<LandingPad>( landingPad.ThrowIfInvalid() )!;
@@ -452,7 +452,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         public Freeze Freeze( Value value )
         {
             ArgumentNullException.ThrowIfNull( value );
-            LLVMValueRef inst = LLVMBuildFreeze( Handle, value.Handle, string.Empty);
+            LLVMValueRef inst = LLVMBuildFreeze( Handle, value.Handle, LazyEncodedString.Empty);
             return Value.FromHandle<Freeze>( inst.ThrowIfInvalid() )!;
         }
 
@@ -514,7 +514,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Cannot_load_a_value_for_an_opaque_or_unsized_type, nameof( type ) );
             }
 
-            var handle = LLVMBuildLoad2( Handle, type.GetTypeRef( ), sourcePtr.Handle, string.Empty );
+            var handle = LLVMBuildLoad2( Handle, type.GetTypeRef( ), sourcePtr.Handle, LazyEncodedString.Empty );
             return Value.FromHandle<Load>( handle.ThrowIfInvalid() )!;
         }
 
@@ -641,7 +641,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ValidateStructGepArgs( pointer, index );
 
             // TODO: verify pointer is an opaque pointer or type == pointer.NativeTYpe
-            var handle = LLVMBuildStructGEP2( Handle, type.GetTypeRef( ), pointer.Handle, index, string.Empty );
+            var handle = LLVMBuildStructGEP2( Handle, type.GetTypeRef( ), pointer.Handle, index, LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -676,7 +676,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                                       , pointer.Handle
                                       , llvmArgs
                                       , ( uint )llvmArgs.Length
-                                      , string.Empty
+                                      , LazyEncodedString.Empty
                                       );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
@@ -789,7 +789,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                                                , pointer.Handle
                                                , llvmArgs
                                                , ( uint )llvmArgs.Length
-                                               , string.Empty
+                                               , LazyEncodedString.Empty
                                                );
             return Value.FromHandle( hRetVal.ThrowIfInvalid() )!;
         }
@@ -897,7 +897,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 
             var handle = (intValue is Constant)
                          ? LLVMConstIntToPtr( intValue.Handle, ptrType.GetTypeRef( ) )
-                         : LLVMBuildIntToPtr( Handle, intValue.Handle, ptrType.GetTypeRef( ), string.Empty );
+                         : LLVMBuildIntToPtr( Handle, intValue.Handle, ptrType.GetTypeRef( ), LazyEncodedString.Empty );
 
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
@@ -928,7 +928,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 
             var handle = ( ptrValue is Constant )
                          ? LLVMConstPtrToInt( ptrValue.Handle, intType.GetTypeRef( ) )
-                         : LLVMBuildPtrToInt( Handle, ptrValue.Handle, intType.GetTypeRef( ), string.Empty );
+                         : LLVMBuildPtrToInt( Handle, ptrValue.Handle, intType.GetTypeRef( ), LazyEncodedString.Empty );
 
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
@@ -988,7 +988,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 throw new ArgumentException( Resources.Expecting_an_integer_or_pointer_type, nameof( rhs ) );
             }
 
-            var handle = LLVMBuildICmp( Handle, ( LLVMIntPredicate )predicate, lhs.Handle, rhs.Handle, string.Empty );
+            var handle = LLVMBuildICmp( Handle, ( LLVMIntPredicate )predicate, lhs.Handle, rhs.Handle, LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1017,7 +1017,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                                       , ( LLVMRealPredicate )predicate
                                       , lhs.Handle
                                       , rhs.Handle
-                                      , string.Empty
+                                      , LazyEncodedString.Empty
                                       );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
@@ -1061,7 +1061,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 return valueRef;
             }
 
-            LLVMValueRef handle = LLVMBuildZExtOrBitCast( Handle, valueRef.Handle, targetType.GetTypeRef( ), string.Empty );
+            LLVMValueRef handle = LLVMBuildZExtOrBitCast( Handle, valueRef.Handle, targetType.GetTypeRef( ), LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1080,7 +1080,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                 return valueRef;
             }
 
-            LLVMValueRef handle = LLVMBuildSExtOrBitCast( Handle, valueRef.Handle, targetType.GetTypeRef( ), string.Empty );
+            LLVMValueRef handle = LLVMBuildSExtOrBitCast( Handle, valueRef.Handle, targetType.GetTypeRef( ), LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1102,7 +1102,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             LLVMValueRef handle;
             handle = valueRef is Constant
                      ? LLVMConstTruncOrBitCast( valueRef.Handle, targetType.GetTypeRef() )
-                     : LLVMBuildTruncOrBitCast( Handle, valueRef.Handle, targetType.GetTypeRef(), string.Empty );
+                     : LLVMBuildTruncOrBitCast( Handle, valueRef.Handle, targetType.GetTypeRef(), LazyEncodedString.Empty );
 
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
@@ -1116,7 +1116,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( valueRef );
             ArgumentNullException.ThrowIfNull( targetType );
 
-            LLVMValueRef handle = LLVMBuildZExt( Handle, valueRef.Handle, targetType.GetTypeRef( ), string.Empty );
+            LLVMValueRef handle = LLVMBuildZExt( Handle, valueRef.Handle, targetType.GetTypeRef( ), LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1129,7 +1129,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( valueRef );
             ArgumentNullException.ThrowIfNull( targetType );
 
-            LLVMValueRef handle = LLVMBuildSExt( Handle, valueRef.Handle, targetType.GetTypeRef( ), string.Empty );
+            LLVMValueRef handle = LLVMBuildSExt( Handle, valueRef.Handle, targetType.GetTypeRef( ), LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1151,7 +1151,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             LLVMValueRef handle;
             handle = valueRef is Constant
                    ? LLVMConstBitCast( valueRef.Handle, targetType.GetTypeRef() )
-                   : LLVMBuildBitCast( Handle, valueRef.Handle, targetType.GetTypeRef(), string.Empty );
+                   : LLVMBuildBitCast( Handle, valueRef.Handle, targetType.GetTypeRef(), LazyEncodedString.Empty );
 
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
@@ -1166,7 +1166,20 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( valueRef );
             ArgumentNullException.ThrowIfNull( targetType );
 
-            LLVMValueRef handle = LLVMBuildIntCast2( Handle, valueRef.Handle, targetType.GetTypeRef( ), isSigned, string.Empty );
+            LLVMValueRef handle = LLVMBuildIntCast2( Handle, valueRef.Handle, targetType.GetTypeRef( ), isSigned, LazyEncodedString.Empty );
+            return Value.FromHandle( handle.ThrowIfInvalid() )!;
+        }
+
+        /// <summary>Creates an address cast instruction</summary>
+        /// <param name="valueRef">Value to convert</param>
+        /// <param name="targetType">Target type (with new address space)</param>
+        /// <returns>Instruction doing conversion as a <see cref="Value"/></returns>
+        public Value AddressSpaceCast(Value valueRef, ITypeRef targetType)
+        {
+            ArgumentNullException.ThrowIfNull( valueRef );
+            ArgumentNullException.ThrowIfNull( targetType );
+
+            LLVMValueRef handle = LLVMBuildAddrSpaceCast(Handle, valueRef.Handle, targetType.GetTypeRef( ), LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1181,7 +1194,7 @@ namespace Ubiquity.NET.Llvm.Instructions
 
             var handle = valueRef is Constant
                        ? LLVMConstTrunc( valueRef.Handle, targetType.GetTypeRef( ) )
-                       : LLVMBuildTrunc( Handle, valueRef.Handle, targetType.GetTypeRef( ), string.Empty );
+                       : LLVMBuildTrunc( Handle, valueRef.Handle, targetType.GetTypeRef( ), LazyEncodedString.Empty );
 
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
@@ -1195,7 +1208,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( valueRef );
             ArgumentNullException.ThrowIfNull( targetType );
 
-            LLVMValueRef handle = LLVMBuildSIToFP( Handle, valueRef.Handle, targetType.GetTypeRef( ), string.Empty );
+            LLVMValueRef handle = LLVMBuildSIToFP( Handle, valueRef.Handle, targetType.GetTypeRef( ), LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1208,7 +1221,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( valueRef );
             ArgumentNullException.ThrowIfNull( targetType );
 
-            LLVMValueRef handle = LLVMBuildUIToFP( Handle, valueRef.Handle, targetType.GetTypeRef( ), string.Empty );
+            LLVMValueRef handle = LLVMBuildUIToFP( Handle, valueRef.Handle, targetType.GetTypeRef( ), LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1221,7 +1234,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( valueRef );
             ArgumentNullException.ThrowIfNull( targetType );
 
-            LLVMValueRef handle = LLVMBuildFPToUI( Handle, valueRef.Handle, targetType.GetTypeRef( ), string.Empty );
+            LLVMValueRef handle = LLVMBuildFPToUI( Handle, valueRef.Handle, targetType.GetTypeRef( ), LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1234,7 +1247,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( valueRef );
             ArgumentNullException.ThrowIfNull( targetType );
 
-            LLVMValueRef handle = LLVMBuildFPToSI( Handle, valueRef.Handle, targetType.GetTypeRef( ), string.Empty );
+            LLVMValueRef handle = LLVMBuildFPToSI( Handle, valueRef.Handle, targetType.GetTypeRef( ), LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1247,7 +1260,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( valueRef );
             ArgumentNullException.ThrowIfNull( targetType );
 
-            LLVMValueRef handle = LLVMBuildFPExt( Handle, valueRef.Handle, targetType.GetTypeRef( ), string.Empty );
+            LLVMValueRef handle = LLVMBuildFPExt( Handle, valueRef.Handle, targetType.GetTypeRef( ), LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1260,7 +1273,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( valueRef );
             ArgumentNullException.ThrowIfNull( targetType );
 
-            LLVMValueRef handle = LLVMBuildFPTrunc( Handle, valueRef.Handle, targetType.GetTypeRef( ), string.Empty );
+            LLVMValueRef handle = LLVMBuildFPTrunc( Handle, valueRef.Handle, targetType.GetTypeRef( ), LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1310,7 +1323,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                                         , ifCondition.Handle
                                         , thenValue.Handle
                                         , elseValue.Handle
-                                        , string.Empty
+                                        , LazyEncodedString.Empty
                                         );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
@@ -1320,7 +1333,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <returns><see cref="Instructions.PhiNode"/></returns>
         public PhiNode PhiNode( ITypeRef resultType )
         {
-            var handle = LLVMBuildPhi( Handle, resultType.GetTypeRef( ), string.Empty );
+            var handle = LLVMBuildPhi( Handle, resultType.GetTypeRef( ), LazyEncodedString.Empty );
             return Value.FromHandle<PhiNode>( handle.ThrowIfInvalid() )!;
         }
 
@@ -1332,7 +1345,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         {
             ArgumentNullException.ThrowIfNull( instance );
 
-            var handle = LLVMBuildExtractValue( Handle, instance.Handle, index, string.Empty );
+            var handle = LLVMBuildExtractValue( Handle, instance.Handle, index, LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1555,7 +1568,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         public Value Malloc( ITypeRef itemType )
         {
             return itemType.IsSized
-                ? Value.FromHandle( LLVMBuildMalloc( Handle, itemType.GetTypeRef(), string.Empty ) ).ThrowIfNull()
+                ? Value.FromHandle( LLVMBuildMalloc( Handle, itemType.GetTypeRef(), LazyEncodedString.Empty ) ).ThrowIfNull()
                 : throw new ArgumentException( Resources.Type_must_be_sized_to_get_target_size_information );
         }
 
@@ -1569,7 +1582,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( aggValue );
             ArgumentNullException.ThrowIfNull( elementValue );
 
-            var handle = LLVMBuildInsertValue( Handle, aggValue.Handle, elementValue.Handle, index, string.Empty );
+            var handle = LLVMBuildInsertValue( Handle, aggValue.Handle, elementValue.Handle, index, LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
 
@@ -1767,7 +1780,7 @@ namespace Ubiquity.NET.Llvm.Instructions
                                               , signatureType.ToString()
                                               , i
                                               , args[ i ].NativeType
-                                              , signatureType.ParameterTypes[ i ]
+                                              , signatureType.ParameterTypes[ i ].ToString()
                                               );
                     throw new ArgumentException( msg, nameof( args ) );
                 }
