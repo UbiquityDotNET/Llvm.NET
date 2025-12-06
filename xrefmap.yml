@@ -4504,6 +4504,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.ReturnType
   fullName: Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.ReturnType
   nameWithType: DebugFunctionType.ReturnType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.ToString
+  name: ToString()
+  href: llvm/api/Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.ToString.html#Ubiquity_NET_Llvm_DebugInfo_DebugFunctionType_ToString
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.ToString
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.ToString()
+  nameWithType: DebugFunctionType.ToString()
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.ToString*
+  name: ToString
+  href: llvm/api/Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.ToString.html
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.ToString
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugFunctionType.ToString
+  nameWithType: DebugFunctionType.ToString
 - uid: Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags
   name: DebugInfoFlags
   href: llvm/api/Ubiquity.NET.Llvm.DebugInfo.DebugInfoFlags.html
@@ -4957,6 +4969,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.ElementType
   fullName: Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.ElementType
   nameWithType: DebugPointerType.ElementType
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.ToString
+  name: ToString()
+  href: llvm/api/Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.ToString.html#Ubiquity_NET_Llvm_DebugInfo_DebugPointerType_ToString
+  commentId: M:Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.ToString
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.ToString()
+  nameWithType: DebugPointerType.ToString()
+- uid: Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.ToString*
+  name: ToString
+  href: llvm/api/Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.ToString.html
+  commentId: Overload:Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.ToString
+  fullName: Ubiquity.NET.Llvm.DebugInfo.DebugPointerType.ToString
+  nameWithType: DebugPointerType.ToString
 - uid: Ubiquity.NET.Llvm.DebugInfo.DebugRecord
   name: DebugRecord
   href: llvm/api/Ubiquity.NET.Llvm.DebugInfo.DebugRecord.html
