@@ -93,5 +93,11 @@ namespace Ubiquity.NET.Llvm.DebugInfo
         /// opaque and the type it refers to is unknown.
         /// </remarks>
         public ITypeRef? ElementType { get; init; }
+
+        /// <inheritdoc/>
+        public override string? ToString( )
+        {
+            return NativeType?.ToString();
+        }
     }
 }
