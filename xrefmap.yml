@@ -11863,6 +11863,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddWithOverflow
   fullName: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddWithOverflow
   nameWithType: InstructionBuilder.AddWithOverflow
+- uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddressSpaceCast(Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.Types.ITypeRef)
+  name: AddressSpaceCast(Value, ITypeRef)
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddressSpaceCast.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_AddressSpaceCast_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Types_ITypeRef_
+  commentId: M:Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddressSpaceCast(Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.Types.ITypeRef)
+  fullName: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddressSpaceCast(Ubiquity.NET.Llvm.Values.Value, Ubiquity.NET.Llvm.Types.ITypeRef)
+  nameWithType: InstructionBuilder.AddressSpaceCast(Value, ITypeRef)
+- uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddressSpaceCast*
+  name: AddressSpaceCast
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddressSpaceCast.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddressSpaceCast
+  fullName: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddressSpaceCast
+  nameWithType: InstructionBuilder.AddressSpaceCast
 - uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef)
   name: Alloca(ITypeRef)
   href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_
