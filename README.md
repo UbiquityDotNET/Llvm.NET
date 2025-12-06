@@ -9,7 +9,7 @@ Projection (bindings) library for LLVM to .NET consumption.
 ### NuGet
 [![NuGet](https://img.shields.io/nuget/dt/Ubiquity.NET.Llvm.svg)](https://www.nuget.org/packages/Ubiquity.NET.Llvm/)  
 
-For details of releases, see the [release notes](https://github.com/UbiquityDotNET/Llvm.NET/blob/develop/docfx/ReleaseNotes.md)
+For details of releases, see the [release notes](https://github.com/UbiquityDotNET/Llvm.NET/releases/tag/v20.1.9)
 
 ## Welcome to Ubiquity.NET.Llvm!
 Ubiquity.NET.Llvm provides LLVM language and runtime bindings for .NET based applications.
