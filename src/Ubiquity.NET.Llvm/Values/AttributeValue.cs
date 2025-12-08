@@ -59,6 +59,10 @@ namespace Ubiquity.NET.Llvm.Values
         /// <returns>Attribute as a string</returns>
         public override string? ToString( ) => LibLLVMAttributeToString( NativeAttribute );
 
+        // CONSIDER: Add static methods to allow construction (with type specific params) of well-known attributes
+        // Maybe as static methods on a static WellKnownAttributes type... The names, and params are subject to
+        // change from major release to major release.
+
         internal AttributeValue( LLVMAttributeRef nativeValue )
         {
             NativeAttribute = nativeValue;

@@ -12,6 +12,8 @@ namespace Ubiquity.NET.Llvm.Types
     {
         public uint AddressSpace => LLVMGetPointerAddressSpace( Handle );
 
+        // TODO: Add support to fetch the `elementtype` attribute if attached
+        // NOTE: attribute is only applicable to ARGUMENTS to intrinsic calls
         public ITypeRef? ElementType { get; init; }
 
         internal PointerType( LLVMTypeRef typeRef )

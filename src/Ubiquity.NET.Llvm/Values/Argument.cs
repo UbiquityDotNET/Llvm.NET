@@ -28,6 +28,9 @@ namespace Ubiquity.NET.Llvm.Values
             return this;
         }
 
+        // CONSIDER: IFF NativeType.IsPointer allow fetch/set of `elementtype` attribute.
+        // technically any attribute is applicable since this implements IAttributeContainer.
+
         /// <summary>Gets the attributes for this argument</summary>
         public ICollection<AttributeValue> Attributes
             => new ValueAttributeCollection( ContainingFunction, FunctionAttributeIndex.Parameter0 + (int)Index );

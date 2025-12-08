@@ -40,8 +40,7 @@ namespace Ubiquity.NET.Llvm.Types
         {
             var kind = ( TypeKind )LLVMGetTypeKind( typeRef );
             return kind == TypeKind.Array
-                || kind == TypeKind.Vector
-                || kind == TypeKind.Pointer;
+                || kind == TypeKind.Vector;
         }
     }
 }

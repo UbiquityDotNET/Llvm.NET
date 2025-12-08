@@ -636,13 +636,19 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// <para>Note that <paramref name="pointer"/> must be a pointer to a structure
         /// or an exception is thrown.</para>
         /// </returns>
-        public Value GetStructElementPointer( ITypeRef type, Value pointer, uint index )
+        public Value GetStructElementPointer( IStructType type, Value pointer, uint index )
         {
-            ValidateStructGepArgs( pointer, index );
+            ValidateStructGepArgs(type, pointer, index );
 
             // TODO: verify pointer is an opaque pointer or type == pointer.NativeTYpe
             var handle = LLVMBuildStructGEP2( Handle, type.GetTypeRef( ), pointer.Handle, index, LazyEncodedString.Empty );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
+        }
+
+        /// <inheritdoc cref="GetElementPtr(ITypeRef, Value, IEnumerable{Value})"/>
+        public Value GetElementPtr( ITypeRef type, Value pointer, params Value[] args )
+        {
+            return GetElementPtr( type, pointer, (IEnumerable<Value>)args);
         }
 
         /// <summary>Creates a <see cref="Value"/> that accesses an element of a type referenced by a pointer</summary>
@@ -658,19 +664,26 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// or an exception is thrown.</para>
         /// </returns>
         /// <remarks>
-        /// For details on GetElementPointer (GEP) see
-        /// <see href="xref:llvm_misunderstood_gep">The Often Misunderstood GEP Instruction</see>.
-        /// The basic gist is that the GEP instruction does not access memory, it only computes a pointer
-        /// offset from a base. A common confusion is around the first index and what it means. For C
-        /// and C++ programmers an expression like pFoo->bar seems to only have a single offset or
-        /// index. However, that is only syntactic sugar where the compiler implicitly hides the first
-        /// index. That is, there is no difference between pFoo[0].bar and pFoo->bar except that the
-        /// former makes the first index explicit. LLVM requires an explicit first index, even if it is
-        /// zero, in order to properly compute the offset for a given element in an aggregate type.
+        /// <para>For details on GetElementPointer (GEP) see the LLVM docs. The basic gist is that the GEP
+        /// instruction <em><b>does not</b></em> access memory, <em><b>it only computes a pointer
+        /// offset from a base</b></em>. A common confusion is around the first index and what it means.
+        /// For C and C++ programmers an expression like <c>pFoo->bar</c> seems to only have a single
+        /// offset or index. However, that is only syntactic sugar where the compiler implicitly hides
+        /// the first index. That is, there is no difference between <c>pFoo[0].bar</c> and <c>pFoo->bar</c>
+        /// except that the former makes the first index explicit. LLVM <c>GetElementPtr</c> instruction
+        /// <em><b>requires</b></em> an explicit first index, even if it is zero, in order to properly
+        /// compute the offset for a given element in an aggregate type.</para>
+        /// <note type="information">
+        /// This instruction was designed with the idea of typed pointers, but with opaque pointers now,
+        /// with opaque pointers, requires a type for the elements of the base pointer for the aggregate.
+        /// This depends on the layout information of the target machine. and could/should be computed
+        /// by the cal
+        /// </note>
         /// </remarks>
+        /// <seealso href="xref:llvm_misunderstood_gep">The Often Misunderstood GEP Instruction</seealso>
         public Value GetElementPtr( ITypeRef type, Value pointer, IEnumerable<Value> args )
         {
-            var llvmArgs = GetValidatedGEPArgs( type, pointer, args );
+            var llvmArgs = GetNativeGEPArgs( type, pointer, [ .. args] );
             var handle = LLVMBuildGEP2( Handle
                                       , type.GetTypeRef( )
                                       , pointer.Handle
@@ -752,7 +765,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// former makes the first index explicit. LLVM requires an explicit first index, even if it is
         /// zero, in order to properly compute the offset for a given element in an aggregate type.
         /// </remarks>
-        [Obsolete( "Use overload that takes a pointer type and opaque pointer" )]
+        [Obsolete( "Use overload that takes a pointer type and an opaque pointer" )]
         public Value GetElementPtrInBounds( Value pointer, IEnumerable<Value> args )
         {
             return GetElementPtrInBounds( pointer.ThrowIfNull().NativeType, pointer, args );
@@ -783,7 +796,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public Value GetElementPtrInBounds( ITypeRef type, Value pointer, IEnumerable<Value> args )
         {
-            var llvmArgs = GetValidatedGEPArgs( type, pointer, args );
+            var llvmArgs = GetNativeGEPArgs( type, pointer, [.. args] );
             var hRetVal = LLVMBuildInBoundsGEP2( Handle
                                                , type.GetTypeRef( )
                                                , pointer.Handle
@@ -816,7 +829,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// former makes the first index explicit. LLVM requires an explicit first index, even if it is
         /// zero, in order to properly compute the offset for a given element in an aggregate type.
         /// </remarks>
-        [Obsolete( "Use overload that accepts base pointer type and na opaque pointer" )]
+        [Obsolete( "Use overload that accepts base pointer type and an opaque pointer" )]
         public Value GetElementPtrInBounds( Value pointer, params Value[] args )
         {
             return GetElementPtrInBounds( pointer, (IEnumerable<Value>)args );
@@ -875,7 +888,7 @@ namespace Ubiquity.NET.Llvm.Instructions
         public static Value ConstGetElementPtrInBounds( Value pointer, params Value[] args )
         {
             ArgumentNullException.ThrowIfNull( pointer );
-            var llvmArgs = GetValidatedGEPArgs( pointer.NativeType, pointer, args );
+            var llvmArgs = GetNativeGEPArgs( pointer.NativeType, pointer, args );
             var handle = LLVMConstInBoundsGEP2(pointer.NativeType.GetTypeRef(), pointer.Handle, llvmArgs, ( uint )llvmArgs.Length );
             return Value.FromHandle( handle.ThrowIfInvalid() )!;
         }
@@ -1642,7 +1655,7 @@ namespace Ubiquity.NET.Llvm.Instructions
             return Call( function, lhs, rhs );
         }
 
-        internal static LLVMValueRef[] GetValidatedGEPArgs( ITypeRef type, Value pointer, IEnumerable<Value> args )
+        internal static LLVMValueRef[] GetNativeGEPArgs( ITypeRef type, Value pointer, Value[] args )
         {
             ArgumentNullException.ThrowIfNull( type );
             ArgumentNullException.ThrowIfNull( pointer );
@@ -1654,19 +1667,57 @@ namespace Ubiquity.NET.Llvm.Instructions
             }
 
             // start with the base pointer as type for first index
-            ITypeRef elementType = type.CreatePointerType();
-            foreach(var index in args)
+            ITypeRef elementType = type;
+
+            // start at i = 1 since it is always plausible to index through the known type pointer
+            for(int i = 1; i < args.Length; ++i)
             {
+                var index = args[i];
+                Debug.WriteLine($"GEP i: {i} Index: {index} elementType: {elementType}");
+                if( !index.NativeType.IsInteger )
+                {
+                    throw new ArgumentException( Resources.GEP_index_arguments_must_be_integers );
+                }
+
                 switch(elementType)
                 {
                 case ISequenceType s:
+                {
+                    // If the index value is a constant, check it against any known size
+                    // Otherwise, there is no way to pre-check it other then walking back
+                    // all use to effectively compute the value, but that might be from
+                    // an external method... [Read: Not possible]
+                    if( index is ConstantInt constIndex )
+                    {
+                        long indexConst = constIndex.SignExtendedValue;
+                        if(s is IArrayType at)
+                        {
+                            if( indexConst > at.Length || indexConst < 0)
+                            {
+                                throw new ArgumentException( $"GEP index {indexConst} is out of range for array {at}" );
+                            }
+                        }
+                        else if(s is IVectorType vt)
+                        {
+                            if( indexConst > vt.Size || indexConst < 0)
+                            {
+                                throw new ArgumentException( $"GEP index {indexConst} is out of range for vector {vt}" );
+                            }
+                        }
+
+                        // pointers are sequence types but have no size to validate...
+                        // indexing through one is an error caught elsewhere.
+                    }
+
                     elementType = s.ElementType;
                     break;
+                }
 
                 case IStructType st:
+                {
                     if(index is not ConstantInt constIndex)
                     {
-                        throw new ArgumentException( "GEP index into a structure type must be constant" );
+                        throw new ArgumentException( $"GEP index into a structure type must be constant. Index Value: {index}" );
                     }
 
                     long indexValue = constIndex.SignExtendedValue;
@@ -1677,20 +1728,26 @@ namespace Ubiquity.NET.Llvm.Instructions
 
                     elementType = st.Members[ (int)constIndex.SignExtendedValue ];
                     break;
+                }
+
+                case IPointerType pt:
+                    throw new ArgumentException( $"GEP cannot index through a pointer type {elementType} Index Value: {index}" );
+
+                case FunctionType ft:
+                    throw new ArgumentException( $"GEP cannot index through a function type {elementType} Index Value: {index}" );
 
                 default:
-                    throw new ArgumentException( $"GEP index through a non-aggregate type {elementType}" );
+                    // const/other concrete types terminate the loops so index must be the last one.
+                    if(i < (args.Length - 1))
+                    {
+                        throw new ArgumentException($"GEP cannot index through a non-aggregate type {elementType} Index Value: {index}");
+                    }
+
+                    break;
                 }
             }
 
-            // if not an array already, pull from source enumerable into an array only once
-            var argsArray = args as Value[ ] ?? [ .. args ];
-            if(argsArray.Any( a => !a.NativeType.IsInteger ))
-            {
-                throw new ArgumentException( Resources.GEP_index_arguments_must_be_integers );
-            }
-
-            LLVMValueRef[ ] llvmArgs = [ .. argsArray.Select( a => a.Handle ) ];
+            LLVMValueRef[ ] llvmArgs = [ .. args.Select( a => a.Handle ) ];
             return llvmArgs.Length == 0
                 ? throw new ArgumentException( Resources.There_must_be_at_least_one_index_argument, nameof( args ) )
                 : llvmArgs;
@@ -1698,13 +1755,19 @@ namespace Ubiquity.NET.Llvm.Instructions
 
 #pragma warning disable IDE0060
         // TODO: Either validate parameter 'index' or remove it...
-        private static void ValidateStructGepArgs( Value pointer, uint index )
+        private static void ValidateStructGepArgs(IStructType type, Value pointer, uint index )
         {
+            ArgumentNullException.ThrowIfNull( type );
             ArgumentNullException.ThrowIfNull( pointer );
 
             if(pointer.NativeType is not IPointerType)
             {
                 throw new ArgumentException( Resources.Pointer_value_expected, nameof( pointer ) );
+            }
+
+            if( index >= (type.Members.Count - 1 ))
+            {
+                throw new ArgumentException( Resources.Index_exceeds_number_of_members_in_the_type, nameof( index ) );
             }
         }
 #pragma warning restore IDE0060
