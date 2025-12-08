@@ -12,5 +12,11 @@ namespace Ubiquity.NET.Llvm.Instructions
             : base( valueRef )
         {
         }
+
+        /// <summary>Gets the base of the GEP instruction</summary>
+        public Value? Base => Operands.GetOperand<Value>(0);
+
+        /// <summary>Gets the index values for the GEP instruction</summary>
+        public ImmutableArray<Value?> IndexValues => [ .. Operands.Skip(1) ];
     }
 }
