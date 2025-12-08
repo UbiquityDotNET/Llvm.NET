@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Values;
 
-namespace Ubiquity.NET.Llvm.UT
+namespace Ubiquity.NET.Llvm.UT.Instructions
 {
     [TestClass]
     public class CallTests

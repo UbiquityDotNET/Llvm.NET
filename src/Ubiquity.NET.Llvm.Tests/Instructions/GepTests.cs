@@ -2,18 +2,17 @@
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
 using System;
-using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Ubiquity.NET.Llvm.Instructions;
 using Ubiquity.NET.Llvm.Values;
 
-namespace Ubiquity.NET.Llvm.UT
+namespace Ubiquity.NET.Llvm.UT.Instructions
 {
     // This tests the https://github.com/UbiquityDotNET/Llvm.NET/issues/380
-    // the behavior is split to multiple test cases but the validation
-    // is performed for each case.
+    // the behavior is split to multiple test cases but the problematic
+    // parameter validation is performed for each case.
 
     [TestClass]
     public class GepTests
@@ -48,7 +47,8 @@ namespace Ubiquity.NET.Llvm.UT
             // This will get the value of the nested MyStruct* p which might be used in another
             // call to GetElementPtr. Since, it is an OPAQUE pointer the type is not carried with it.
             // Even with a known type for the pointer one shouldn't attempt arbitrary math on the
-            // pointers as it could be nullptr. Next leg of this test validates it throws.
+            // resulting pointer as it could be nullptr. GetElementPtr_indexing_through_a_pointer_throws()
+            // validates it throws.
             Value gep2 = irBuilder.GetElementPtr(structType, pInstance, constZero, constTwo); // get `pInstance[0].p`
             Assert.IsNotNull( gep2 );
             Assert.IsInstanceOfType<GetElementPtr>( gep2 );
@@ -82,8 +82,9 @@ namespace Ubiquity.NET.Llvm.UT
             var pInstance = func.Parameters[ 0 ];
 
             // attempting to index through a pointer should generate an error.
-            // NOTE: underlying LLVM seems to allow this, but it's a very dangerous
-            // so the managed wrapper will detect this case and throw.
+            // NOTE: underlying LLVM seems to allow this, but it's very dangerous
+            //       and likely busted, so the managed wrapper will detect this
+            //       case and throw.
             Assert.ThrowsExactly<ArgumentException>(
                 ( ) =>
                 {

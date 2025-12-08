@@ -22,6 +22,13 @@ namespace Ubiquity.NET.Llvm.Instructions
         /// </remarks>
         public ITypeRef ElementType => LLVMGetAllocatedType( Handle ).CreateType();
 
+        /// <summary>Gets a value indicating whether this allocation is for an array</summary>
+        public bool IsArrayAllocation => ElementCount > 1;
+
+        /// <summary>Gets the array element count for this allocation</summary>
+        /// <remarks>Allocations will always use at least 1 element, arrays are indicated if this value is >1</remarks>
+        public Int64 ElementCount => Operands.GetOperand<ConstantInt>(0)?.SignExtendedValue ?? 1;
+
         internal Alloca( LLVMValueRef valueRef )
             : base( valueRef )
         {

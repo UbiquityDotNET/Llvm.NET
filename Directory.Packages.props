@@ -48,7 +48,7 @@
     <!--
     Security vulnerability overrides.
     NOTE: For these to work the assemblies ***MUST** also have an explicit reference in the
-          impacted projects. Otherwise no upgrade.override occurs and the projects remain
+          impacted projects. Otherwise no upgrade/override occurs and the projects remain
           vulnerable. Ideally the dependent projects would update to resolve this but,
           sadly they do not, and remain vulnerable, and we must stop it here.
     -->
@@ -66,7 +66,7 @@
     <PackageVersion Include="Ubiquity.NET.Runtime.Utils" Version="20.1.8" />
     <PackageVersion Include="Ubiquity.NET.CommandLine" Version="20.1.8" />
     <PackageVersion Include="Ubiquity.NET.ANTLR.Utils" Version="20.1.8" />
-    <PackageVersion Include="Ubiquity.NET.LibLLVM" Version="20.1.8" />
+    <PackageVersion Include="Ubiquity.NET.LibLLVM" Version="20.1.9" />
     <PackageVersion Include="Ubiquity.NET.Versioning" Version="6.0.2" />
     <PackageVersion Include="Antlr4BuildTasks" Version="12.11.0" />
     <PackageVersion Include="Antlr4.Runtime.Standard" Version="4.13.1" />
