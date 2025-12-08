@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Ubiquity.NET Contributors. All rights reserved.
 // Licensed under the Apache-2.0 WITH LLVM-exception license. See the LICENSE.md file in the project root for full license information.
 
+using static Ubiquity.NET.Llvm.Interop.ABI.libllvm_c.DiBuilderBindings;
 using static Ubiquity.NET.Llvm.Interop.ABI.llvm_c.Core;
 
 namespace Ubiquity.NET.Llvm.Instructions
@@ -247,28 +248,39 @@ namespace Ubiquity.NET.Llvm.Instructions
 
         /// <summary>Creates an alloca instruction</summary>
         /// <param name="typeRef">Type of the value to allocate</param>
+        /// <param name="addressSpace">Optional address space, if not specified the default for the data layout is used</param>
         /// <returns><see cref="Instructions.Alloca"/> instruction</returns>
-        public Alloca Alloca( ITypeRef typeRef )
+        public Alloca Alloca( ITypeRef typeRef, UInt32? addressSpace = null )
         {
             ArgumentNullException.ThrowIfNull( typeRef );
-            var handle = LLVMBuildAlloca( Handle, typeRef.GetTypeRef( ), string.Empty );
+            RequireValidDataLayout("alloca");
+
+            LLVMValueRef handle = addressSpace.HasValue
+                                ? LibLLVMBuildAlloca( Handle, typeRef.GetTypeRef( ), LazyEncodedString.Empty, addressSpace.Value )
+                                : LLVMBuildAlloca( Handle, typeRef.GetTypeRef( ), LazyEncodedString.Empty );
 
             return handle == default
                 ? throw new InternalCodeGeneratorException( "Failed to build an Alloca instruction" )
                 : Value.FromHandle<Alloca>( handle )!;
         }
 
-        /// <summary>Creates an alloca instruction</summary>
+        /// <summary>Creates an alloca instruction for an array of values</summary>
         /// <param name="typeRef">Type of the value to allocate</param>
         /// <param name="elements">Number of elements to allocate</param>
-        /// <returns><see cref="Instructions.Alloca"/> instruction</returns>
+        /// <param name="addressSpace">Optional address space, if not specified the default for the data layout is used</param>
+        /// <returns><see cref="Instructions.Alloca"/> instruction for the array</returns>
         [SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Specific type required by interop call" )]
-        public Alloca Alloca( ITypeRef typeRef, ConstantInt elements )
+        public Alloca Alloca( ITypeRef typeRef, ConstantInt elements, UInt32? addressSpace = null )
         {
             ArgumentNullException.ThrowIfNull( typeRef );
             ArgumentNullException.ThrowIfNull( elements );
 
-            var instHandle = LLVMBuildArrayAlloca( Handle, typeRef.GetTypeRef( ), elements.Handle, string.Empty );
+            RequireValidDataLayout("alloca");
+
+            LLVMValueRef instHandle = addressSpace.HasValue
+                                    ? LibLLVMBuildArrayAlloca( Handle, typeRef.GetTypeRef( ), elements.Handle, LazyEncodedString.Empty, addressSpace.Value )
+                                    : LLVMBuildArrayAlloca( Handle, typeRef.GetTypeRef( ), elements.Handle, LazyEncodedString.Empty );
+
             return instHandle == default
                 ? throw new InternalCodeGeneratorException( "Failed to build an Alloca array instruction" )
                 : Value.FromHandle<Alloca>( instHandle )!;
@@ -1859,6 +1871,14 @@ namespace Ubiquity.NET.Llvm.Instructions
             ValidateCallArgs( sig, args );
             LLVMValueRef[ ] llvmArgs = [ .. args.Select( v => v.Handle ) ];
             return LLVMBuildCall2( Handle, sig.GetTypeRef(), target.Handle, llvmArgs, (uint)llvmArgs.Length, LazyEncodedString.Empty );
+        }
+
+        private void RequireValidDataLayout(string instructionName)
+        {
+            if( InsertBlock?.DataLayout is null)
+            {
+                throw new InvalidOperationException($"Creation of '{instructionName}' requires a basic block with data layout");
+            }
         }
 
         private LLVMBuilderRef Handle { get; }

@@ -32,6 +32,21 @@ namespace Ubiquity.NET.Llvm.Values
             }
         }
 
+        /// <summary>Gets the module for this block</summary>
+        /// <remarks>
+        /// If the block is not yet attached to a function, then this is null.
+        /// This is a shorthand means of retrieving the <see cref="GlobalValue.ParentModule"/>
+        /// from <see cref="ContainingFunction"/>
+        /// </remarks>
+        public IModule? Module => ContainingFunction?.ParentModule;
+
+        /// <summary>Gets the data layout for this block</summary>
+        /// <remarks>
+        /// This is a short hand for retrieving the <see cref="IModule.Layout"/> from the
+        /// <see cref="Module"/> property
+        /// </remarks>
+        public IDataLayout? DataLayout => Module?.Layout;
+
         /// <summary>Gets the first instruction in the block</summary>
         public Instruction? FirstInstruction
         {
