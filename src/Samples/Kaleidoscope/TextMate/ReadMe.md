@@ -4,7 +4,7 @@ grammar used in the documentation template for the site docs. This allows highli
 an editor.
 
 ## VisualStudio
-In Visual Studio copies of sub-folders of this folder can be placed into the user profile
+For Visual Studio, copies of sub-folders of this folder can be placed into the user profile
 folder `.vs/Extensions` to enable syntax highlighting of the Kaleidoscope
 language files.
 

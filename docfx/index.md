@@ -22,4 +22,4 @@ documented. It is an internal implementation detail subject to change in the fut
 are plans to merge it with the OO wrapper library. Therefore, applications should NOT depend
 on it as it is likely to cease existing in the future.
 
-<a id="footnote_1"/><sup>2</sup> The analyzer is included in the `Ubiquity.NET.Llvm` package.
+<a id="footnote_2"/><sup>2</sup> The analyzer is included in the `Ubiquity.NET.Llvm` package.
