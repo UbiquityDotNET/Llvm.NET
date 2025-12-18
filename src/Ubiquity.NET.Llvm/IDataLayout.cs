@@ -19,28 +19,33 @@ namespace Ubiquity.NET.Llvm
     /// that are target dependent.</para>
     /// <para>The following table illustrates the differences in sizes and their meaning
     ///  for a sample set of types.</para>
-    /// |   Type  | SizeInBits | StoreSizeInBits | AbiSizeInBits |
-    /// |---------|------------|-----------------|---------------|
-    /// | i1      | 1          | 8               | 8             |
-    /// | i8      | 8          | 8               | 8             |
-    /// | i19     | 19         | 24              | 32            |
-    /// | i32     | 32         | 32              | 32            |
-    /// | i10     | 100        | 104             | 128           |
-    /// | i128    | 128        | 128             | 128           |
-    /// | Float   | 32         | 32              | 32            |
-    /// | Double  | 64         | 64              | 64            |
-    /// | X86_FP80| 80         | 80              | 96            |
+    /// <list type="table">
+    /// <listheader>
+    ///     <term> Type </term><term> SizeInBits </term><term> StoreSizeInBits </term><term> AbiSizeInBits </term>
+    /// </listheader>
+    /// <item> <description>i1      </description><description> 1   </description><description> 8   </description><description> 8   </description></item>
+    /// <item> <description>i8      </description><description> 8   </description><description> 8   </description><description> 8   </description></item>
+    /// <item> <description>i19     </description><description> 19  </description><description> 24  </description><description> 32  </description></item>
+    /// <item> <description>i32     </description><description> 32  </description><description> 32  </description><description> 32  </description></item>
+    /// <item> <description>i10     </description><description> 100 </description><description> 104 </description><description> 128 </description></item>
+    /// <item> <description>i128    </description><description> 128 </description><description> 128 </description><description> 128 </description></item>
+    /// <item> <description>Float   </description><description> 32  </description><description> 32  </description><description> 32  </description></item>
+    /// <item> <description>Double  </description><description> 64  </description><description> 64  </description><description> 64  </description></item>
+    /// <item> <description>X86_FP80</description><description> 80  </description><description> 80  </description><description> 96  </description></item>
+    /// </list>
     ///
     /// <note type="note">
     /// The allocation size depends on the alignment, and thus on the target.
     /// The values in the example table are for x86-32-linux.
     /// </note>
-    /// |   Property      | Definition |
-    /// |-----------------|------------|
-    /// | SizeInBits      | Minimum number of bits needed to represent the full range of values for the type |
-    /// | StoreSizeInBits | Minimum number of bits needed to actually store a *single* value of the type |
-    /// | AbiSizeInBits   | Total number of bits used to store a value in a sequence, including any alignment padding |
-    ///
+    /// <list type="table">
+    /// <listheader>
+    ///     <term>Property</term><term>Definition</term>
+    /// </listheader>
+    /// <item> <description>SizeInBits      </description><description> Minimum number of bits needed to represent the full range of values for the type </description></item>
+    /// <item> <description>StoreSizeInBits </description><description> Minimum number of bits needed to actually store a *single* value of the type </description></item>
+    /// <item> <description>AbiSizeInBits   </description><description> Total number of bits used to store a value in a sequence, including any alignment padding </description></item>
+    /// </list>
     /// The allocation size determines the total size of each entry in a sequence so that the "next" element is computed
     /// by adding the size to the start address of the current element.
     /// </remarks>
@@ -49,11 +54,11 @@ namespace Ubiquity.NET.Llvm
         /// <summary>Gets the byte ordering for this target</summary>
         public ByteOrdering Endianness { get; }
 
-        /// <summary>Gets the size of a pointer for the default address space of the target</summary>
+        /// <summary>Gets the size (in bytes) of a pointer for the default address space of the target</summary>
         /// <returns>Size of a pointer to the default address space</returns>
         public uint PointerSize( );
 
-        /// <summary>Retrieves the size of a pointer for a given address space of the target</summary>
+        /// <summary>Retrieves the size (in bytes) of a pointer for a given address space of the target</summary>
         /// <param name="addressSpace">Address space for the pointer</param>
         /// <returns>Size of a pointer</returns>
         public uint PointerSize( uint addressSpace );
@@ -109,7 +114,7 @@ namespace Ubiquity.NET.Llvm
         /// </remarks>
         public ulong StoreSizeOf( ITypeRef typeRef );
 
-        /// <summary>Retrieves the ABI specified size of the given type</summary>
+        /// <summary>Retrieves the ABI specified size (in bytes) of the given type</summary>
         /// <param name="typeRef">Type to get the size from</param>
         /// <returns>Size of the type</returns>
         /// <remarks>
@@ -123,17 +128,17 @@ namespace Ubiquity.NET.Llvm
         /// <returns>ABI specified alignment</returns>
         public uint AbiAlignmentOf( ITypeRef typeRef );
 
-        /// <summary>Retrieves the call frame alignment for a given type</summary>
+        /// <summary>Retrieves the call frame alignment (in bytes) for a given type</summary>
         /// <param name="typeRef">type to get the alignment of</param>
         /// <returns>Alignment for the type</returns>
         public uint CallFrameAlignmentOf( ITypeRef typeRef );
 
-        /// <summary>Gets the preferred alignment for an LLVM type</summary>
+        /// <summary>Gets the preferred alignment (in bytes) for an LLVM type</summary>
         /// <param name="typeRef">Type to get the alignment of</param>
         /// <returns>Preferred alignment</returns>
         public uint PreferredAlignmentOf( ITypeRef typeRef );
 
-        /// <summary>Gets the preferred alignment for a <see cref="Value"/></summary>
+        /// <summary>Gets the preferred alignment (in bytes) for a <see cref="Value"/></summary>
         /// <param name="value">Value to get the alignment of</param>
         /// <returns>Preferred alignment</returns>
         public uint PreferredAlignmentOf( Value value );
