@@ -920,6 +920,11 @@ namespace Ubiquity.NET.Llvm.Instructions
             ArgumentNullException.ThrowIfNull( intValue );
             ArgumentNullException.ThrowIfNull( ptrType );
 
+            if(!intValue.NativeType.IsInteger)
+            {
+                throw new ArgumentException( Resources.Expecting_an_integer_type, nameof( intValue ) );
+            }
+
             var handle = (intValue is Constant)
                          ? LLVMConstIntToPtr( intValue.Handle, ptrType.GetTypeRef( ) )
                          : LLVMBuildIntToPtr( Handle, intValue.Handle, ptrType.GetTypeRef( ), LazyEncodedString.Empty );

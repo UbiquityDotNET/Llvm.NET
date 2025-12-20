@@ -1,4 +1,20 @@
 #Primary settings apply to all files unless overridden below
+# NOTE: Just opening this file in the VS UI editor will make changes that are
+# not intended.
+#
+# DO-NOT allow such changes!
+#
+# Unfortunately, this requires a great deal of discipline and manual checking
+# of differences to ensure the changes made ONLY contains intentional changes
+# that really apply to all users of this repository.
+#
+# see: https://github.com/dotnet/roslyn/issues/59325
+#
+# Unfortunately, that has remained open for nearly 4 years, so not likely to
+# get a fix any time soon...
+
+# Analysis and refactoring rules for Ubiquity.NET
+# Description: Code analysis rules for Ubiquity.NET projects
 root = true
 
 [*]
@@ -107,11 +123,6 @@ dotnet_diagnostic.SA1202.severity = none
 csharp_style_prefer_local_over_anonymous_function = true:error
 csharp_style_prefer_index_operator = true:error
 csharp_style_prefer_range_operator = true:error
-
-# Analysis and refactoring rules for Ubiquity.NET
-# Description: Code analysis rules for Ubiquity.NET projects
-
-# NOTE: Requires **VS2019 16.3** or later
 
 # Code files
 [*.{cs,vb}]
@@ -1615,7 +1626,6 @@ dotnet_diagnostic.SA1651.severity = error
 dotnet_diagnostic.SA1652.severity = warning
 
 dotnet_diagnostic.SX1101.severity = error
-
 
 # IDE0045: Convert to conditional expression
 dotnet_diagnostic.IDE0045.severity = suggestion
