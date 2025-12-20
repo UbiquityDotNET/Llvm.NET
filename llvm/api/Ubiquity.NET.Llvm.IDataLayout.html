@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Llvm_IDataLayout" data-uid="Ubiquity.NET.Llvm.IDataLayout" class="text-break">
-Interface IDataLayout  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/IDataLayout.cs/#L47"><i class="bi bi-code-slash"></i></a>
+Interface IDataLayout  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/IDataLayout.cs/#L52"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -115,28 +115,14 @@ Interface IDataLayout  <a class="header-action link-secondary" title="View sourc
 that are target dependent.</p>
 <p>The following table illustrates the differences in sizes and their meaning
  for a sample set of types.</p>
-|   Type  | SizeInBits | StoreSizeInBits | AbiSizeInBits |
-|---------|------------|-----------------|---------------|
-| i1      | 1          | 8               | 8             |
-| i8      | 8          | 8               | 8             |
-| i19     | 19         | 24              | 32            |
-| i32     | 32         | 32              | 32            |
-| i10     | 100        | 104             | 128           |
-| i128    | 128        | 128             | 128           |
-| Float   | 32         | 32              | 32            |
-| Double  | 64         | 64              | 64            |
-| X86_FP80| 80         | 80              | 96            |
+<table><thead><tr><th class="term"> Type </th><th class="term"> SizeInBits </th><th class="term"> StoreSizeInBits </th><th class="term"> AbiSizeInBits </th></tr></thead><tbody><tr><td class="description">i1      </td><td class="description"> 1   </td><td class="description"> 8   </td><td class="description"> 8   </td></tr><tr><td class="description">i8      </td><td class="description"> 8   </td><td class="description"> 8   </td><td class="description"> 8   </td></tr><tr><td class="description">i19     </td><td class="description"> 19  </td><td class="description"> 24  </td><td class="description"> 32  </td></tr><tr><td class="description">i32     </td><td class="description"> 32  </td><td class="description"> 32  </td><td class="description"> 32  </td></tr><tr><td class="description">i10     </td><td class="description"> 100 </td><td class="description"> 104 </td><td class="description"> 128 </td></tr><tr><td class="description">i128    </td><td class="description"> 128 </td><td class="description"> 128 </td><td class="description"> 128 </td></tr><tr><td class="description">Float   </td><td class="description"> 32  </td><td class="description"> 32  </td><td class="description"> 32  </td></tr><tr><td class="description">Double  </td><td class="description"> 64  </td><td class="description"> 64  </td><td class="description"> 64  </td></tr><tr><td class="description">X86_FP80</td><td class="description"> 80  </td><td class="description"> 80  </td><td class="description"> 96  </td></tr></tbody></table>
 <div class="NOTE"><h5>note</h5><p>
 The allocation size depends on the alignment, and thus on the target.
 The values in the example table are for x86-32-linux.
 </p></div>
-|   Property      | Definition |
-|-----------------|------------|
-| SizeInBits      | Minimum number of bits needed to represent the full range of values for the type |
-| StoreSizeInBits | Minimum number of bits needed to actually store a *single* value of the type |
-| AbiSizeInBits   | Total number of bits used to store a value in a sequence, including any alignment padding |
-<p>The allocation size determines the total size of each entry in a sequence so that the &quot;next&quot; element is computed
-by adding the size to the start address of the current element.</p>
+<table><thead><tr><th class="term">Property</th><th class="term">Definition</th></tr></thead><tbody><tr><td class="description">SizeInBits      </td><td class="description"> Minimum number of bits needed to represent the full range of values for the type </td></tr><tr><td class="description">StoreSizeInBits </td><td class="description"> Minimum number of bits needed to actually store a *single* value of the type </td></tr><tr><td class="description">AbiSizeInBits   </td><td class="description"> Total number of bits used to store a value in a sequence, including any alignment padding </td></tr></tbody></table>
+The allocation size determines the total size of each entry in a sequence so that the "next" element is computed
+by adding the size to the start address of the current element.
 </div>
 
   <h2 class="section" id="properties">Properties
@@ -163,7 +149,7 @@ by adding the size to the start address of the current element.</p>
   </dl>
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.AbiSizeOf.html#Ubiquity_NET_Llvm_IDataLayout_AbiSizeOf_Ubiquity_NET_Llvm_Types_ITypeRef_">AbiSizeOf(ITypeRef)</a></dt>
-    <dd><p>Retrieves the ABI specified size of the given type</p>
+    <dd><p>Retrieves the ABI specified size (in bytes) of the given type</p>
 </dd>
   </dl>
   <dl class="jumplist">
@@ -183,7 +169,7 @@ by adding the size to the start address of the current element.</p>
   </dl>
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.CallFrameAlignmentOf.html#Ubiquity_NET_Llvm_IDataLayout_CallFrameAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_">CallFrameAlignmentOf(ITypeRef)</a></dt>
-    <dd><p>Retrieves the call frame alignment for a given type</p>
+    <dd><p>Retrieves the call frame alignment (in bytes) for a given type</p>
 </dd>
   </dl>
   <dl class="jumplist">
@@ -209,22 +195,22 @@ a pointer for the given address space of the target</p>
   </dl>
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.PointerSize.html#Ubiquity_NET_Llvm_IDataLayout_PointerSize">PointerSize()</a></dt>
-    <dd><p>Gets the size of a pointer for the default address space of the target</p>
+    <dd><p>Gets the size (in bytes) of a pointer for the default address space of the target</p>
 </dd>
   </dl>
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.PointerSize.html#Ubiquity_NET_Llvm_IDataLayout_PointerSize_System_UInt32_">PointerSize(uint)</a></dt>
-    <dd><p>Retrieves the size of a pointer for a given address space of the target</p>
+    <dd><p>Retrieves the size (in bytes) of a pointer for a given address space of the target</p>
 </dd>
   </dl>
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf.html#Ubiquity_NET_Llvm_IDataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Types_ITypeRef_">PreferredAlignmentOf(ITypeRef)</a></dt>
-    <dd><p>Gets the preferred alignment for an LLVM type</p>
+    <dd><p>Gets the preferred alignment (in bytes) for an LLVM type</p>
 </dd>
   </dl>
   <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.IDataLayout.PreferredAlignmentOf.html#Ubiquity_NET_Llvm_IDataLayout_PreferredAlignmentOf_Ubiquity_NET_Llvm_Values_Value_">PreferredAlignmentOf(Value)</a></dt>
-    <dd><p>Gets the preferred alignment for a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></p>
+    <dd><p>Gets the preferred alignment (in bytes) for a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></p>
 </dd>
   </dl>
   <dl class="jumplist">
@@ -248,7 +234,7 @@ a pointer for the given address space of the target</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/IDataLayout.cs/#L47" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/IDataLayout.cs/#L52" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -264,7 +250,7 @@ a pointer for the given address space of the target</p>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.10-alpha.1
+          - Build: 20.1.10-alpha.2
         </div>
       </div>
     </footer>

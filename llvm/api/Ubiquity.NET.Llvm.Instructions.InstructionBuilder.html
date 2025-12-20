@@ -84,7 +84,7 @@
 
 
   <h1 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder" class="text-break">
-Class InstructionBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L17"><i class="bi bi-code-slash"></i></a>
+Class InstructionBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L18"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -211,13 +211,13 @@ name.</p></div>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_">Alloca(ITypeRef)</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_System_Nullable_System_UInt32__">Alloca(ITypeRef, uint?)</a></dt>
     <dd><p>Creates an alloca instruction</p>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_ConstantInt_">Alloca(ITypeRef, ConstantInt)</a></dt>
-    <dd><p>Creates an alloca instruction</p>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_ConstantInt_System_Nullable_System_UInt32__">Alloca(ITypeRef, ConstantInt, uint?)</a></dt>
+    <dd><p>Creates an alloca instruction for an array of values</p>
 </dd>
   </dl>
   <dl class="jumplist">
@@ -441,6 +441,11 @@ name.</p></div>
 </dd>
   </dl>
   <dl class="jumplist">
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value___">GetElementPtr(ITypeRef, Value, params Value[])</a></dt>
+    <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
+</dd>
+  </dl>
+  <dl class="jumplist">
     <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Values_Value_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Value__">GetElementPtr(Value, IEnumerable&lt;Value&gt;)</a></dt>
     <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
 </dd>
@@ -471,7 +476,7 @@ name.</p></div>
 </dd>
   </dl>
   <dl class="jumplist">
-    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetStructElementPointer_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_System_UInt32_">GetStructElementPointer(ITypeRef, Value, uint)</a></dt>
+    <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetStructElementPointer_Ubiquity_NET_Llvm_Types_IStructType_Ubiquity_NET_Llvm_Values_Value_System_UInt32_">GetStructElementPointer(IStructType, Value, uint)</a></dt>
     <dd><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element (field) of a structure</p>
 </dd>
   </dl>
@@ -711,7 +716,7 @@ name.</p></div>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L17" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L18" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -727,7 +732,7 @@ name.</p></div>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.10-alpha.1
+          - Build: 20.1.10-alpha.2
         </div>
       </div>
     </footer>

@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca*" class="text-break">
-Method Alloca  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L251"><i class="bi bi-code-slash"></i></a>
+Method Alloca  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L253"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -114,9 +114,9 @@ Method Alloca  <a class="header-action link-secondary" title="View source" href=
 
 <a id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca*"></a>
 
-<h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef)">
-  Alloca(ITypeRef)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L251"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_System_Nullable_System_UInt32__" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef,System.Nullable{System.UInt32})">
+  Alloca(ITypeRef, uint?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L253"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Creates an alloca instruction</p>
@@ -124,13 +124,16 @@ Method Alloca  <a class="header-action link-secondary" title="View source" href=
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
-  <pre><code class="lang-csharp hljs">public Alloca Alloca(ITypeRef typeRef)</code></pre>
+  <pre><code class="lang-csharp hljs">public Alloca Alloca(ITypeRef typeRef, uint? addressSpace = null)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
 <dl class="parameters">
   <dt><code>typeRef</code> <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a></dt>
   <dd><p>Type of the value to allocate</p>
+</dd>
+  <dt><code>addressSpace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a>?</dt>
+  <dd><p>Optional address space, if not specified the default for the data layout is used</p>
 </dd>
 </dl>
 
@@ -153,18 +156,18 @@ Method Alloca  <a class="header-action link-secondary" title="View source" href=
 
 <a id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca*"></a>
 
-<h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_ConstantInt_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Values.ConstantInt)">
-  Alloca(ITypeRef, ConstantInt)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L265"><i class="bi bi-code-slash"></i></a>
+<h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_ConstantInt_System_Nullable_System_UInt32__" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Values.ConstantInt,System.Nullable{System.UInt32})">
+  Alloca(ITypeRef, ConstantInt, uint?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L272"><i class="bi bi-code-slash"></i></a>
 </h3>
 
-<div class="markdown level1 summary"><p>Creates an alloca instruction</p>
+<div class="markdown level1 summary"><p>Creates an alloca instruction for an array of values</p>
 </div>
 <div class="markdown level1 conceptual"></div>
 
 <div class="codewrapper">
   <pre><code class="lang-csharp hljs">[SuppressMessage(&quot;Microsoft.Design&quot;, &quot;CA1011:ConsiderPassingBaseTypesAsParameters&quot;, Justification = &quot;Specific type required by interop call&quot;)]
-public Alloca Alloca(ITypeRef typeRef, ConstantInt elements)</code></pre>
+public Alloca Alloca(ITypeRef typeRef, ConstantInt elements, uint? addressSpace = null)</code></pre>
 </div>
 
 <h4 class="section">Parameters</h4>
@@ -175,12 +178,15 @@ public Alloca Alloca(ITypeRef typeRef, ConstantInt elements)</code></pre>
   <dt><code>elements</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantInt.html">ConstantInt</a></dt>
   <dd><p>Number of elements to allocate</p>
 </dd>
+  <dt><code>addressSpace</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint32">uint</a>?</dt>
+  <dd><p>Optional address space, if not specified the default for the data layout is used</p>
+</dd>
 </dl>
 
 <h4 class="section">Returns</h4>
 <dl class="parameters">
   <dt><a class="xref" href="Ubiquity.NET.Llvm.Instructions.Alloca.html">Alloca</a></dt>
-  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.Instructions.Alloca.html">Alloca</a> instruction</p>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.Instructions.Alloca.html">Alloca</a> instruction for the array</p>
 </dd>
 </dl>
 
@@ -197,7 +203,7 @@ public Alloca Alloca(ITypeRef typeRef, ConstantInt elements)</code></pre>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L251" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L253" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -213,7 +219,7 @@ public Alloca Alloca(ITypeRef typeRef, ConstantInt elements)</code></pre>
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.10-alpha.1
+          - Build: 20.1.10-alpha.2
         </div>
       </div>
     </footer>

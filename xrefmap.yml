@@ -10933,6 +10933,18 @@ references:
   commentId: T:Ubiquity.NET.Llvm.Instructions.Alloca
   fullName: Ubiquity.NET.Llvm.Instructions.Alloca
   nameWithType: Alloca
+- uid: Ubiquity.NET.Llvm.Instructions.Alloca.ElementCount
+  name: ElementCount
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.Alloca.ElementCount.html#Ubiquity_NET_Llvm_Instructions_Alloca_ElementCount
+  commentId: P:Ubiquity.NET.Llvm.Instructions.Alloca.ElementCount
+  fullName: Ubiquity.NET.Llvm.Instructions.Alloca.ElementCount
+  nameWithType: Alloca.ElementCount
+- uid: Ubiquity.NET.Llvm.Instructions.Alloca.ElementCount*
+  name: ElementCount
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.Alloca.ElementCount.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.Alloca.ElementCount
+  fullName: Ubiquity.NET.Llvm.Instructions.Alloca.ElementCount
+  nameWithType: Alloca.ElementCount
 - uid: Ubiquity.NET.Llvm.Instructions.Alloca.ElementType
   name: ElementType
   href: llvm/api/Ubiquity.NET.Llvm.Instructions.Alloca.ElementType.html#Ubiquity_NET_Llvm_Instructions_Alloca_ElementType
@@ -10945,6 +10957,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Instructions.Alloca.ElementType
   fullName: Ubiquity.NET.Llvm.Instructions.Alloca.ElementType
   nameWithType: Alloca.ElementType
+- uid: Ubiquity.NET.Llvm.Instructions.Alloca.IsArrayAllocation
+  name: IsArrayAllocation
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.Alloca.IsArrayAllocation.html#Ubiquity_NET_Llvm_Instructions_Alloca_IsArrayAllocation
+  commentId: P:Ubiquity.NET.Llvm.Instructions.Alloca.IsArrayAllocation
+  fullName: Ubiquity.NET.Llvm.Instructions.Alloca.IsArrayAllocation
+  nameWithType: Alloca.IsArrayAllocation
+- uid: Ubiquity.NET.Llvm.Instructions.Alloca.IsArrayAllocation*
+  name: IsArrayAllocation
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.Alloca.IsArrayAllocation.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.Alloca.IsArrayAllocation
+  fullName: Ubiquity.NET.Llvm.Instructions.Alloca.IsArrayAllocation
+  nameWithType: Alloca.IsArrayAllocation
 - uid: Ubiquity.NET.Llvm.Instructions.AtomicCmpXchg
   name: AtomicCmpXchg
   href: llvm/api/Ubiquity.NET.Llvm.Instructions.AtomicCmpXchg.html
@@ -11641,6 +11665,30 @@ references:
   commentId: T:Ubiquity.NET.Llvm.Instructions.GetElementPtr
   fullName: Ubiquity.NET.Llvm.Instructions.GetElementPtr
   nameWithType: GetElementPtr
+- uid: Ubiquity.NET.Llvm.Instructions.GetElementPtr.Base
+  name: Base
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.GetElementPtr.Base.html#Ubiquity_NET_Llvm_Instructions_GetElementPtr_Base
+  commentId: P:Ubiquity.NET.Llvm.Instructions.GetElementPtr.Base
+  fullName: Ubiquity.NET.Llvm.Instructions.GetElementPtr.Base
+  nameWithType: GetElementPtr.Base
+- uid: Ubiquity.NET.Llvm.Instructions.GetElementPtr.Base*
+  name: Base
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.GetElementPtr.Base.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.GetElementPtr.Base
+  fullName: Ubiquity.NET.Llvm.Instructions.GetElementPtr.Base
+  nameWithType: GetElementPtr.Base
+- uid: Ubiquity.NET.Llvm.Instructions.GetElementPtr.IndexValues
+  name: IndexValues
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.GetElementPtr.IndexValues.html#Ubiquity_NET_Llvm_Instructions_GetElementPtr_IndexValues
+  commentId: P:Ubiquity.NET.Llvm.Instructions.GetElementPtr.IndexValues
+  fullName: Ubiquity.NET.Llvm.Instructions.GetElementPtr.IndexValues
+  nameWithType: GetElementPtr.IndexValues
+- uid: Ubiquity.NET.Llvm.Instructions.GetElementPtr.IndexValues*
+  name: IndexValues
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.GetElementPtr.IndexValues.html
+  commentId: Overload:Ubiquity.NET.Llvm.Instructions.GetElementPtr.IndexValues
+  fullName: Ubiquity.NET.Llvm.Instructions.GetElementPtr.IndexValues
+  nameWithType: GetElementPtr.IndexValues
 - uid: Ubiquity.NET.Llvm.Instructions.IndirectBranch
   name: IndirectBranch
   href: llvm/api/Ubiquity.NET.Llvm.Instructions.IndirectBranch.html
@@ -11875,18 +11923,24 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddressSpaceCast
   fullName: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.AddressSpaceCast
   nameWithType: InstructionBuilder.AddressSpaceCast
-- uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef)
-  name: Alloca(ITypeRef)
-  href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_
-  commentId: M:Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef)
-  fullName: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef)
-  nameWithType: InstructionBuilder.Alloca(ITypeRef)
-- uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Values.ConstantInt)
-  name: Alloca(ITypeRef, ConstantInt)
-  href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_ConstantInt_
-  commentId: M:Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Values.ConstantInt)
-  fullName: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.Values.ConstantInt)
-  nameWithType: InstructionBuilder.Alloca(ITypeRef, ConstantInt)
+- uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef,System.Nullable{System.UInt32})
+  name: Alloca(ITypeRef, uint?)
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_System_Nullable_System_UInt32__
+  commentId: M:Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef,System.Nullable{System.UInt32})
+  name.vb: Alloca(ITypeRef, UInteger?)
+  fullName: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef, uint?)
+  fullName.vb: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef, UInteger?)
+  nameWithType: InstructionBuilder.Alloca(ITypeRef, uint?)
+  nameWithType.vb: InstructionBuilder.Alloca(ITypeRef, UInteger?)
+- uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Values.ConstantInt,System.Nullable{System.UInt32})
+  name: Alloca(ITypeRef, ConstantInt, uint?)
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_Alloca_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_ConstantInt_System_Nullable_System_UInt32__
+  commentId: M:Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Values.ConstantInt,System.Nullable{System.UInt32})
+  name.vb: Alloca(ITypeRef, ConstantInt, UInteger?)
+  fullName: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.Values.ConstantInt, uint?)
+  fullName.vb: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca(Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.Values.ConstantInt, UInteger?)
+  nameWithType: InstructionBuilder.Alloca(ITypeRef, ConstantInt, uint?)
+  nameWithType.vb: InstructionBuilder.Alloca(ITypeRef, ConstantInt, UInteger?)
 - uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca*
   name: Alloca
   href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.Alloca.html
@@ -12424,6 +12478,15 @@ references:
   fullName.vb: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr(Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.Values.Value, System.Collections.Generic.IEnumerable(Of Ubiquity.NET.Llvm.Values.Value))
   nameWithType: InstructionBuilder.GetElementPtr(ITypeRef, Value, IEnumerable<Value>)
   nameWithType.vb: InstructionBuilder.GetElementPtr(ITypeRef, Value, IEnumerable(Of Value))
+- uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.Values.Value[])
+  name: GetElementPtr(ITypeRef, Value, params Value[])
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value___
+  commentId: M:Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.Values.Value[])
+  name.vb: GetElementPtr(ITypeRef, Value, ParamArray Value())
+  fullName: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr(Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.Values.Value, params Ubiquity.NET.Llvm.Values.Value[])
+  fullName.vb: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr(Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.Values.Value, ParamArray Ubiquity.NET.Llvm.Values.Value())
+  nameWithType: InstructionBuilder.GetElementPtr(ITypeRef, Value, params Value[])
+  nameWithType.vb: InstructionBuilder.GetElementPtr(ITypeRef, Value, ParamArray Value())
 - uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr(Ubiquity.NET.Llvm.Values.Value,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Value})
   name: GetElementPtr(Value, IEnumerable<Value>)
   href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Values_Value_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Value__
@@ -12490,15 +12553,15 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtrInBounds
   fullName: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtrInBounds
   nameWithType: InstructionBuilder.GetElementPtrInBounds
-- uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Values.Value,System.UInt32)
-  name: GetStructElementPointer(ITypeRef, Value, uint)
-  href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetStructElementPointer_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_System_UInt32_
-  commentId: M:Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Values.Value,System.UInt32)
-  name.vb: GetStructElementPointer(ITypeRef, Value, UInteger)
-  fullName: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer(Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.Values.Value, uint)
-  fullName.vb: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer(Ubiquity.NET.Llvm.Types.ITypeRef, Ubiquity.NET.Llvm.Values.Value, UInteger)
-  nameWithType: InstructionBuilder.GetStructElementPointer(ITypeRef, Value, uint)
-  nameWithType.vb: InstructionBuilder.GetStructElementPointer(ITypeRef, Value, UInteger)
+- uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer(Ubiquity.NET.Llvm.Types.IStructType,Ubiquity.NET.Llvm.Values.Value,System.UInt32)
+  name: GetStructElementPointer(IStructType, Value, uint)
+  href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer.html#Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetStructElementPointer_Ubiquity_NET_Llvm_Types_IStructType_Ubiquity_NET_Llvm_Values_Value_System_UInt32_
+  commentId: M:Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer(Ubiquity.NET.Llvm.Types.IStructType,Ubiquity.NET.Llvm.Values.Value,System.UInt32)
+  name.vb: GetStructElementPointer(IStructType, Value, UInteger)
+  fullName: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer(Ubiquity.NET.Llvm.Types.IStructType, Ubiquity.NET.Llvm.Values.Value, uint)
+  fullName.vb: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer(Ubiquity.NET.Llvm.Types.IStructType, Ubiquity.NET.Llvm.Values.Value, UInteger)
+  nameWithType: InstructionBuilder.GetStructElementPointer(IStructType, Value, uint)
+  nameWithType.vb: InstructionBuilder.GetStructElementPointer(IStructType, Value, UInteger)
 - uid: Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer*
   name: GetStructElementPointer
   href: llvm/api/Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetStructElementPointer.html
@@ -21637,6 +21700,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Values.BasicBlock.ContainingFunction
   fullName: Ubiquity.NET.Llvm.Values.BasicBlock.ContainingFunction
   nameWithType: BasicBlock.ContainingFunction
+- uid: Ubiquity.NET.Llvm.Values.BasicBlock.DataLayout
+  name: DataLayout
+  href: llvm/api/Ubiquity.NET.Llvm.Values.BasicBlock.DataLayout.html#Ubiquity_NET_Llvm_Values_BasicBlock_DataLayout
+  commentId: P:Ubiquity.NET.Llvm.Values.BasicBlock.DataLayout
+  fullName: Ubiquity.NET.Llvm.Values.BasicBlock.DataLayout
+  nameWithType: BasicBlock.DataLayout
+- uid: Ubiquity.NET.Llvm.Values.BasicBlock.DataLayout*
+  name: DataLayout
+  href: llvm/api/Ubiquity.NET.Llvm.Values.BasicBlock.DataLayout.html
+  commentId: Overload:Ubiquity.NET.Llvm.Values.BasicBlock.DataLayout
+  fullName: Ubiquity.NET.Llvm.Values.BasicBlock.DataLayout
+  nameWithType: BasicBlock.DataLayout
 - uid: Ubiquity.NET.Llvm.Values.BasicBlock.FirstInstruction
   name: FirstInstruction
   href: llvm/api/Ubiquity.NET.Llvm.Values.BasicBlock.FirstInstruction.html#Ubiquity_NET_Llvm_Values_BasicBlock_FirstInstruction
@@ -21685,6 +21760,18 @@ references:
   commentId: Overload:Ubiquity.NET.Llvm.Values.BasicBlock.LastInstruction
   fullName: Ubiquity.NET.Llvm.Values.BasicBlock.LastInstruction
   nameWithType: BasicBlock.LastInstruction
+- uid: Ubiquity.NET.Llvm.Values.BasicBlock.Module
+  name: Module
+  href: llvm/api/Ubiquity.NET.Llvm.Values.BasicBlock.Module.html#Ubiquity_NET_Llvm_Values_BasicBlock_Module
+  commentId: P:Ubiquity.NET.Llvm.Values.BasicBlock.Module
+  fullName: Ubiquity.NET.Llvm.Values.BasicBlock.Module
+  nameWithType: BasicBlock.Module
+- uid: Ubiquity.NET.Llvm.Values.BasicBlock.Module*
+  name: Module
+  href: llvm/api/Ubiquity.NET.Llvm.Values.BasicBlock.Module.html
+  commentId: Overload:Ubiquity.NET.Llvm.Values.BasicBlock.Module
+  fullName: Ubiquity.NET.Llvm.Values.BasicBlock.Module
+  nameWithType: BasicBlock.Module
 - uid: Ubiquity.NET.Llvm.Values.BasicBlock.Terminator
   name: Terminator
   href: llvm/api/Ubiquity.NET.Llvm.Values.BasicBlock.Terminator.html#Ubiquity_NET_Llvm_Values_BasicBlock_Terminator

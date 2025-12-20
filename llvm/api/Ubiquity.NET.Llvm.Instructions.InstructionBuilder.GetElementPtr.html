@@ -86,7 +86,7 @@
 
 
 <h1 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr*" class="text-break">
-Method GetElementPtr  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L671"><i class="bi bi-code-slash"></i></a>
+Method GetElementPtr  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L661"><i class="bi bi-code-slash"></i></a>
 </h1>
 
 <div class="facts text-secondary">
@@ -114,9 +114,82 @@ Method GetElementPtr  <a class="header-action link-secondary" title="View source
 
 <a id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr*"></a>
 
+<h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value___" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.Values.Value[])">
+  GetElementPtr(ITypeRef, Value, params Value[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L661"><i class="bi bi-code-slash"></i></a>
+</h3>
+
+<div class="markdown level1 summary"><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
+</div>
+<div class="markdown level1 conceptual"></div>
+
+<div class="codewrapper">
+  <pre><code class="lang-csharp hljs">public Value GetElementPtr(ITypeRef type, Value pointer, params Value[] args)</code></pre>
+</div>
+
+<h4 class="section">Parameters</h4>
+<dl class="parameters">
+  <dt><code>type</code> <a class="xref" href="Ubiquity.NET.Llvm.Types.ITypeRef.html">ITypeRef</a></dt>
+  <dd><p>Type of array,vector or structure to get the element pointer from</p>
+</dd>
+  <dt><code>pointer</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></dt>
+  <dd><p>opaque pointer to get an element from</p>
+</dd>
+  <dt><code>args</code> <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a>[]</dt>
+  <dd><p>additional indices for computing the resulting pointer</p>
+</dd>
+</dl>
+
+<h4 class="section">Returns</h4>
+<dl class="parameters">
+  <dt><a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a></dt>
+  <dd><p><a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> for the member access. This is a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a>
+as LLVM may optimize the expression to a <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantExpression.html">ConstantExpression</a> if it
+can so the actual type of the result may be <a class="xref" href="Ubiquity.NET.Llvm.Values.ConstantExpression.html">ConstantExpression</a>
+or <a class="xref" href="Ubiquity.NET.Llvm.Instructions.GetElementPtr.html">GetElementPtr</a>.</p>
+<p>Note that <code class="paramref">pointer</code> must be a pointer to a structure
+or an exception is thrown.</p>
+</dd>
+</dl>
+
+
+
+
+
+
+
+<h4 class="section" id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value____remarks">Remarks</h4>
+<div class="markdown level1 remarks"><p>For details on GetElementPointer (GEP) see the LLVM docs. The basic gist is that the GEP
+instruction <em><b>does not</b></em> access memory, <em><b>it only computes a pointer
+offset from a base</b></em>. A common confusion is around the first index and what it means.
+For C and C++ programmers an expression like <code>pFoo-&gt;bar</code> seems to only have a single
+offset or index. However, that is only syntactic sugar where the compiler implicitly hides
+the first index. That is, there is no difference between <code>pFoo[0].bar</code> and <code>pFoo-&gt;bar</code>
+except that the former makes the first index explicit. LLVM <code>GetElementPtr</code> instruction
+<em><b>requires</b></em> an explicit first index, even if it is zero, in order to properly
+compute the offset for a given element in an aggregate type.</p>
+<div class="NOTE"><h5>information</h5><p>
+This instruction was designed with the idea of typed pointers, but with opaque pointers now,
+with opaque pointers, requires a type for the elements of the base pointer for the aggregate.
+This depends on the layout information of the target machine. and could/should be computed
+by the cal
+</p></div>
+</div>
+
+
+<dl class="typelist seealso">
+  <dt>See Also</dt>
+  <dd>
+  <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/GetElementPtr.html">The Often Misunderstood GEP Instruction</a></span></div>
+  </dd>
+</dl>
+
+
+<a id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr*"></a>
+
 <h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Value__" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr(Ubiquity.NET.Llvm.Types.ITypeRef,Ubiquity.NET.Llvm.Values.Value,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Value})">
   GetElementPtr(ITypeRef, Value, IEnumerable&lt;Value&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L671"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L696"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
@@ -159,25 +232,37 @@ or an exception is thrown.</p>
 
 
 <h4 class="section" id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Types_ITypeRef_Ubiquity_NET_Llvm_Values_Value_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Value___remarks">Remarks</h4>
-<div class="markdown level1 remarks"><p>For details on GetElementPointer (GEP) see
-<a class="xref" href="https://releases.llvm.org/20.1.0/docs/GetElementPtr.html">The Often Misunderstood GEP Instruction</a>.
-The basic gist is that the GEP instruction does not access memory, it only computes a pointer
-offset from a base. A common confusion is around the first index and what it means. For C
-and C++ programmers an expression like pFoo-&gt;bar seems to only have a single offset or
-index. However, that is only syntactic sugar where the compiler implicitly hides the first
-index. That is, there is no difference between pFoo[0].bar and pFoo-&gt;bar except that the
-former makes the first index explicit. LLVM requires an explicit first index, even if it is
-zero, in order to properly compute the offset for a given element in an aggregate type.</p>
+<div class="markdown level1 remarks"><p>For details on GetElementPointer (GEP) see the LLVM docs. The basic gist is that the GEP
+instruction <em><b>does not</b></em> access memory, <em><b>it only computes a pointer
+offset from a base</b></em>. A common confusion is around the first index and what it means.
+For C and C++ programmers an expression like <code>pFoo-&gt;bar</code> seems to only have a single
+offset or index. However, that is only syntactic sugar where the compiler implicitly hides
+the first index. That is, there is no difference between <code>pFoo[0].bar</code> and <code>pFoo-&gt;bar</code>
+except that the former makes the first index explicit. LLVM <code>GetElementPtr</code> instruction
+<em><b>requires</b></em> an explicit first index, even if it is zero, in order to properly
+compute the offset for a given element in an aggregate type.</p>
+<div class="NOTE"><h5>information</h5><p>
+This instruction was designed with the idea of typed pointers, but with opaque pointers now,
+with opaque pointers, requires a type for the elements of the base pointer for the aggregate.
+This depends on the layout information of the target machine. and could/should be computed
+by the cal
+</p></div>
 </div>
 
 
+<dl class="typelist seealso">
+  <dt>See Also</dt>
+  <dd>
+  <div><span><a class="xref" href="https://releases.llvm.org/20.1.0/docs/GetElementPtr.html">The Often Misunderstood GEP Instruction</a></span></div>
+  </dd>
+</dl>
 
 
 <a id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr*"></a>
 
 <h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Values_Value_System_Collections_Generic_IEnumerable_Ubiquity_NET_Llvm_Values_Value__" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr(Ubiquity.NET.Llvm.Values.Value,System.Collections.Generic.IEnumerable{Ubiquity.NET.Llvm.Values.Value})">
   GetElementPtr(Value, IEnumerable&lt;Value&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L706"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L731"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
@@ -235,7 +320,7 @@ zero, in order to properly compute the offset for a given element in an aggregat
 
 <h3 id="Ubiquity_NET_Llvm_Instructions_InstructionBuilder_GetElementPtr_Ubiquity_NET_Llvm_Values_Value_Ubiquity_NET_Llvm_Values_Value___" data-uid="Ubiquity.NET.Llvm.Instructions.InstructionBuilder.GetElementPtr(Ubiquity.NET.Llvm.Values.Value,Ubiquity.NET.Llvm.Values.Value[])">
   GetElementPtr(Value, params Value[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L731"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L756"><i class="bi bi-code-slash"></i></a>
 </h3>
 
 <div class="markdown level1 summary"><p>Creates a <a class="xref" href="Ubiquity.NET.Llvm.Values.Value.html">Value</a> that accesses an element of a type referenced by a pointer</p>
@@ -292,7 +377,7 @@ zero, in order to properly compute the offset for a given element in an aggregat
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.1/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L671" class="edit-link">Edit this page</a>
+          <a href="https://github.com/UbiquityDotNET/Llvm.NET/blob/v20.1.10-alpha.2/src/Ubiquity.NET.Llvm/Instructions/InstructionBuilder.cs/#L661" class="edit-link">Edit this page</a>
         </div>
 
 
@@ -308,7 +393,7 @@ zero, in order to properly compute the offset for a given element in an aggregat
       <div class="container-xxl">
         <div class="flex-fill">
           Copyright (C) 2017-2025, Ubiquity.NET Contributors
-          - Build: 20.1.10-alpha.1
+          - Build: 20.1.10-alpha.2
         </div>
       </div>
     </footer>
