@@ -17,5 +17,5 @@ PreReleaseFix
     BuildMinor = "1"
     BuildPatch = "10"
     PreReleaseName = "alpha"
-    PreReleaseNumber = "1"
+    PreReleaseNumber = "2"
 />
